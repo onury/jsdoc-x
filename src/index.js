@@ -1,5 +1,6 @@
 // core modules
-var path = require('path');
+var path = require('path'),
+    fs = require('fs');
 // dep modules
 var _ = require('lodash');
 // own modules
@@ -7,9 +8,32 @@ var helper = require('./lib/helper');
 
 module.exports = (function () {
 
-    var jsdocx = {
-        path: './node_modules/jsdoc/jsdoc.js'
-    };
+    var jsdocx = {};
+
+    // if the dependent project has jsdoc dependency, ours will not be
+    // installed. and since we don't use the jsdoc module via require but a
+    // specific file (jsdoc.js), we cannot be sure of its location. this method
+    // will try to find it if exists.
+    var jsdocjs = 'jsdoc/jsdoc.js';
+    try {
+        var local = path.join('..', 'node_modules', jsdocjs);
+        if (fs.existsSync(local)) {
+            jsdocx.path = local;
+        } else {
+            // Use the internal require() machinery to look up the location
+            // of a module, but rather than loading the module, just return
+            // the resolved filename.
+            jsdocx.path = require.resolve(jsdocjs);
+            // jsdoc module does not expose a main file. so instead of
+            // require.resolve('jsdoc') - which will fail; we'll look for
+            // 'jsdoc/jsdoc.js'.
+
+            // for example, if the parent project has it, we'll get:
+            // /path/to/parent-project/node_modules/jsdoc/jsdoc.js
+        }
+    } catch (e) {
+        throw new Error('Could not find jsdoc module.');
+    }
 
     // ---------------------------
     // HELPERS

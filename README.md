@@ -256,7 +256,8 @@ See a larger output example [here](https://github.com/onury/jsdoc-x/blob/master/
 
 ### Change-log:
 
-**v0.4.7** (2016-03-19)  
+**v0.4.8** (2016-03-19)  
+ - If the parent project(s) has `jsdoc`, ours won't get installed. Since we use a specific file within `jsdoc` module, we cannot find it via `require()`. Now, fixed `jsdoc` path resolver. This will either use the local or from the parent project(s) properly.  
  - Code cleanup. Documentation update.  
 
 **v0.4.6** (2016-03-19)  

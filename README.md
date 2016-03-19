@@ -19,7 +19,7 @@ npm install jsdoc-x
 var jsdocx = require('jsdoc-x');
 ```
 
-#### `jsdocx.parse()`  
+### `jsdocx.parse()`  
 
 Executes the `jsdoc -X` command and parses the output into a Javascript object/array; with the specified options.  
 
@@ -45,7 +45,8 @@ jsdocx.parse(options, function (err, docs) {
 });
 ```
 
-### Options:
+### `options`
+`Object|Array|String` - Either an options object or one or more source files to be processed.
 
 <table>
     <tr>

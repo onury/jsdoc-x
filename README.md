@@ -4,7 +4,7 @@
 ![release](https://img.shields.io/github/release/onury/jsdoc-x.svg)
 ![license](http://img.shields.io/npm/l/jsdoc-x.svg)
 
-Parser to output a customized Javascript object via JSDoc's explain (`-X`) command.  
+Parser for outputting a customized Javascript object from documented code via JSDoc's explain (`-X`) command.  
 
 > © 2016, Onur Yıldırım (@onury). MIT License.  
 

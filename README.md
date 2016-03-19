@@ -164,19 +164,19 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>↳<code>output.path</code></td>
+        <td>↳<code>output.<b>path</b></code></td>
         <td><code>String</code></td>
         <td><code>undefined</code></td>
         <td>Path for a JSON file to be created.</td>
     </tr>
     <tr>
-        <td>↳<code>output.indent</code></td>
+        <td>↳<code>output.<b>indent</b></code></td>
         <td><code>Boolean|Number</code></td>
         <td><code>false</code></td>
         <td>Number of spaces for indentation. If set to <code>true</code>, 2 spaces will be used.</td>
     </tr>
     <tr>
-        <td>↳<code>output.force</code></td>
+        <td>↳<code>output.<b>force</b></code></td>
         <td><code>Boolean</code></td>
         <td><code>false</code></td>
         <td>Whether to create parent directories if they don't exist.</td>

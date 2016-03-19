@@ -52,13 +52,13 @@ jsdocx.parse(options, function (err, docs) {
 
 <table>
     <tr>
-        <td>**Option**</td>
-        <td>**Type**</td>
-        <td>**Default**</td>
-        <td>**Description**</td>
+        <td><b>Option</b></td>
+        <td><b>Type</b></td>
+        <td><b>Default</b></td>
+        <td><b>Description</b></td>
     </tr>
     <tr>
-        <td>`files`</td>
+        <td><code>files</code></td>
         <td>`String|Array`</td>
         <td>`undefined`</td>
         <td>

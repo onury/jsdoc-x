@@ -194,6 +194,8 @@ jsdocx.parse(options, function (err, docs) {
 
 ### Example Output:
 
+See a larger output example [here](https://github.com/onury/jsdoc-x/blob/master/test/output/docs.json).
+
 ```js
 [
   {

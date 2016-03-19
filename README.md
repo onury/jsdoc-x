@@ -161,34 +161,25 @@ jsdocx.parse(options, function (err, docs) {
         <td><code>undefined</code></td>
         <td>
             Path for a JSON file to be created, containing the output documentation array. Or you can set this to an object for extra options.  
-
-            <table>
-                <tr>
-                    <td>Option</td>
-                    <td>Type</td>
-                    <td>Default</td>
-                    <td>Description</td>
-                </tr>
-                <tr>
-                    <td><b><code>output.path</code></b></td>
-                    <td><code>String</code></td>
-                    <td><code>undefined</code></td>
-                    <td>Path for a JSON file to be created.</td>
-                </tr>
-                <tr>
-                    <td><b><code>output.indent</code></b></td>
-                    <td><code>Boolean|Number</code></td>
-                    <td><code>false</code></td>
-                    <td>Number of spaces for indentation. If set to <code>true</code>, 2 spaces will be used.</td>
-                </tr>
-                <tr>
-                    <td><b><code>output.force</code></b></td>
-                    <td><code>Boolean</code></td>
-                    <td><code>false</code></td>
-                    <td>Whether to create parent directories if they don't exist.</td>
-                </tr>
-            </table>
         </td>
+    </tr>
+    <tr>
+        <td>↳<code>output.path</code></td>
+        <td><code>String</code></td>
+        <td><code>undefined</code></td>
+        <td>Path for a JSON file to be created.</td>
+    </tr>
+    <tr>
+        <td>↳<code>output.indent</code></td>
+        <td><code>Boolean|Number</code></td>
+        <td><code>false</code></td>
+        <td>Number of spaces for indentation. If set to <code>true</code>, 2 spaces will be used.</td>
+    </tr>
+    <tr>
+        <td>↳<code>output.force</code></td>
+        <td><code>Boolean</code></td>
+        <td><code>false</code></td>
+        <td>Whether to create parent directories if they don't exist.</td>
     </tr>
 </table>
 

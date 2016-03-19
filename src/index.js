@@ -109,10 +109,8 @@ module.exports = (function () {
                 o = userFilter(item);
                 if (_.isPlainObject(o)) {
                     memo.push(o); // filtered item pushed
-                    console.log(item.longname);
                 } else if (o) { // boolean check
                     memo.push(item); // original item pushed
-                    console.log(item.longname);
                 }
             }
             return memo;
@@ -122,9 +120,6 @@ module.exports = (function () {
     // ---------------------------
     // PUBLIC METHODS
     // ---------------------------
-
-    // TODO: Support directory path, file (string) or files (array)
-    // TODO: use minimatch
 
     /**
      * Executes the `jsdoc` command and parses the output into a Javascript
@@ -172,8 +167,6 @@ module.exports = (function () {
             })
             .nodeify(callback);
     };
-
-    // TODO: parseSource() - create temp file
 
     // ---------------------------
 

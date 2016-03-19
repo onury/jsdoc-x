@@ -6,10 +6,7 @@
 
 Parser to output a customized Javascript object via JSDoc's explain (`-X`) command.  
 
-### Under development...
-
-> Author: Onur Yıldırım (@onury)  
-> © 2016 — Licensed under the MIT License.  
+> © 2016, Onur Yıldırım (@onury). MIT License.  
 
 **Install via NPM**:
 ```shell
@@ -193,3 +190,98 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
 </table>
+
+### Example Output:
+
+```js
+[
+  {
+    "comment": "/**\n * This is the Code class for testing jsdoc-x. */",
+    "meta": {
+      "range": [
+        445,
+        9624
+      ],
+      "filename": "code.js",
+      "lineno": 14,
+      "path": "../lib",
+      "code": {
+        "id": "astnode100000001",
+        "name": "Code",
+        "type": "ClassDeclaration",
+        "paramnames": [
+          "options"
+        ]
+      }
+    },
+    "classdesc": "This is the Code class for testing jsdoc-x.",
+    "see": [
+      "{@link https://github.com/onury/jsdoc-x|GitHub Project}"
+    ],
+    "license": "MIT",
+    "copyright": "2016, Onur Yıldırım (onur@cutepilot.com)",
+    "name": "Code",
+    "longname": "Code",
+    "kind": "class",
+    "scope": "global",
+    "description": "Initiates a new instance of the `Code` class.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "Optional. Configuration object.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "Default: `\"en\"`.\n    Language to be used for API requests that supports language configurations.",
+        "name": "options.language"
+      },
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "Default: `true`.\n    If set to `true`, the API calls are made over HTTPS, at all times.",
+        "name": "options.https"
+      }
+    ]
+  }
+]
+```
+
+---
+
+### Change-log:
+
+**v0.4.7** (2016-03-19)  
+ - Code cleanup. Documentation update.  
+
+**v0.4.6** (2016-03-19)  
+ - Added `output` option to write `JSON` file.  
+ - Initial commit.  
+
+**v0.4.0** (2016-03-18)  
+ - Using `child_process.spawn` instead of `execFile` since the latter has 200kb limit.  
+ - Added `filter`, `undocumented`, `undescribed`, `module` options.
+ - Added jasmine tests.
+
+**v0.3.0** (2016-03-17)  
+ - Added support for both Promises and callbacks.
+ - Added `relativePath` option.
+
+**v0.1.0** (2016-03-16)  
+
+ ---
+
+### TODO:
+
+- `options.source` for parsing source code. This should create a temp file before parsing.

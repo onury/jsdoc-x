@@ -58,7 +58,7 @@ jsdocx.parse(options, function (err, docs) {
         <td>**Description**</td>
     </tr>
     <tr>
-        <td>**`files`**</td>
+        <td>`files`</td>
         <td>`String|Array`</td>
         <td>`undefined`</td>
         <td>
@@ -66,7 +66,7 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>**`source`**</td>
+        <td>`source`</td>
         <td>`String`</td>
         <td>`undefined`</td>
         <td>
@@ -74,13 +74,13 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>**`encoding`**</td>
+        <td>`encoding`</td>
         <td>`String`</td>
         <td>`"utf8"`</td>
         <td>Encoding to be used when reading source files.</td>
     </tr>
     <tr>
-        <td>**`recurse`**</td>
+        <td>`recurse`</td>
         <td>`Boolean`</td>
         <td>`false`</td>
         <td>
@@ -88,7 +88,7 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>**`pedantic`**</td>
+        <td>`pedantic`</td>
         <td>`Boolean`</td>
         <td>`false`</td>
         <td>
@@ -96,7 +96,7 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>**`access`**</td>
+        <td>`access`</td>
         <td>`String|Array`</td>
         <td>`undefined`</td>
         <td>
@@ -104,13 +104,13 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>**`private`**</td>
+        <td>`private`</td>
         <td>`Boolean`</td>
         <td>`false`</td>
         <td></td>
     </tr>
     <tr>
-        <td>**`package`**</td>
+        <td>`package`</td>
         <td>`String`</td>
         <td>`undefined`</td>
         <td>
@@ -118,7 +118,7 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>**`module`**</td>
+        <td>`module`</td>
         <td>`Boolean`</td>
         <td>`true`</td>
         <td>
@@ -126,7 +126,7 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>**`undocumented`**</td>
+        <td>`undocumented`</td>
         <td>`Boolean`</td>
         <td>`true`</td>
         <td>
@@ -134,7 +134,7 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>**`undescribed`**</td>
+        <td>`undescribed`</td>
         <td>`Boolean`</td>
         <td>`true`</td>
         <td>
@@ -142,7 +142,7 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>**`relativePath`**</td>
+        <td>`relativePath`</td>
         <td>`String`</td>
         <td>`undefined`</td>
         <td>
@@ -150,7 +150,7 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>**`filter`**</td>
+        <td>`filter`</td>
         <td>`Function`</td>
         <td>`undefined`</td>
         <td>
@@ -158,7 +158,7 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td>**`output`**</td>
+        <td>`output`</td>
         <td>`String|Object`</td>
         <td>`undefined`</td>
         <td>
@@ -166,10 +166,10 @@ jsdocx.parse(options, function (err, docs) {
 
             <table>
                 <tr>
-                    <td>**Option**</td>
-                    <td>**Type**</td>
-                    <td>**Default**</td>
-                    <td>**Description**</td>
+                    <td>Option</td>
+                    <td>Type</td>
+                    <td>Default</td>
+                    <td>Description</td>
                 </tr>
                 <tr>
                     <td>output.path</td>

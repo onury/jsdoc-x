@@ -1,0 +1,474 @@
+[
+  {
+    "comment": "/**\n * This is the Code class for testing docmatic.\n *\n * Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\n * tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\n * quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\n * consequat.\n *\n * @see {@link https://github.com/onury/docmatic|GitHub Project}\n *\n * @license MIT\n * @copyright 2016, Onur Yıldırım (onur@cutepilot.com)\n */",
+    "meta": {
+      "range": [
+        445,
+        9624
+      ],
+      "filename": "code.es6.js",
+      "lineno": 14,
+      "path": "../../code",
+      "code": {
+        "id": "astnode100000001",
+        "name": "Code",
+        "type": "ClassDeclaration",
+        "paramnames": [
+          "options"
+        ]
+      }
+    },
+    "classdesc": "This is the Code class for testing docmatic.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod\ntempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo\nconsequat.",
+    "see": [
+      "{@link https://github.com/onury/docmatic|GitHub Project}"
+    ],
+    "license": "MIT",
+    "copyright": "2016, Onur Yıldırım (onur@cutepilot.com)",
+    "name": "Code",
+    "longname": "Code",
+    "kind": "class",
+    "scope": "global",
+    "description": "Initiates a new instance of the `Code` class.",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "Optional. Configuration object.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "Default: `\"en\"`.\n    Language to be used for API requests that supports language configurations.\n    This is generally used for Google APIs.\n    See {@link https://developers.google.com/maps/faq#languagesupport|supported languages}..",
+        "name": "options.language"
+      },
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "Default: `true`.\n    As Google recommends; using HTTPS encryption makes your site more secure,\n    and more resistant to snooping or tampering.\n    If set to `true`, the API calls are made over HTTPS, at all times.\n    Setting to `false` will switch to HTTP (even if the page is on HTTPS).\n    And if set to `null`, current protocol will be used.\n    Note that some APIs might not work with HTTP such as Google Maps TimeZone API.",
+        "name": "options.https"
+      },
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "Google specific options.",
+        "name": "options.google"
+      },
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "Default: `\"3.22\"`.\n        Google Maps API version to be used.\n        You can set a greater value or the latest version number and it\n        should work; but it's not guaranteed.\n        Find out the {@link https://developers.google.com/maps/documentation/javascript/versions|latest version here}.",
+        "name": "options.google.version"
+      },
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "Default: `\"\"`.\n        API key to be used with Google API calls. Although some calls might\n        work without a key, it is generally required by most Goolge APIs.\n        To get a free (or premium) key,\n        {@link https://developers.google.com/maps/documentation/javascript/|click here}.",
+        "name": "options.google.key"
+      }
+    ]
+  },
+  {
+    "comment": "/**\n     * Gets the config object for the `Code` instance.\n     *\n     * @memberof Code\n     * @type {Object}\n     * @readonly\n     */",
+    "meta": {
+      "range": [
+        2786,
+        2825
+      ],
+      "filename": "code.es6.js",
+      "lineno": 69,
+      "path": "../../code",
+      "code": {
+        "id": "astnode100000023",
+        "name": "Code#config",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Gets the config object for the `Code` instance.",
+    "memberof": "Code",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "readonly": true,
+    "name": "config",
+    "longname": "Code#config",
+    "kind": "member",
+    "scope": "instance"
+  },
+  {
+    "comment": "/**\n     * Error class that provides a common type of error object for `Code`.\n     *\n     * @memberof Code\n     * @type {CodeError}\n     * @readonly\n     * @static\n     */",
+    "meta": {
+      "range": [
+        3352,
+        3400
+      ],
+      "filename": "code.es6.js",
+      "lineno": 98,
+      "path": "../../code",
+      "code": {
+        "id": "astnode100000035",
+        "name": "Code.Error",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Error class that provides a common type of error object for `Code`.",
+    "memberof": "Code",
+    "type": {
+      "names": [
+        "CodeError"
+      ]
+    },
+    "readonly": true,
+    "scope": "static",
+    "name": "Error",
+    "longname": "Code.Error",
+    "kind": "member"
+  },
+  {
+    "comment": "/**\n     * Helpful constants and utility methods for Code.\n     * @memberof Code\n     * @type {Object}\n     */",
+    "meta": {
+      "range": [
+        3521,
+        3566
+      ],
+      "filename": "code.es6.js",
+      "lineno": 107,
+      "path": "../../code",
+      "code": {
+        "id": "astnode100000041",
+        "name": "Code.utils",
+        "type": "MethodDefinition",
+        "paramnames": []
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Helpful constants and utility methods for Code.",
+    "memberof": "Code",
+    "type": {
+      "names": [
+        "Object"
+      ]
+    },
+    "name": "utils",
+    "longname": "Code.utils",
+    "kind": "member",
+    "scope": "static"
+  },
+  {
+    "comment": "/**\n     * Returns a location and accuracy radius based on information about cell\n     * towers and WiFi nodes that the mobile client can detect; via the Google\n     * Maps Geolocation API.\n     * @see {@link https://developers.google.com/maps/documentation/geolocation/intro|Google Maps Geolocation API}\n     * @see {@link https://developers.google.com/maps/documentation/geolocation/usage-limits|Usage Limits}\n     * @memberof Code\n     *\n     * @param {Object} options - Optional. Default: `undefined`.\n     * Geolocation options.\n     *     @param {Number} options.homeMobileCountryCode - Optional. Default: `undefined`.\n     *     The mobile country code (MCC) for the device's home network.\n     *     @param {Number} options.homeMobileNetworkCode - Optional. Default: `undefined`.\n     *     The mobile network code (MNC) for the device's home network.\n     *     @param {String} options.radioType - Optional. Default: `undefined`.\n     *     The mobile radio type. See `{@link geolocator.RadioType}` enumeration\n     *     for possible values. While this field is optional, it should be\n     *     included if a value is available, for more accurate results.\n     *     @param {string} options.carrier - Optional. Default: `undefined`.\n     *     The carrier name. e.g. \"Vodafone\"\n     *     @param {Boolean} options.considerIp - Optional. Default: `false`.\n     *     Specifies whether to fallback to IP geolocation if wifi and cell\n     *     tower signals are not available. Note that the IP address in the\n     *     request header may not be the IP of the device. Set `considerIp` to\n     *     false to disable fall back.\n     *     @param {Array} options.cellTowers - Optional. Default: `undefined`.\n     *     An array of cell tower objects.\n     *     See {@link https://developers.google.com/maps/documentation/geolocation/intro#cell_tower_object|Cell tower objects} for details.\n     *     @param {Array} options.wifiAccessPoints - Optional. Default: `undefined`.\n     *     An array of WiFi access point objects.\n     *     See {@link https://developers.google.com/maps/documentation/geolocation/intro#wifi_access_point_object|WiFi access point objects} for details.\n     *     @param {Boolean} options.addressLookup - Optional. Default: `false`.\n     *     Specifies whether to run a reverse-geocode operation for the fetched\n     *     coordinates to retrieve detailed address information. Note that this\n     *     means an additional request which requires a Google API key to be set\n     *     in the Geolocator configuration. See `{@link geolocator.config}`.\n     *     @param {Boolean} options.timezone - Optional. Default: `false`.\n     *     Specifies whether to also fetch the time zone information for the\n     *     receieved coordinates. Note that this means an additional request\n     *     which requires a Google API key to be set in the Geolocator\n     *     configuration. See `{@link geolocator.config}`.\n     *     @param {Boolean} options.raw - Optional. Default: `false`\n     *     \tWhether to return the raw Google API result.\n     * @param {Function} callback - Required. Callback function to be executed\n     * when the request completes. This takes 2 arguments:\n     * `function (err, location) { ... }`\n     * @returns {void}\n     *\n     * @example\n     * var options = {\n     *     homeMobileCountryCode: 310,\n     *     homeMobileNetworkCode: 410,\n     *     carrier: 'Vodafone',\n     *     radioType: geolocator.RadioType.GSM,\n     *     considerIp: true,\n     *     addressLookup: false,\n     *     timezone: false\n     * };\n     * code.requestLocation(options, function (err, location) {\n     *     console.log(err || location);\n     * });\n     */",
+    "meta": {
+      "range": [
+        7371,
+        7432
+      ],
+      "filename": "code.es6.js",
+      "lineno": 177,
+      "path": "../../code",
+      "code": {
+        "id": "astnode100000047",
+        "name": "Code#instanceMethod",
+        "type": "MethodDefinition",
+        "paramnames": [
+          "options",
+          "callback"
+        ]
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Returns a location and accuracy radius based on information about cell\ntowers and WiFi nodes that the mobile client can detect; via the Google\nMaps Geolocation API.",
+    "see": [
+      "{@link https://developers.google.com/maps/documentation/geolocation/intro|Google Maps Geolocation API}",
+      "{@link https://developers.google.com/maps/documentation/geolocation/usage-limits|Usage Limits}"
+    ],
+    "memberof": "Code",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "Optional. Default: `undefined`.\nGeolocation options.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "Number"
+          ]
+        },
+        "description": "Optional. Default: `undefined`.\n    The mobile country code (MCC) for the device's home network.",
+        "name": "options.homeMobileCountryCode"
+      },
+      {
+        "type": {
+          "names": [
+            "Number"
+          ]
+        },
+        "description": "Optional. Default: `undefined`.\n    The mobile network code (MNC) for the device's home network.",
+        "name": "options.homeMobileNetworkCode"
+      },
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "Optional. Default: `undefined`.\n    The mobile radio type. See `{@link geolocator.RadioType}` enumeration\n    for possible values. While this field is optional, it should be\n    included if a value is available, for more accurate results.",
+        "name": "options.radioType"
+      },
+      {
+        "type": {
+          "names": [
+            "string"
+          ]
+        },
+        "description": "Optional. Default: `undefined`.\n    The carrier name. e.g. \"Vodafone\"",
+        "name": "options.carrier"
+      },
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "Optional. Default: `false`.\n    Specifies whether to fallback to IP geolocation if wifi and cell\n    tower signals are not available. Note that the IP address in the\n    request header may not be the IP of the device. Set `considerIp` to\n    false to disable fall back.",
+        "name": "options.considerIp"
+      },
+      {
+        "type": {
+          "names": [
+            "Array"
+          ]
+        },
+        "description": "Optional. Default: `undefined`.\n    An array of cell tower objects.\n    See {@link https://developers.google.com/maps/documentation/geolocation/intro#cell_tower_object|Cell tower objects} for details.",
+        "name": "options.cellTowers"
+      },
+      {
+        "type": {
+          "names": [
+            "Array"
+          ]
+        },
+        "description": "Optional. Default: `undefined`.\n    An array of WiFi access point objects.\n    See {@link https://developers.google.com/maps/documentation/geolocation/intro#wifi_access_point_object|WiFi access point objects} for details.",
+        "name": "options.wifiAccessPoints"
+      },
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "Optional. Default: `false`.\n    Specifies whether to run a reverse-geocode operation for the fetched\n    coordinates to retrieve detailed address information. Note that this\n    means an additional request which requires a Google API key to be set\n    in the Geolocator configuration. See `{@link geolocator.config}`.",
+        "name": "options.addressLookup"
+      },
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "Optional. Default: `false`.\n    Specifies whether to also fetch the time zone information for the\n    receieved coordinates. Note that this means an additional request\n    which requires a Google API key to be set in the Geolocator\n    configuration. See `{@link geolocator.config}`.",
+        "name": "options.timezone"
+      },
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "Optional. Default: `false`\n    \tWhether to return the raw Google API result.",
+        "name": "options.raw"
+      },
+      {
+        "type": {
+          "names": [
+            "function"
+          ]
+        },
+        "description": "Required. Callback function to be executed\nwhen the request completes. This takes 2 arguments:\n`function (err, location) { ... }`",
+        "name": "callback"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "void"
+          ]
+        }
+      }
+    ],
+    "examples": [
+      "var options = {\n    homeMobileCountryCode: 310,\n    homeMobileNetworkCode: 410,\n    carrier: 'Vodafone',\n    radioType: geolocator.RadioType.GSM,\n    considerIp: true,\n    addressLookup: false,\n    timezone: false\n};\ncode.requestLocation(options, function (err, location) {\n    console.log(err || location);\n});"
+    ],
+    "name": "instanceMethod",
+    "longname": "Code#instanceMethod",
+    "kind": "function",
+    "scope": "instance"
+  },
+  {
+    "comment": "/**\n     * Sets or gets the `Code` configuration object.\n     * @memberof Code\n     *\n     * @param {Object} options - Optional. Configuration object.\n     *     @param {String} options.language - Default: `\"en\"`.\n     *     Language to be used for API requests that supports language configurations.\n     *     This is generally used for Google APIs.\n     *     See {@link https://developers.google.com/maps/faq#languagesupport|supported languages}..\n     *     @param {Boolean} options.https - Default: `true`.\n     *     As Google recommends; using HTTPS encryption makes your site more secure,\n     *     and more resistant to snooping or tampering.\n     *     If set to `true`, the API calls are made over HTTPS, at all times.\n     *     Setting to `false` will switch to HTTP (even if the page is on HTTPS).\n     *     And if set to `null`, current protocol will be used.\n     *     Note that some APIs might not work with HTTP such as Google Maps TimeZone API.\n     *     @param {Object} options.google - Google specific options.\n     *         @param {String} options.google.version - Default: `\"3.22\"`.\n     *         Google Maps API version to be used.\n     *         You can set a greater value or the latest version number and it\n     *         should work; but it's not guaranteed.\n     *         Find out the {@link https://developers.google.com/maps/documentation/javascript/versions|latest version here}.\n     *         @param {String} options.google.key - Default: `\"\"`.\n     *         API key to be used with Google API calls. Although some calls might\n     *         work without a key, it is generally required by most Goolge APIs.\n     *         To get a free (or premium) key,\n     *         {@link https://developers.google.com/maps/documentation/javascript/|click here}.\n     *\n     * @returns {Object} - A new instance of `Code`.\n     *\n     * @example\n     * Code.staticMethod({\n     *     language: 'en',\n     *     google: {\n     *         key: 'YOUR-KEY'\n     *     }\n     * });\n     */",
+    "meta": {
+      "range": [
+        9551,
+        9621
+      ],
+      "filename": "code.es6.js",
+      "lineno": 223,
+      "path": "../../code",
+      "code": {
+        "id": "astnode100000056",
+        "name": "Code.staticMethod",
+        "type": "MethodDefinition",
+        "paramnames": [
+          "options"
+        ]
+      },
+      "vars": {
+        "": null
+      }
+    },
+    "description": "Sets or gets the `Code` configuration object.",
+    "memberof": "Code",
+    "params": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "Optional. Configuration object.",
+        "name": "options"
+      },
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "Default: `\"en\"`.\n    Language to be used for API requests that supports language configurations.\n    This is generally used for Google APIs.\n    See {@link https://developers.google.com/maps/faq#languagesupport|supported languages}..",
+        "name": "options.language"
+      },
+      {
+        "type": {
+          "names": [
+            "Boolean"
+          ]
+        },
+        "description": "Default: `true`.\n    As Google recommends; using HTTPS encryption makes your site more secure,\n    and more resistant to snooping or tampering.\n    If set to `true`, the API calls are made over HTTPS, at all times.\n    Setting to `false` will switch to HTTP (even if the page is on HTTPS).\n    And if set to `null`, current protocol will be used.\n    Note that some APIs might not work with HTTP such as Google Maps TimeZone API.",
+        "name": "options.https"
+      },
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "Google specific options.",
+        "name": "options.google"
+      },
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "Default: `\"3.22\"`.\n        Google Maps API version to be used.\n        You can set a greater value or the latest version number and it\n        should work; but it's not guaranteed.\n        Find out the {@link https://developers.google.com/maps/documentation/javascript/versions|latest version here}.",
+        "name": "options.google.version"
+      },
+      {
+        "type": {
+          "names": [
+            "String"
+          ]
+        },
+        "description": "Default: `\"\"`.\n        API key to be used with Google API calls. Although some calls might\n        work without a key, it is generally required by most Goolge APIs.\n        To get a free (or premium) key,\n        {@link https://developers.google.com/maps/documentation/javascript/|click here}.",
+        "name": "options.google.key"
+      }
+    ],
+    "returns": [
+      {
+        "type": {
+          "names": [
+            "Object"
+          ]
+        },
+        "description": "- A new instance of `Code`."
+      }
+    ],
+    "examples": [
+      "Code.staticMethod({\n    language: 'en',\n    google: {\n        key: 'YOUR-KEY'\n    }\n});"
+    ],
+    "name": "staticMethod",
+    "longname": "Code.staticMethod",
+    "kind": "function",
+    "scope": "static"
+  },
+  {
+    "kind": "package",
+    "name": "jsdoc-x-test",
+    "longname": "package:jsdoc-x-test",
+    "author": "Onur Yıldırım <onur@cutepilot.com>",
+    "bugs": {
+      "url": "https://github.com/onury/jsdoc-x/issues"
+    },
+    "description": "test for jsdoc-x",
+    "files": [
+      "/Users/oy/developer/javascript/jsdoc-x/test/input/code.es6.js"
+    ],
+    "homepage": "https://github.com/onury/jsdoc-x#readme",
+    "keywords": [
+      "jsdoc",
+      "explain",
+      "-X",
+      "documentation",
+      "parse",
+      "doc"
+    ],
+    "licenses": [
+      {
+        "type": "MIT"
+      }
+    ],
+    "main": "src/index.js",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/onury/jsdoc-x.git"
+    },
+    "version": "0.0.0"
+  }
+]

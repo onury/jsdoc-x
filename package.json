@@ -1,0 +1,45 @@
+{
+  "name": "jsdoc-x",
+  "version": "0.4.6",
+  "description": "Parser to output a customized Javascript object via JSDoc's explain (-X) command.",
+  "license": "MIT",
+  "author": "Onur Yıldırım <onur@cutepilot.com>",
+  "main": "src/index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://github.com/onury/jsdoc-x#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onury/jsdoc-x.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onury/jsdoc-x/issues"
+  },
+  "keywords": [
+    "jsdoc",
+    "explain",
+    "-X",
+    "documentation",
+    "parse",
+    "doc"
+  ],
+  "dependencies": {
+    "bluebird": "^3.3.4",
+    "fs-extra": "^0.26.7",
+    "jsdoc": "^3.4.0",
+    "lodash": "^4.6.1"
+  },
+  "devDependencies": {
+    "eslint": "^2.4.0",
+    "eslint-config-xo": "^0.12.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-jasmine-nodejs": "^1.5.1",
+    "matchdep": "^1.0.1"
+  }
+}

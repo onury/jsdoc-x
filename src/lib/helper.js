@@ -84,8 +84,6 @@ module.exports = (function () {
     // fs.exists does not conform with the Node callback signature e.g.
     // `function (err, result) {...}`. so we promisify this manually.
     helper.exists = function (filePath) {
-        console.log('--------------');
-        console.log(filePath);
         return new Promise(function (resolve, reject) {
             fs.exists(filePath, function (exists) {
                 resolve(exists);
@@ -112,7 +110,6 @@ module.exports = (function () {
 
             proc.on('close', function (code) {
                 // console.log(`child process exited with code ${code}`);
-                // console.log(output);
                 if (code !== 0 || err) {
                     return reject(new Error(err));
                 }
@@ -122,18 +119,6 @@ module.exports = (function () {
                 resolve(output);
             });
         });
-
-        // helper.exec = function (file, args, options) {
-        //     args = args || [];
-        //     options = options || {};
-        //     return new Promise(function (resolve, reject) {
-        //         child_process.execFile(file, args, options, function (err, stdout, stderr) {
-        //             if (err) return reject(err);
-        //             if (stderr) return reject(new Error(stderr));
-        //             resolve(stdout);
-        //         });
-        //     });
-        // };
 
     };
 

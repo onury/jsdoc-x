@@ -19,6 +19,28 @@ npm i jsdoc-x
 var jsdocx = require('jsdoc-x');
 ```
 
+Parse using Promises...
+```js
+jsdocx.parse(options)
+    .then(function (docs) {
+        console.log(docs);
+    })
+    .catch(function (err) {
+        console.log(err.stack);
+    });
+```
+
+Or callback...
+```js
+jsdocx.parse(options, function (err, docs) {
+    if (err) {
+        console.log(err.stack);
+        return;
+    }
+    console.log(docs);
+});
+```
+
 ## `jsdocx.parse(options[, callback])`  
 
 Executes the `jsdoc -X` command and parses the output into a Javascript object/array; with the specified options.  
@@ -45,28 +67,6 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
         </td>
     </tr>
 </table>
-
-Parse using Promises...
-```js
-jsdocx.parse(options)
-    .then(function (docs) {
-        console.log(docs);
-    })
-    .catch(function (err) {
-        console.log(err.stack);
-    });
-```
-
-Or callback...
-```js
-jsdocx.parse(options, function (err, docs) {
-    if (err) {
-        console.log(err.stack);
-        return;
-    }
-    console.log(docs);
-});
-```
 
 ### `options`
 `Object|Array|String` - Either an options object or one or more source files to be processed.
@@ -227,7 +227,7 @@ See an **output example** [here](https://github.com/onury/jsdoc-x/blob/master/te
 
 ## `jsdocx.filter(docs[, options][, predicate])`  
 
-Filters the given/parsed documentation output array.
+Filters the given documentation output array. This is useful if you have an already parsed documentation output.  
 
 <table>
     <tr>

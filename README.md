@@ -335,40 +335,176 @@ Filters the given documentation output array. This is useful if you have an alre
     </tr>
 </table>
 
+## `jsdocx.utils`  
+
+Utilities for documentation output and symbols.
+
+<table>
+    <tr>
+        <td><b>Method</b></td>
+        <td><b>Params</b></td>
+        <td><b>Returns</b></td>
+        <td><b>Description</b></td>
+    </tr>
+    <tr>
+        <td><b><code>getFullName(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>String</code></td>
+        <td>
+            Gets the full code-name of the given symbol.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>getName(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>String</code></td>
+        <td>
+            Gets the (short) code-name of the given symbol.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>getSymbolByName(docs, name)</code></b></td>
+        <td>
+            <code>docs:Array</code>
+            <code>name:String</code>
+        </td>
+        <td><code>Boolean</code></td>
+        <td>
+            Gets the first matching symbol by the given name.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isGlobal(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol has global scope.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isNamespace(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a namespace.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isClass(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a class.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isConstructor(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a constructor.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isStaticMember(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a static member.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isInstanceMember(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is an instance member.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isMethod(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a method.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isInstanceMethod(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is an instance method.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isStaticMethod(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a static method.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isProperty(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a property.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isInstanceProperty(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is an instance property.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isStaticProperty(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a static property.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isEnum(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is an enumeration.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isReadOnly(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is read-only.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isUndocumented(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is undocumented. This checks if the symbol has any comments.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>hasDescription(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol has description.
+        </td>
+    </tr>
+</table>
+
 ---
 
 ### Change-log:
 
-**v0.7.0** (2016-05-05)  
- - Added `glob` support for `files` option of `.parse()` method.   
- - Added `source` option for `.parse()` method.   
- - Added `hierarchy` option for `.parse()` method.   
- - Added `sort` option for `.parse()` method.   
- - Added `.filter()` method for use with (already parsed) documentation array.   
- - Created `utils` as a utility module for documentation symbols.   
- - Code cleanup. Documentation update.  
-
-**v0.4.8** (2016-03-19)  
- - If the parent project(s) has `jsdoc`, ours won't get installed. Since we use a specific file within `jsdoc` module, we cannot find it via `require()`. Now, fixed `jsdoc` path resolver. This will either use the local or from the parent project(s) properly.  
- - Code cleanup. Documentation update.  
-
-**v0.4.6** (2016-03-19)  
- - Added `output` option to write `JSON` file.  
- - Initial commit.  
-
-**v0.4.0** (2016-03-18)  
- - Using `child_process.spawn` instead of `execFile` since the latter has 200kb limit.  
- - Added `filter`, `undocumented`, `undescribed`, `module` options.
- - Added jasmine tests.
-
-**v0.3.0** (2016-03-17)  
- - Added support for both Promises and callbacks.
- - Added `relativePath` option.
-
-**v0.1.0** (2016-03-16)  
-
- ---
-
-### TODO:
-
-- `options.source` for parsing source code. This should create a temp file before parsing.
+Se [CHANGELOG.md](CHANGELOG.md).

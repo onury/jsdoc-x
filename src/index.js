@@ -295,6 +295,8 @@ module.exports = (function () {
             .nodeify(callback);
     };
 
+    jsdocx.utils = utils;
+
     // ---------------------------
 
     return jsdocx;

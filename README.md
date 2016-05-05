@@ -83,7 +83,7 @@ jsdocx.parse(options, function (err, docs) {
         <td><code>String|Array</code></td>
         <td><code>undefined</code></td>
         <td>
-            Required (if <code>source</code> is not set). One or more file/directory paths to be processed. This also accepts a [Glob](https://github.com/isaacs/node-glob) string or array of globs. e.g. <code>`./src/**/*.js`</code> will produce an array of all <code>.js</code> files under </code>./src</code> directory and sub-directories.
+            Required (if <code>source</code> is not set). One or more file/directory paths to be processed. This also accepts a <a href="https://github.com/isaacs/node-glob">Glob</a> string or array of globs. e.g. <code>`./src/**/*.js`</code> will produce an array of all <code>.js</code> files under </code>./src</code> directory and sub-directories.
         </td>
     </tr>
     <tr>
@@ -224,72 +224,8 @@ jsdocx.parse(options, function (err, docs) {
 
 ### Example Output:
 
-See a larger output example [here](https://github.com/onury/jsdoc-x/blob/master/test/output/docs.json).
+See an output example [here](https://github.com/onury/jsdoc-x/blob/master/test/output/docs.json).
 
-```js
-[
-  {
-    "comment": "/**\n * This is the Code class for testing jsdoc-x. */",
-    "meta": {
-      "range": [
-        445,
-        9624
-      ],
-      "filename": "code.js",
-      "lineno": 14,
-      "path": "../lib",
-      "code": {
-        "id": "astnode100000001",
-        "name": "Code",
-        "type": "ClassDeclaration",
-        "paramnames": [
-          "options"
-        ]
-      }
-    },
-    "classdesc": "This is the Code class for testing jsdoc-x.",
-    "see": [
-      "{@link https://github.com/onury/jsdoc-x|GitHub Project}"
-    ],
-    "license": "MIT",
-    "copyright": "2016, Onur Yıldırım (onur@cutepilot.com)",
-    "name": "Code",
-    "longname": "Code",
-    "kind": "class",
-    "scope": "global",
-    "description": "Initiates a new instance of the `Code` class.",
-    "params": [
-      {
-        "type": {
-          "names": [
-            "Object"
-          ]
-        },
-        "description": "Optional. Configuration object.",
-        "name": "options"
-      },
-      {
-        "type": {
-          "names": [
-            "String"
-          ]
-        },
-        "description": "Default: `\"en\"`.\n    Language to be used for API requests that supports language configurations.",
-        "name": "options.language"
-      },
-      {
-        "type": {
-          "names": [
-            "Boolean"
-          ]
-        },
-        "description": "Default: `true`.\n    If set to `true`, the API calls are made over HTTPS, at all times.",
-        "name": "options.https"
-      }
-    ]
-  }
-]
-```
 
 ## `jsdocx.filter(docs[, options][, predicate])`  
 

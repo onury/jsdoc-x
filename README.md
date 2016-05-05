@@ -222,7 +222,7 @@ jsdocx.parse(options, function (err, docs) {
     </tr>
 </table>
 
-### Example Output:
+#### Example Output:
 
 See an output example [here](https://github.com/onury/jsdoc-x/blob/master/test/output/docs.json).
 

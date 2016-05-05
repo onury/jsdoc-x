@@ -83,7 +83,7 @@ jsdocx.parse(options, function (err, docs) {
         <td><code>String|Array</code></td>
         <td><code>undefined</code></td>
         <td>
-            Required (if <code>source</code> is not set). One or more file/directory paths to be processed. This also accepts a [Glob](https://github.com/isaacs/node-glob) string or array of globs. e.g. <code>./src/\*\*/\*.js</code> will produce an array of all <code>.js</code> files under </code>./src</code> directory and sub-directories.
+            Required (if <code>source</code> is not set). One or more file/directory paths to be processed. This also accepts a [Glob](https://github.com/isaacs/node-glob) string or array of globs. e.g. <code>`./src/**/*.js`</code> will produce an array of all <code>.js</code> files under </code>./src</code> directory and sub-directories.
         </td>
     </tr>
     <tr>

@@ -42,6 +42,8 @@ jsdocx.parse(options, function (err, docs) {
 });
 ```
 
+See an **output example** [here](https://github.com/onury/jsdoc-x/blob/master/test/output/docs.json).
+
 ## `jsdocx.parse(options[, callback])`  
 
 Executes the `jsdoc -X` command and parses the output into a Javascript object/array; with the specified options.  
@@ -55,9 +57,9 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
     </tr>
     <tr>
         <td><b><code>options</code></b></td>
-        <td><code>Object</code></td>
+        <td><code>Object|Array|String</code></td>
         <td></td>
-        <td>Required. Parse options. See details below.</td>
+        <td>Required. Either an options object or one or more source files to be processed. See details below.</td>
     </tr>
     <tr>
         <td><b><code>callback</code></b></td>
@@ -70,7 +72,7 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
 </table>
 
 ### `options`
-`Object|Array|String` - Either an options object or one or more source files to be processed.
+`Object|Array|String` - Parse options.
 
 <table>
     <tr>
@@ -222,8 +224,6 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
         <td>Whether to create parent directories if they don't exist.</td>
     </tr>
 </table>
-
-See an **output example** [here](https://github.com/onury/jsdoc-x/blob/master/test/output/docs.json).
 
 
 ## `jsdocx.filter(docs[, options][, predicate])`  

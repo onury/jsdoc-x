@@ -23,7 +23,30 @@ var jsdocx = require('jsdoc-x');
 
 Executes the `jsdoc -X` command and parses the output into a Javascript object/array; with the specified options.  
 
-with Promise...
+<table>
+    <tr>
+        <td><b>Param</b></td>
+        <td><b>Type</b></td>
+        <td><b>Default</b></td>
+        <td><b>Description</b></td>
+    </tr>
+    <tr>
+        <td><b><code>options</code></b></td>
+        <td><code>Object</code></td>
+        <td></td>
+        <td>Required. Parse options. See details below.</td>
+    </tr>
+    <tr>
+        <td><b><code>callback</code></b></td>
+        <td><code>Function</code></td>
+        <td><code>undefined</code></td>
+        <td>
+            Callback function to be executed in the following signature: `function (err, array) { ... }`. Omit this callback to return a `Promise`.
+        </td>
+    </tr>
+</table>
+
+Parse using Promises...
 ```js
 jsdocx.parse(options)
     .then(function (docs) {
@@ -271,6 +294,35 @@ See a larger output example [here](https://github.com/onury/jsdoc-x/blob/master/
 ## `jsdocx.filter(docs[, options][, predicate])`  
 
 Filters the given/parsed documentation output array.
+
+<table>
+    <tr>
+        <td><b>Param</b></td>
+        <td><b>Type</b></td>
+        <td><b>Default</b></td>
+        <td><b>Description</b></td>
+    </tr>
+    <tr>
+        <td><b><code>docs</code></b></td>
+        <td><code>Array</code></td>
+        <td></td>
+        <td>Required. Documentation output array.</td>
+    </tr>
+    <tr>
+        <td><b><code>options</code></b></td>
+        <td><code>Object</code></td>
+        <td><code>undefined</code></td>
+        <td>Filter options. See details below.</td>
+    </tr>
+    <tr>
+        <td><b><code>predicate</code></b></td>
+        <td><code>Function</code></td>
+        <td><code>undefined</code></td>
+        <td>
+            The function invoked per iteration. Returning a falsy value will remove the symbol from the output. Returning `true` will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object.
+        </td>
+    </tr>
+</table>
 
 ### `options`
 `Object` - Filter options.

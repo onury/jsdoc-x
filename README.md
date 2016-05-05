@@ -83,7 +83,7 @@ jsdocx.parse(options, function (err, docs) {
         <td><code>String|Array</code></td>
         <td><code>undefined</code></td>
         <td>
-            Required (if <code>source</code> is not set). One or more file/directory paths to be processed. This also accepts a [Glob](https://github.com/isaacs/node-glob) string or array of globs. e.g. `./src/**/*.js` will produce an array of all `.js` files under `./src` directory and sub-directories.
+            Required (if <code>source</code> is not set). One or more file/directory paths to be processed. This also accepts a [Glob](https://github.com/isaacs/node-glob) string or array of globs. e.g. <code>./src/\*\*/\*.js</code> will produce an array of all <code>.js</code> files under </code>./src</code> directory and sub-directories.
         </td>
     </tr>
     <tr>
@@ -175,7 +175,7 @@ jsdocx.parse(options, function (err, docs) {
         <td><code>Function</code></td>
         <td><code>undefined</code></td>
         <td>
-            Alias: `filter`. This is used to filter the parsed documentation output array. If a <code>Function</code> is passed; it's invoked for each included <code>symbol</code>. e.g. <code>function (symbol) { return symbol; }</code> Returning a falsy value will remove the symbol from the output. Returning <code>true</code> will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object.
+            Alias: <code>filter</code>. This is used to filter the parsed documentation output array. If a <code>Function</code> is passed; it's invoked for each included <code>symbol</code>. e.g. <code>function (symbol) { return symbol; }</code> Returning a falsy value will remove the symbol from the output. Returning <code>true</code> will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object.
         </td>
     </tr>
     <tr>
@@ -183,7 +183,7 @@ jsdocx.parse(options, function (err, docs) {
         <td><code>Boolean</code></td>
         <td><code>false</code></td>
         <td>
-            Specifies whether to arrange symbols by their hierarchy. This will find and move symbols that have a `memberof` property to a `$members` property of their corresponding owners. Also the constructor symbol will be moved to a `$constructor` property of the `ClassDeclaration` symbol; if any.
+            Specifies whether to arrange symbols by their hierarchy. This will find and move symbols that have a <code>memberof</code> property to a <code>$members</code> property of their corresponding owners. Also the constructor symbol will be moved to a <code>$constructor</code> property of the <code>ClassDeclaration</code> symbol; if any.
         </td>
     </tr>
     <tr>
@@ -191,7 +191,7 @@ jsdocx.parse(options, function (err, docs) {
         <td><code>Boolean|String</code></td>
         <td><code>false</code></td>
         <td>
-            Specifies whether to sort the documentation symbols. For alphabetic sort, set to `true` or `"alphabetic"`. To additionally group by scope (static/instance) set to `"grouped"`. Set to `false` to disable.
+            Specifies whether to sort the documentation symbols. For alphabetic sort, set to <code>true</code> or <code>"alphabetic"</code>. To additionally group by scope (static/instance) set to <code>"grouped"</code>. Set to <code>false</code> to disable.
         </td>
     </tr>
     <tr>
@@ -319,7 +319,7 @@ Filters the given/parsed documentation output array.
         <td><code>Function</code></td>
         <td><code>undefined</code></td>
         <td>
-            The function invoked per iteration. Returning a falsy value will remove the symbol from the output. Returning `true` will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object.
+            The function invoked per iteration. Returning a falsy value will remove the symbol from the output. Returning <code>true</code> will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object.
         </td>
     </tr>
 </table>
@@ -387,7 +387,7 @@ Filters the given/parsed documentation output array.
         <td><code>Boolean</code></td>
         <td><code>false</code></td>
         <td>
-            Specifies whether to arrange symbols by their hierarchy. This will find and move symbols that have a `memberof` property to a `$members` property of their corresponding owners. Also the constructor symbol will be moved to a `$constructor` property of the `ClassDeclaration` symbol; if any.
+            Specifies whether to arrange symbols by their hierarchy. This will find and move symbols that have a <code>memberof</code> property to a <code>$members</code> property of their corresponding owners. Also the constructor symbol will be moved to a <code>$constructor</code> property of the <code>ClassDeclaration</code> symbol; if any.
         </td>
     </tr>
     <tr>
@@ -395,7 +395,7 @@ Filters the given/parsed documentation output array.
         <td><code>Boolean|String</code></td>
         <td><code>false</code></td>
         <td>
-            Specifies whether to sort the documentation symbols. For alphabetic sort, set to `true` or `"alphabetic"`. To additionally group by scope (static/instance) set to `"grouped"`. Set to `false` to disable.
+            Specifies whether to sort the documentation symbols. For alphabetic sort, set to <code>true</code> or <code>"alphabetic"</code>. To additionally group by scope (static/instance) set to <code>"grouped"</code>. Set to <code>false</code> to disable.
         </td>
     </tr>
 </table>

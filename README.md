@@ -507,4 +507,4 @@ Utilities for documentation output and symbols.
 
 ### Change-log:
 
-Se [CHANGELOG.md](CHANGELOG.md).
+See [CHANGELOG.md](CHANGELOG.md).

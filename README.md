@@ -21,7 +21,7 @@ var jsdocx = require('jsdoc-x');
 
 Parse using Promises...
 ```js
-jsdocx.parse(options)
+jsdocx.parse('./src/**/*.js')
     .then(function (docs) {
         console.log(docs);
     })
@@ -32,6 +32,7 @@ jsdocx.parse(options)
 
 Or callback...
 ```js
+var options = { files: './src/**/*.js', hierarchy: true };
 jsdocx.parse(options, function (err, docs) {
     if (err) {
         console.log(err.stack);

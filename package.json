@@ -1,6 +1,6 @@
 {
   "name": "jsdoc-x",
-  "version": "0.4.8",
+  "version": "0.5.0",
   "description": "Parser for outputting a customized Javascript object from documented code via JSDoc's explain (-X) command. ",
   "license": "MIT",
   "author": "Onur Yıldırım <onur@cutepilot.com>",

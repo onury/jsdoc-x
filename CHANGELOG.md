@@ -1,6 +1,6 @@
 ### jsdoc-x Change log:
 
-**v0.7.0** (2016-05-05)
+**v1.0.0** (2016-05-05)
  - Added `glob` support for `files` option of `.parse()` method.
  - Added `source` option for `.parse()` method.
  - Added `hierarchy` option for `.parse()` method.

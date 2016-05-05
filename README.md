@@ -273,7 +273,7 @@ See a larger output example [here](https://github.com/onury/jsdoc-x/blob/master/
 Filters the given/parsed documentation output array.
 
 ### `options`
-`Object|Array|String` - Either an options object or one or more source files to be processed.
+`Object` - Filter options.
 
 <table>
     <tr>

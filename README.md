@@ -1,4 +1,4 @@
-## jsdoc-x
+# jsdoc-x
 
 ![npm](https://img.shields.io/npm/v/jsdoc-x.svg)
 ![release](https://img.shields.io/github/release/onury/jsdoc-x.svg)
@@ -10,16 +10,16 @@ Parser for outputting a customized Javascript object from documented code via JS
 
 **Install via NPM**:
 ```shell
-npm install jsdoc-x
+npm i jsdoc-x
 ```
 
-### Usage:
+## Usage:
 
 ```js
 var jsdocx = require('jsdoc-x');
 ```
 
-### `jsdocx.parse()`  
+## `jsdocx.parse(options[, callback])`  
 
 Executes the `jsdoc -X` command and parses the output into a Javascript object/array; with the specified options.  
 
@@ -60,7 +60,7 @@ jsdocx.parse(options, function (err, docs) {
         <td><code>String|Array</code></td>
         <td><code>undefined</code></td>
         <td>
-            Required (if <code>source</code> is not set). One or more file/directory paths to be processed.
+            Required (if <code>source</code> is not set). One or more file/directory paths to be processed. This also accepts a [Glob](https://github.com/isaacs/node-glob) string or array of globs. e.g. `./src/**/*.js` will produce an array of all `.js` files under `./src` directory and sub-directories.
         </td>
     </tr>
     <tr>
@@ -68,7 +68,7 @@ jsdocx.parse(options, function (err, docs) {
         <td><code>String</code></td>
         <td><code>undefined</code></td>
         <td>
-            (NOT IMPLEMENTED YET) Required (if <code>files</code> is not set). Documented source code to be processed.
+            Required (if <code>files</code> is not set). Documented source code to be processed. If <code>files</code> is also set, this will be ignored.
         </td>
     </tr>
     <tr>
@@ -148,11 +148,27 @@ jsdocx.parse(options, function (err, docs) {
         </td>
     </tr>
     <tr>
-        <td><b><code>filter</code></b></td>
+        <td><b><code>predicate</code></b></td>
         <td><code>Function</code></td>
         <td><code>undefined</code></td>
         <td>
-            This is used to filter the parsed documentation output array. If a <code>Function</code> is passed; it's invoked for each included <code>symbol</code>. e.g. <code>function (symbol) { return symbol; }</code> Returning a falsy value will remove the symbol from the output. Returning <code>true</code> will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object.
+            Alias: `filter`. This is used to filter the parsed documentation output array. If a <code>Function</code> is passed; it's invoked for each included <code>symbol</code>. e.g. <code>function (symbol) { return symbol; }</code> Returning a falsy value will remove the symbol from the output. Returning <code>true</code> will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>hierarchy</code></b></td>
+        <td><code>Boolean</code></td>
+        <td><code>false</code></td>
+        <td>
+            Specifies whether to arrange symbols by their hierarchy. This will find and move symbols that have a `memberof` property to a `$members` property of their corresponding owners. Also the constructor symbol will be moved to a `$constructor` property of the `ClassDeclaration` symbol; if any.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>sort</code></b></td>
+        <td><code>Boolean|String</code></td>
+        <td><code>false</code></td>
+        <td>
+            Specifies whether to sort the documentation symbols. For alphabetic sort, set to `true` or `"alphabetic"`. To additionally group by scope (static/instance) set to `"grouped"`. Set to `false` to disable.
         </td>
     </tr>
     <tr>
@@ -252,9 +268,98 @@ See a larger output example [here](https://github.com/onury/jsdoc-x/blob/master/
 ]
 ```
 
+## `jsdocx.filter(docs[, options][, predicate])`  
+
+Filters the given/parsed documentation output array.
+
+### `options`
+`Object|Array|String` - Either an options object or one or more source files to be processed.
+
+<table>
+    <tr>
+        <td><b>Option</b></td>
+        <td><b>Type</b></td>
+        <td><b>Default</b></td>
+        <td><b>Description</b></td>
+    </tr>
+    <tr>
+        <td><b><code>access</code></b></td>
+        <td><code>String|Array</code></td>
+        <td><code>undefined</code></td>
+        <td>
+            Specifies which symbols to be processed with the given access property. Possible values: <code>"private"</code>, <code>"protected"</code>, <code>"public"</code> or <code>"all"</code> (for all access levels). By default, all except private symbols are processed. Note that, if access is not set for a documented symbol, it will still be included, regardless of this option.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>package</code></b></td>
+        <td><code>String</code></td>
+        <td><code>undefined</code></td>
+        <td>
+            The path to the <code>package.json</code> file that contains the project name, version, and other details. If set to <code>true</code> instead of a path string, the first <code>package.json</code> file found in the source paths.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>module</code></b></td>
+        <td><code>Boolean</code></td>
+        <td><code>true</code></td>
+        <td>
+            Specifies whether to include <code>module.exports</code> symbols.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>undocumented</code></b></td>
+        <td><code>Boolean</code></td>
+        <td><code>true</code></td>
+        <td>
+            Specifies whether to include undocumented symbols.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>undescribed</code></b></td>
+        <td><code>Boolean</code></td>
+        <td><code>true</code></td>
+        <td>
+            Specifies whether to include symbols without a description.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>relativePath</code></b></td>
+        <td><code>String</code></td>
+        <td><code>undefined</code></td>
+        <td>
+            When set, all <code>symbol.meta.path</code> values will be relative to this path.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>hierarchy</code></b></td>
+        <td><code>Boolean</code></td>
+        <td><code>false</code></td>
+        <td>
+            Specifies whether to arrange symbols by their hierarchy. This will find and move symbols that have a `memberof` property to a `$members` property of their corresponding owners. Also the constructor symbol will be moved to a `$constructor` property of the `ClassDeclaration` symbol; if any.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>sort</code></b></td>
+        <td><code>Boolean|String</code></td>
+        <td><code>false</code></td>
+        <td>
+            Specifies whether to sort the documentation symbols. For alphabetic sort, set to `true` or `"alphabetic"`. To additionally group by scope (static/instance) set to `"grouped"`. Set to `false` to disable.
+        </td>
+    </tr>
+</table>
+
 ---
 
 ### Change-log:
+
+**v0.7.0** (2016-05-05)  
+ - Added `glob` support for `files` option of `.parse()` method.   
+ - Added `source` option for `.parse()` method.   
+ - Added `hierarchy` option for `.parse()` method.   
+ - Added `sort` option for `.parse()` method.   
+ - Added `.filter()` method for use with (already parsed) documentation array.   
+ - Created `utils` as a utility module for documentation symbols.   
+ - Code cleanup. Documentation update.  
 
 **v0.4.8** (2016-03-19)  
  - If the parent project(s) has `jsdoc`, ours won't get installed. Since we use a specific file within `jsdoc` module, we cannot find it via `require()`. Now, fixed `jsdoc` path resolver. This will either use the local or from the parent project(s) properly.  

@@ -6,7 +6,8 @@ var path = require('path'),
 // dep modules
 var _ = require('lodash'),
     Promise = require('bluebird'),
-    fs = require('fs-extra');
+    fs = require('fs-extra'),
+    tmp = require('tmp');
 
 module.exports = (function () {
 
@@ -16,7 +17,7 @@ module.exports = (function () {
         promiseEnsureDir = Promise.promisify(fs.ensureDir);
 
     var ERR = {
-        SOURCE: 'There are no input files to process.',
+        SOURCE: 'There are no input files or source code to process.',
         INVALID_OUTPUT: 'Could not parse invalid output.'
     };
     helper.ERR = ERR;
@@ -43,6 +44,34 @@ module.exports = (function () {
             out = JSON.parse(string);
         } catch (e) {}
         return out;
+    };
+
+    helper.createTempSource = function (source) {
+        var tmpOpts = {
+            mode: 0o666,
+            prefix: 'jsdocx-',
+            postfix: '.js',
+            // use cleanupCallback if `keep` is `true`
+            keep: false
+        };
+        return new Promise(function (resolve, reject) {
+            tmp.file(tmpOpts, function _tempFileCreated(err, path, fd, cleanupCallback) {
+                if (err) return reject(err);
+                // console.log("File: ", path);
+                // console.log("Filedescriptor: ", fd);
+                fs.write(fd, source || '', 'utf8', function (err, written, string) {
+                    if (err) return reject(err);
+                    fs.close(fd, function (err) {
+                        if (err) return reject(err);
+                        resolve({
+                            path: path,
+                            descriptor: fd,
+                            cleanup: cleanupCallback
+                        });
+                    });
+                });
+            });
+        });
     };
 
     // write output file and return the original object.

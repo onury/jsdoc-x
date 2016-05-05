@@ -14,6 +14,7 @@
         // beforeAll(function () {});
 
         it('should throw on invalid source file(s)', function (done) {
+            console.log('options', options);
             var throwTest = function () {
                 try {
                     jsdocx.parse(options).finally(done);
@@ -70,7 +71,7 @@
                 .then(function (docs) {
                     expect(docs).toEqual(jasmine.any(Array));
                     var result = _.filter(docs, { undocumented: true });
-                    expect(result.length).toEqual(0);
+                    expect(result.length).toEqual(1); // constructor is marked undocumented
                     result = _.find(docs, { longname: 'module.exports' });
                     expect(result).toBeUndefined();
                     result = _.find(docs, { kind: 'kind' });
@@ -79,6 +80,25 @@
                 .catch(function (err) {
                     expect(Boolean(err)).toEqual(false);
                     console.log(err.stack || err);
+                })
+                .finally(done);
+        });
+
+        it('should parse source code', function (done) {
+            options.files = null;
+            options.source = '/**\n *  describe\n *  @namespace\n *  @type {Object}\n */\nconst nspace = {};\nclass Test { constructor() {} }';
+            jsdocx.parse(options)
+                .then(function (docs) {
+                    // console.log(docs);
+                    expect(docs).toEqual(jasmine.any(Array));
+                    var nspace = _.find(docs, { longname: 'nspace' });
+                    expect(nspace).toBeDefined();
+                    var testClass = _.find(docs, { longname: 'Test' });
+                    expect(testClass).toBeDefined();
+                })
+                .catch(function (err) {
+                    console.log(err);
+                    expect(Boolean(err)).toEqual(false);
                 })
                 .finally(done);
         });

@@ -1,5 +1,8 @@
 ### jsdoc-x Change log:
 
+**v1.0.1** (2016-05-07)
+ - Fixed `utils.isMethod()`.
+
 **v1.0.0** (2016-05-05)
  - Added `glob` support for `files` option of `.parse()` method.
  - Added `source` option for `.parse()` method.

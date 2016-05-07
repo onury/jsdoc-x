@@ -153,8 +153,9 @@ module.exports = (function () {
      *  @returns {Boolean}
      */
     utils.isMethod = function (symbol) {
+        var codeType = utils.notate(symbol, 'meta.code.type');
         return symbol.kind === 'function'
-            && notate(symbol, 'meta.code.type') === 'MethodDefinition';
+            && (codeType === 'MethodDefinition' || codeType === 'FunctionExpression');
     };
 
     /**

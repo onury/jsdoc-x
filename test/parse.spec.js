@@ -58,7 +58,7 @@
 
         it('should parse file (options 2)', function (done) {
             options = {
-                files: './test/input',
+                files: './test/input/code.es6.js',
                 access: null,
                 package: './test/input/package.json',
                 module: false,

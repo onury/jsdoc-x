@@ -1,5 +1,8 @@
 ### jsdoc-x Change log:
 
+**v1.0.2** (2016-05-10)
+ - Parsing an array of files was broken. Fixed. (PR [#2](https://github.com/onury/jsdoc-x/pull/2))
+
 **v1.0.1** (2016-05-07)
  - Fixed `utils.isMethod()`.
 

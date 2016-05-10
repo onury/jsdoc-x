@@ -58,7 +58,7 @@
 
         it('should parse file (options 2)', function (done) {
             options = {
-                files: './test/input',
+                files: './test/input/code.es6.js',
                 access: null,
                 package: './test/input/package.json',
                 module: false,
@@ -76,6 +76,35 @@
                     expect(result).toBeUndefined();
                     result = _.find(docs, { kind: 'kind' });
                     expect(result).toBeUndefined();
+                })
+                .catch(function (err) {
+                    expect(Boolean(err)).toEqual(false);
+                    console.log(err.stack || err);
+                })
+                .finally(done);
+        });
+
+        it('should parse multiple files', function (done) {
+            options = {
+                files: ['./test/input/code.es6.js', './test/input/test2.es6.js'],
+                encoding: 'utf8',
+                recurse: false,
+                pedantic: false,
+                access: null,
+                package: null,
+                module: true,
+                undocumented: true,
+                undescribed: true,
+                relativePath: null,
+                filter: null
+            };
+            jsdocx.parse(options)
+                .then(function (docs) {
+                    expect(docs).toEqual(jasmine.any(Array));
+                    var result = _.filter(docs, { meta: { filename: 'code.es6.js' } });
+                    expect(result.length).toBeGreaterThan(0);
+                    result = _.filter(docs, { meta: { filename: 'test2.es6.js' } });
+                    expect(result.length).toBeGreaterThan(0);
                 })
                 .catch(function (err) {
                     expect(Boolean(err)).toEqual(false);

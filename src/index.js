@@ -146,8 +146,7 @@ module.exports = (function () {
         globs = helper.ensureArray(globs);
         return Promise.reduce(globs, function (memo, pattern) {
             return glob(pattern).then(function (paths) {
-                memo.concat(paths);
-                return paths;
+                return memo.concat(paths);
             });
         }, []);
     }

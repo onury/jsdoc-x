@@ -84,6 +84,35 @@
                 .finally(done);
         });
 
+        it('should parse multiple files', function (done) {
+            options = {
+                files: ['./test/input/code.es6.js', './test/input/test2.es6.js'],
+                encoding: 'utf8',
+                recurse: false,
+                pedantic: false,
+                access: null,
+                package: null,
+                module: true,
+                undocumented: true,
+                undescribed: true,
+                relativePath: null,
+                filter: null
+            };
+            jsdocx.parse(options)
+                .then(function (docs) {
+                    expect(docs).toEqual(jasmine.any(Array));
+                    var result = _.filter(docs, { meta: { filename: 'code.es6.js' } });
+                    expect(result.length).toBeGreaterThan(0);
+                    result = _.filter(docs, { meta: { filename: 'test2.es6.js' } });
+                    expect(result.length).toBeGreaterThan(0);
+                })
+                .catch(function (err) {
+                    expect(Boolean(err)).toEqual(false);
+                    console.log(err.stack || err);
+                })
+                .finally(done);
+        });
+
         it('should parse source code', function (done) {
             options.files = null;
             options.source = '/**\n *  describe\n *  @namespace\n *  @type {Object}\n */\nconst nspace = {};\nclass Test { constructor() {} }';

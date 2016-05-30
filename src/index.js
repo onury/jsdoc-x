@@ -95,21 +95,37 @@ module.exports = (function () {
         return helper.ensureArray(access);
     }
 
-    // if group'ed, symbols are sorted with operators (#.~) intact. Otherwise
+    // if group'ed, symbols are sorted with operators (#.~:) intact. Otherwise
     // operators are not taken into account.
-    function getSorter(sortType) {
-        var re = /[^#\.~]/g,
+    function getSorter(sortType, prop) {
+        prop = prop || 'longname';
+        var re = /[#\.~:]/g,
             group = sortType === 'grouped';
         return function symbolSorter(a, b) {
-            var A = group ? a.longname : a.longname.replace(re, '_'),
-                B = group ? b.longname : b.longname.replace(re, '_');
-            return A.toLocaleUpperCase().localeCompare(B.toLocaleUpperCase());
+            var A = group ? a[prop] : a[prop].replace(re, '_'),
+                B = group ? b[prop] : b[prop].replace(re, '_');
+            var result = A.toLocaleUpperCase().localeCompare(B.toLocaleUpperCase());
+            // console.log('comparing:', A, '<<—>>', B, '==>', result);
+            return result;
         };
+    }
+
+    // sorts documentation symbols and properties of each symbol, if any.
+    function sortDocs(docs, sortType) {
+        var sorter = getSorter(sortType, 'longname'),
+            propSorter = getSorter(sortType, 'name');
+        docs.sort(sorter);
+        docs.forEach(function (symbol) {
+            if (symbol && Array.isArray(symbol.properties)) {
+                symbol.properties.sort(propSorter);
+            }
+        });
     }
 
     function hierarchy(docs, sortType) {
         var parent,
-            sorter = sortType ? getSorter(sortType) : null;
+            sorter = sortType ? getSorter(sortType) : null,
+            propSorter = sortType ? getSorter(sortType, 'name') : null;
         _.eachRight(docs, function (symbol, index) {
             // Move constructor (method definition) to class declaration symbol
             if (utils.isConstructor(symbol)) {
@@ -122,6 +138,11 @@ module.exports = (function () {
                 }
             // otherwise, move symbols with memberof property to corresponding parent member.
             } else if (symbol.memberof) {
+                // first check and sort if it has properties
+                if (propSorter && Array.isArray(symbol.properties)) {
+                    symbol.properties.sort(propSorter);
+                }
+
                 parent = _.find(docs, { longname: symbol.memberof });
                 if (parent) {
                     parent.$members = parent.$members || [];
@@ -136,9 +157,7 @@ module.exports = (function () {
                 }
             }
         });
-        if (sorter) {
-            docs.sort(sorter);
-        }
+        if (sorter) docs.sort(sorter);
         return docs;
     }
 
@@ -215,8 +234,9 @@ module.exports = (function () {
         if (options.hierarchy) {
             docs = hierarchy(docs, options.sort);
         } else if (options.sort) {
-            var sorter = getSorter(options.sort);
-            docs.sort(sorter);
+            // var sorter = getSorter(options.sort);
+            // docs.sort(sorter);
+            sortDocs(docs, options.sort);
         }
         return docs;
     };

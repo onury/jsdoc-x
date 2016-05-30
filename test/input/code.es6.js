@@ -1,3 +1,5 @@
+/* eslint camelcase:0 */
+
 /**
  * This is the Code class for testing jsdoc-x.
  *
@@ -52,9 +54,19 @@ class Code {
      * @memberof Code
      * @type {Object}
      * @readonly
+     *
+     * @property {Number} zOption - z option.
+     * @property {Number} bOption - b option.
+     * @property {Number} _opt - _opt option.
+     * @property {Number} aOption - a option.
      */
     get config() {
-        return {};
+        return {
+            zOption: 3,
+            bOption: 2,
+            _opt: 4,
+            aOption: 1
+        };
     }
 
     /**
@@ -96,6 +108,55 @@ class Code {
     }
 
     // ---------------------------
+    // STATIC METHODS
+    // ---------------------------
+
+    /**
+     * Sets or gets the `Code` configuration object.
+     * @memberof Code
+     *
+     * @param {Object} options - Optional. Configuration object.
+     *     @param {String} options.language - Default: `"en"`.
+     *     Language to be used for API requests that supports language configurations.
+     *     This is generally used for Google APIs.
+     *     @param {Object} options.google - Google specific options.
+     *         @param {String} options.google.version - Default: `"3.22"`.
+     *         Google Maps API version to be used.
+     *         You can set a greater value or the latest version number and it
+     *         should work; but it's not guaranteed.
+     *         Find out the {@link https://developers.google.com/maps/documentation/javascript/versions|latest version here}.
+     *
+     * @returns {Object} - A new instance of `Code`.
+     *
+     * @example
+     * Code.staticMethod({
+     *     language: 'en',
+     *     google: {
+     *         key: 'YOUR-KEY'
+     *     }
+     * });
+     */
+    static staticMethod(options) {
+        return new Code(options);
+    }
+
+    /**
+     * x - For sort test.
+     * @memberof Code
+     */
+    static xStaticMethod() {
+        return 'x';
+    }
+
+    /**
+     * a - For sort test.
+     * @memberof Code
+     */
+    static aStaticMethod() {
+        return 'a';
+    }
+
+    // ---------------------------
     // INSTANCE METHODS
     // ---------------------------
 
@@ -133,37 +194,12 @@ class Code {
         callback();
     }
 
-    // ---------------------------
-    // STATIC METHODS
-    // ---------------------------
-
     /**
-     * Sets or gets the `Code` configuration object.
+     * b - For sort test.
      * @memberof Code
-     *
-     * @param {Object} options - Optional. Configuration object.
-     *     @param {String} options.language - Default: `"en"`.
-     *     Language to be used for API requests that supports language configurations.
-     *     This is generally used for Google APIs.
-     *     @param {Object} options.google - Google specific options.
-     *         @param {String} options.google.version - Default: `"3.22"`.
-     *         Google Maps API version to be used.
-     *         You can set a greater value or the latest version number and it
-     *         should work; but it's not guaranteed.
-     *         Find out the {@link https://developers.google.com/maps/documentation/javascript/versions|latest version here}.
-     *
-     * @returns {Object} - A new instance of `Code`.
-     *
-     * @example
-     * Code.staticMethod({
-     *     language: 'en',
-     *     google: {
-     *         key: 'YOUR-KEY'
-     *     }
-     * });
      */
-    static staticMethod(options) {
-        return new Code(options);
+    bInstanceMethod() {
+        return 'b';
     }
 
 }

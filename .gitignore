@@ -2,7 +2,6 @@ backup
 wiki
 node_modules
 npm-debug.log
+output
 tmp
 TODO.md
-test/output/**
-docs.json

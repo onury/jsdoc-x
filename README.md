@@ -86,7 +86,7 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
         <td><code>String|Array</code></td>
         <td><code>undefined</code></td>
         <td>
-            Required (if <code>source</code> is not set). One or more file/directory paths to be processed. This also accepts a <a href="https://github.com/isaacs/node-glob">Glob</a> string or array of globs. e.g. <code>`./src/**/*.js`</code> will produce an array of all <code>.js</code> files under </code>./src</code> directory and sub-directories.
+            Required (if <code>source</code> is not set). One or more file/directory paths to be processed. This also accepts a <a href="https://github.com/isaacs/node-glob">Glob</a> string or array of globs. e.g. <code>./src/&#x2A;&#x2A;/&#x2A;.js</code> will produce an array of all <code>.js</code> files under </code>./src</code> directory and sub-directories.
         </td>
     </tr>
     <tr>
@@ -374,21 +374,13 @@ Utilities for documentation output and symbols.
         </td>
     </tr>
     <tr>
-        <td><b><code>isGlobal(symbol)</code></b></td>
+        <td><b><code>hasDescription(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>
         <td>
-            Checks whether the given symbol has global scope.
+            Checks whether the given symbol has description.
         </td>
-    </tr>
-    <tr>
-        <td><b><code>isNamespace(symbol)</code></b></td>
-        <td><code>symbol:Object</code></td>
-        <td><code>Boolean</code></td>
-        <td>
-            Checks whether the given symbol is a namespace.
-        </td>
-    </tr>
+    </tr>    
     <tr>
         <td><b><code>isClass(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
@@ -406,11 +398,19 @@ Utilities for documentation output and symbols.
         </td>
     </tr>
     <tr>
-        <td><b><code>isStaticMember(symbol)</code></b></td>
+        <td><b><code>isEnum(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>
         <td>
-            Checks whether the given symbol is a static member.
+            Checks whether the given symbol is an enumeration.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isGlobal(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol has global scope.
         </td>
     </tr>
     <tr>
@@ -422,35 +422,11 @@ Utilities for documentation output and symbols.
         </td>
     </tr>
     <tr>
-        <td><b><code>isMethod(symbol)</code></b></td>
-        <td><code>symbol:Object</code></td>
-        <td><code>Boolean</code></td>
-        <td>
-            Checks whether the given symbol is a method.
-        </td>
-    </tr>
-    <tr>
         <td><b><code>isInstanceMethod(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>
         <td>
             Checks whether the given symbol is an instance method.
-        </td>
-    </tr>
-    <tr>
-        <td><b><code>isStaticMethod(symbol)</code></b></td>
-        <td><code>symbol:Object</code></td>
-        <td><code>Boolean</code></td>
-        <td>
-            Checks whether the given symbol is a static method.
-        </td>
-    </tr>
-    <tr>
-        <td><b><code>isProperty(symbol)</code></b></td>
-        <td><code>symbol:Object</code></td>
-        <td><code>Boolean</code></td>
-        <td>
-            Checks whether the given symbol is a property.
         </td>
     </tr>
     <tr>
@@ -462,19 +438,19 @@ Utilities for documentation output and symbols.
         </td>
     </tr>
     <tr>
-        <td><b><code>isStaticProperty(symbol)</code></b></td>
+        <td><b><code>isNamespace(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>
         <td>
-            Checks whether the given symbol is a static property.
+            Checks whether the given symbol is a namespace.
         </td>
     </tr>
     <tr>
-        <td><b><code>isEnum(symbol)</code></b></td>
+        <td><b><code>isProperty(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>
         <td>
-            Checks whether the given symbol is an enumeration.
+            Checks whether the given symbol is a property.
         </td>
     </tr>
     <tr>
@@ -486,6 +462,38 @@ Utilities for documentation output and symbols.
         </td>
     </tr>
     <tr>
+        <td><b><code>isMethod(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a method.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isStaticMember(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a static member.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isStaticMethod(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a static method.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isStaticProperty(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a static property.
+        </td>
+    </tr>
+    <tr>
         <td><b><code>isUndocumented(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>
@@ -494,11 +502,11 @@ Utilities for documentation output and symbols.
         </td>
     </tr>
     <tr>
-        <td><b><code>hasDescription(symbol)</code></b></td>
-        <td><code>symbol:Object</code></td>
-        <td><code>Boolean</code></td>
+        <td><b><code>notate(symbol, notation)</code></b></td>
+        <td><code>symbol:Object</code><br /><code>notation:String</code></td>
+        <td><code>&#x2A;</code></td>
         <td>
-            Checks whether the given symbol has description.
+            Gets the value by the given object notation.
         </td>
     </tr>
 </table>

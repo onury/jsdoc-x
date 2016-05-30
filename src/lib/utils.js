@@ -4,11 +4,21 @@ module.exports = (function () {
 
     var utils = {};
 
+    function _getStr(value) {
+        return value && value.trim() !== '' ? value : null;
+    }
+
+    // Cleans the given symbol name.
+    // e.g. <anonymous>~obj.doStuff —> obj.doStuff
+    function _cleanName(name) {
+        return (name || '').replace(/([^>]+>)?~?(.*)/, '$2');
+    }
+
     // e.g.
     // var symbol = { code: { meta: { type: "MethodDefinition" } } };
-    // notate(symbol, "code.meta.type") => "MethodDefinition"
+    // utils.notate(symbol, "code.meta.type") => "MethodDefinition"
     // See https://github.com/onury/notation for an advanced library.
-    function notate(obj, notation) {
+    utils.notate = function (obj, notation) {
         if (typeof obj !== 'object') return;
         // console.log('n', notation);
         var o,
@@ -20,16 +30,10 @@ module.exports = (function () {
         o = obj[prop];
         if (props.length > 1) {
             props.shift();
-            return notate(o, props);
+            return utils.notate(o, props);
         }
         return o;
-    }
-
-    function getStr(value) {
-        return value && value.trim() !== '' ? value : null;
-    }
-
-    // ---------------------------
+    };
 
     /**
      *  Gets the full code-name of the given symbol.
@@ -38,11 +42,15 @@ module.exports = (function () {
      *  @returns {Boolean}
      */
     utils.getFullName = function (symbol) {
-        var codeName = notate(symbol, 'meta.code.name') || '',
-            re = /[^#\.~]/g;
-        return codeName.replace(re, '').length >= symbol.longname.replace(re, '').length
-            ? codeName
-            : symbol.longname;
+        var codeName = _cleanName(utils.notate(symbol, 'meta.code.name')),
+            name = _cleanName(symbol.longname || symbol.name);
+        if (codeName) {
+            var rePunc = /[^#\.~:]/g;
+            return codeName.replace(rePunc, '').length >= name.replace(rePunc, '').length
+                ? codeName
+                : name;
+        }
+        return name;
     };
 
     /**
@@ -53,9 +61,9 @@ module.exports = (function () {
      */
     utils.getName = function (symbol) {
         // if @alias is set, the original (long) name is only found at meta.code.name
-        var name = notate(symbol, 'meta.code.name');
+        var name = utils.notate(symbol, 'meta.code.name');
         if (name) {
-            return name.replace(/.*?[#\.~](\w+)$/i, '$1');
+            return name.replace(/.*?[#\.~:](\w+)$/i, '$1');
         }
         return symbol.name;
     };
@@ -105,14 +113,25 @@ module.exports = (function () {
     };
 
     /**
+     *  Checks whether the given symbol is a module.
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    utils.isModule = function (symbol) {
+        return symbol.kind === 'module';
+    };
+
+    /**
      *  Checks whether the given symbol is a class.
      *
      *  @param {Object} symbol - Documented symbol object.
      *  @returns {Boolean}
      */
     utils.isClass = function (symbol) {
-        return symbol.kind === 'class'
-            && notate(symbol, 'meta.code.type') === 'ClassDeclaration';
+        return !utils.isConstructor(symbol)
+            && (symbol.kind === 'class'
+                || utils.notate(symbol, 'meta.code.type') === 'ClassDeclaration');
     };
 
     /**
@@ -123,11 +142,12 @@ module.exports = (function () {
      */
     utils.isConstructor = function (symbol) {
         return symbol.kind === 'class'
-            && notate(symbol, 'meta.code.type') === 'MethodDefinition';
+            && utils.notate(symbol, 'meta.code.type') === 'MethodDefinition';
     };
 
     /**
      *  Checks whether the given symbol is a static member.
+     *  @alias jsdocx.utils.isStatic
      *
      *  @param {Object} symbol - Documented symbol object.
      *  @returns {Boolean}
@@ -135,6 +155,7 @@ module.exports = (function () {
     utils.isStaticMember = function (symbol) {
         return symbol.scope === 'static';
     };
+    utils.isStatic = utils.isStaticMember;
 
     /**
      *  Checks whether the given symbol is an instance member.
@@ -155,8 +176,9 @@ module.exports = (function () {
     utils.isMethod = function (symbol) {
         var codeType = utils.notate(symbol, 'meta.code.type');
         return symbol.kind === 'function'
-            && (codeType === 'MethodDefinition' || codeType === 'FunctionExpression');
+            || (codeType === 'MethodDefinition' || codeType === 'FunctionExpression');
     };
+    utils.isFunction = utils.isMethod;
 
     /**
      *  Checks whether the given symbol is an instance method.
@@ -186,7 +208,7 @@ module.exports = (function () {
      */
     utils.isProperty = function (symbol) {
         return symbol.kind === 'member';
-            // && notate(symbol, 'meta.code.type') === 'MethodDefinition';
+            // && utils.notate(symbol, 'meta.code.type') === 'MethodDefinition';
     };
 
     /**
@@ -251,7 +273,7 @@ module.exports = (function () {
      *  @returns {Boolean}
      */
     utils.hasDescription = function (symbol) {
-        return Boolean(getStr(symbol.classdesc) || getStr(symbol.description));
+        return Boolean(_getStr(symbol.classdesc) || _getStr(symbol.description));
     };
 
     // ---------------------------

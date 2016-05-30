@@ -1,5 +1,13 @@
 ### jsdoc-x Change log:
 
+**v1.0.5** (2016-05-30)
+ - Fixed `sort` option.
+ - Added `utils.notate()`.
+ - Added `utils.isModule()`.
+ - Fixed `utils.getFullName()`.
+ - Fixed `utils.isMethod()`. Added alias `utils.isFunction()`
+ - Fixed `utils.isClass()`.
+
 **v1.0.2** (2016-05-10)
  - Parsing an array of files was broken. Fixed. (PR [#2](https://github.com/onury/jsdoc-x/pull/2))
 

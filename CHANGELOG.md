@@ -1,7 +1,7 @@
 ### jsdoc-x Change log:
 
 **v1.0.5** (2016-05-30)
- - Fixed `sort` option.
+ - Fixed `sort` option. Also `symbol.properties` are sorted, as well as the symbols.
  - Added `utils.notate()`.
  - Added `utils.isModule()`.
  - Fixed `utils.getFullName()`.

@@ -98,7 +98,7 @@ module.exports = (function () {
     // if group'ed, symbols are sorted with operators (#.~:) intact. Otherwise
     // operators are not taken into account.
     function getSorter(sortType, prop) {
-        prop = prop || 'longname';
+        prop = prop || '$longname';
         var re = /[#\.~:]/g,
             group = sortType === 'grouped';
         return function symbolSorter(a, b) {
@@ -112,7 +112,7 @@ module.exports = (function () {
 
     // sorts documentation symbols and properties of each symbol, if any.
     function sortDocs(docs, sortType) {
-        var sorter = getSorter(sortType, 'longname'),
+        var sorter = getSorter(sortType, '$longname'),
             propSorter = getSorter(sortType, 'name');
         docs.sort(sorter);
         docs.forEach(function (symbol) {
@@ -210,6 +210,11 @@ module.exports = (function () {
         var isCon, undoc, undesc, pkg, mdl, acc, o;
         docs = _.reduce(docs, function (memo, symbol) {
             // console.log(symbol.longname, symbol.kind, symbol.access, symbol.meta ? symbol.meta.code.type : '');
+
+            // JSDoc overwrites the `longname` and `name` of the symbol, if it
+            // has an alias. See https://github.com/jsdoc3/jsdoc/issues/1217 and
+            // documentation of jsdocx.utils.getFullName()
+            symbol.$longname = utils.getLongName(symbol);
             // constructor symbol is undocumented=true even if it's documented
             isCon = utils.isConstructor(symbol);
             undoc = options.undocumented || symbol.undocumented !== true;

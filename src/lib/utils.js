@@ -36,36 +36,53 @@ module.exports = (function () {
     };
 
     /**
-     *  Gets the full code-name of the given symbol.
+     *  Gets the short name of the given symbol.
+     *  JSDoc overwrites the `longname` and `name` of the symbol, if it has an
+     *  alias. This returns the correct short name.
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
-     */
-    utils.getFullName = function (symbol) {
-        var codeName = _cleanName(utils.notate(symbol, 'meta.code.name')),
-            name = _cleanName(symbol.longname || symbol.name);
-        if (codeName) {
-            var rePunc = /[^#\.~:]/g;
-            return codeName.replace(rePunc, '').length >= name.replace(rePunc, '').length
-                ? codeName
-                : name;
-        }
-        return name;
-    };
-
-    /**
-     *  Gets the (short) code-name of the given symbol.
-     *
-     *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {String}
      */
     utils.getName = function (symbol) {
         // if @alias is set, the original (long) name is only found at meta.code.name
-        var name = utils.notate(symbol, 'meta.code.name');
-        if (name) {
-            return name.replace(/.*?[#\.~:](\w+)$/i, '$1');
+        if (symbol.alias) {
+            var codeName = _cleanName(utils.notate(symbol, 'meta.code.name') || '');
+            if (codeName) return codeName.replace(/.*?[#\.~:](\w+)$/i, '$1');
         }
         return symbol.name;
+    };
+
+    /**
+     *  Gets the original long name of the given symbol.
+     *  JSDoc overwrites the `longname` and `name` of the symbol, if it has an
+     *  alias. This returns the correct long name.
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {String}
+     */
+    utils.getLongName = function (symbol) {
+        var longName = _cleanName(symbol.longname);
+        if (symbol.alias) {
+            var codeName = _cleanName(utils.notate(symbol, 'meta.code.name') || '');
+            if (!codeName) return longName;
+            var memberOf = _cleanName(symbol.memberof || '');
+            if (!memberOf) return codeName;
+            var re = new RegExp('^' + memberOf + '[#\\.~:]'),
+                dot = symbol.scope === 'instance' ? '#' : '.';
+            return re.test(codeName) ? codeName : memberOf + dot + codeName;
+        }
+        return longName;
+    };
+    utils.getFullName = utils.getLongName;
+
+    /**
+     *  Gets the code name of the given symbol.
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {String} - If no code name, falls back to long name.
+     */
+    utils.getCodeName = function (symbol) {
+        return _cleanName(utils.notate(symbol, 'meta.code.name') || '')
+            || utils.getLongName(symbol);
     };
 
     /**
@@ -81,7 +98,7 @@ module.exports = (function () {
             symbol = docs[i];
             if (symbol.name === name
                     || symbol.longname === name
-                    || utils.getFullName(symbol) === name) {
+                    || utils.getCodeName(symbol) === name) {
                 return symbol;
             }
             if (symbol.$members) {
@@ -158,6 +175,16 @@ module.exports = (function () {
     utils.isStatic = utils.isStaticMember;
 
     /**
+     *  Checks whether the given symbol has an inner scope.
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    utils.isInner = function (symbol) {
+        return symbol.scope === 'inner';
+    };
+
+    /**
      *  Checks whether the given symbol is an instance member.
      *
      *  @param {Object} symbol - Documented symbol object.
@@ -230,6 +257,22 @@ module.exports = (function () {
     utils.isStaticProperty = function (symbol) {
         return utils.isStaticMember(symbol) && utils.isProperty(symbol);
     };
+
+    /**
+     *  Checks whether the given symbol is a custom type definition.
+     *  @alias utils.isCustomType
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    utils.isTypeDef = function (symbol) {
+        return symbol.kind === 'typedef';
+    };
+    /**
+     *  Alias for `utils.isTypeDef`
+     *  @private
+     */
+    utils.isCustomType = utils.isTypeDef;
 
     /**
      *  Checks whether the given symbol is an enumeration.

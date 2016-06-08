@@ -351,7 +351,15 @@ Utilities for documentation output and symbols.
         <td><code>symbol:Object</code></td>
         <td><code>String</code></td>
         <td>
-            Gets the full code-name of the given symbol.
+            Alias: <code>getLongName()</code>. Gets the full name of the given symbol.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>getCodeName(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>String</code></td>
+        <td>
+            Gets the code name of the given symbol.
         </td>
     </tr>
     <tr>
@@ -411,6 +419,14 @@ Utilities for documentation output and symbols.
         <td><code>Boolean</code></td>
         <td>
             Checks whether the given symbol has global scope.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isInner(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol has an inner scope.
         </td>
     </tr>
     <tr>
@@ -491,6 +507,14 @@ Utilities for documentation output and symbols.
         <td><code>Boolean</code></td>
         <td>
             Checks whether the given symbol is a static property.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isTypeDef(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Alias: <code>isCustomType()</code>. Checks whether the given symbol is a custom type definition.
         </td>
     </tr>
     <tr>

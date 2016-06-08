@@ -1,10 +1,17 @@
 ### jsdoc-x Change log:
 
+**v1.0.8** (2016-06-06)
+- JSDoc overwrites the `longname` and `name` of the symbol, if it has an `alias`. Now we additionally output a `$longname` property with each symbol, that returns the correct/original long name. See [issue](https://github.com/jsdoc3/jsdoc/issues/1217) at JSDoc repo.
+- Sort options now sorts with `$longname`.
+- Fixed `utils.getFullName()` (alias: `utils.getLongName()`).
+- Added `utils.getCodeName()`.
+- Added `utils.isInner()`.
+- Added `utils.isTypeDef()` (alias: `utils.isCustomType()`).
+
 **v1.0.5** (2016-05-30)
  - Fixed `sort` option. Also `symbol.properties` are sorted, as well as the symbols.
  - Added `utils.notate()`.
  - Added `utils.isModule()`.
- - Fixed `utils.getFullName()`.
  - Fixed `utils.isMethod()`. Added alias `utils.isFunction()`
  - Fixed `utils.isClass()`.
 

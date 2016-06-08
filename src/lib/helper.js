@@ -17,7 +17,7 @@ module.exports = (function () {
         promiseEnsureDir = Promise.promisify(fs.ensureDir);
 
     var ERR = {
-        SOURCE: 'There are no input files or source code to process.',
+        SOURCE: 'Cannot process missing or invalid input files, or source code.',
         INVALID_OUTPUT: 'Could not parse invalid output.'
     };
     helper.ERR = ERR;

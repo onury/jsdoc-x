@@ -215,8 +215,7 @@ module.exports = (function () {
             // has an alias. See https://github.com/jsdoc3/jsdoc/issues/1217 and
             // documentation of jsdocx.utils.getFullName()
             symbol.$longname = utils.getLongName(symbol);
-            // constructor symbol is undocumented=true even if it's documented
-            isCon = utils.isConstructor(symbol);
+
             undoc = options.undocumented || symbol.undocumented !== true;
             undesc = options.undescribed || utils.hasDescription(symbol);
             pkg = options.package || symbol.kind !== 'package';
@@ -224,6 +223,8 @@ module.exports = (function () {
             // access might not be explicitly set for the symbol.
             // in this case, we'll include the symbol.
             acc = access === 'all' || !symbol.access || access.indexOf(symbol.access) >= 0;
+            // constructor symbol is undocumented=true even if it's documented
+            isCon = acc && utils.isConstructor(symbol);
             if (isCon || (undoc && undesc && pkg && mdl && acc)) {
                 relativePath(symbol, options.relativePath);
                 o = predicate(symbol);

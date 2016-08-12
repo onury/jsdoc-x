@@ -295,6 +295,36 @@ module.exports = (function () {
     };
 
     /**
+     *  Checks whether the given symbol has `public` access.
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    utils.isPublic = function (symbol) {
+        return typeof symbol.access !== 'string' || symbol.access === 'public';
+    };
+
+    /**
+     *  Checks whether the given symbol has `private` access.
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    utils.isPrivate = function (symbol) {
+        return symbol.access === 'private';
+    };
+
+    /**
+     *  Checks whether the given symbol has `protected` access.
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    utils.isProtected = function (symbol) {
+        return symbol.access === 'protected';
+    };
+
+    /**
      *  Checks whether the given symbol is undocumented.
      *  This checks if the symbol has any comments.
      *

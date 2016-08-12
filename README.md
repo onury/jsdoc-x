@@ -518,6 +518,30 @@ Utilities for documentation output and symbols.
         </td>
     </tr>
     <tr>
+        <td><b><code>isPublic(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol has <code>public</code> access.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isPrivate(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol has <code>private</code> access.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isProtected(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol has <code>protected</code> access.
+        </td>
+    </tr>
+    <tr>
         <td><b><code>isUndocumented(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>

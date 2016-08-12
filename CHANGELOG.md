@@ -1,5 +1,12 @@
 ### jsdoc-x Change log:
 
+**v1.1.0** (2016-08-13)
+
+- Constructors would still show up in the output even though `@private` is set. Fixed.
+- Added `utils.isPublic()`.
+- Added `utils.isPrivate()`.
+- Added `utils.isProtected()`.
+
 **v1.0.8** (2016-06-06)
 - JSDoc overwrites the `longname` and `name` of the symbol, if it has an `alias`. Now we additionally output a `$longname` property with each symbol, that returns the correct/original long name. See [issue](https://github.com/jsdoc3/jsdoc/issues/1217) at JSDoc repo.
 - Sort options now sorts with `$longname`.

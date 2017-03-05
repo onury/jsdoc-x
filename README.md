@@ -167,6 +167,48 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
         </td>
     </tr>
     <tr>
+        <td><b><code>allowUnknownTags</code></b></td>
+        <td><code>Boolean</code></td>
+        <td><code>true</code></td>
+        <td>
+            Specifies whether to allow unrecognized tags.
+            If set to `false` parsing will fail on unknown tags.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>dictionaries</code></b></td>
+        <td><code>Array</code></td>
+        <td><code>["jsdoc", "closure"]</code></td>
+        <td>
+            Indicates the dictionaries to be used. By default, both standard JSDoc tags and Closure Compiler tags are enabled.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>includePattern</code></b></td>
+        <td><code>String</code></td>
+        <td><code>".+\\.js(doc|x)?$"</code></td>
+        <td>
+            String pattern for defining sources to be included. By default, only files ending in ".js", ".jsdoc", and ".jsx" will be processed.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>excludePattern</code></b></td>
+        <td><code>String</code></td>
+        <td><code>"(^|\\/|\\\\)_"</code></td>
+        <td>
+            String pattern for defining sources to be ignored. By default, any file starting with an underscore or in a directory starting with an underscore will be ignored.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>plugins</code></b></td>
+        <td><code>Array</code></td>
+        <td><code>[]</code></td>
+        <td>
+            Defines the JSDoc plugins to be used.
+            See <a href="http://usejsdoc.org/about-plugins.html">this guide</a> on JSDoc plugins.
+        </td>
+    </tr>
+    <tr>
         <td><b><code>relativePath</code></b></td>
         <td><code>String</code></td>
         <td><code>undefined</code></td>

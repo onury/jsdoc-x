@@ -7,7 +7,8 @@ var path = require('path'),
 var _ = require('lodash'),
     Promise = require('bluebird'),
     fs = require('fs-extra'),
-    tmp = require('tmp');
+    tmp = require('tmp'),
+    stringifySafe = require('json-stringify-safe');
 
 module.exports = (function () {
 
@@ -46,19 +47,20 @@ module.exports = (function () {
         return out;
     };
 
-    helper.createTempSource = function (source) {
-        var tmpOpts = {
+    helper.createTempFile = function (source, tmpOptions) {
+        var tmpOpts = _.defaults(tmpOptions, {
             mode: 0o666,
             prefix: 'jsdocx-',
             postfix: '.js',
             // use cleanupCallback if `keep` is `true`
             keep: false
-        };
+        });
         return new Promise(function (resolve, reject) {
             tmp.file(tmpOpts, function _tempFileCreated(err, path, fd, cleanupCallback) {
                 if (err) return reject(err);
                 // console.log("File: ", path);
                 // console.log("Filedescriptor: ", fd);
+                if (typeof source !== 'string') source = stringifySafe(source);
                 fs.write(fd, source || '', 'utf8', function (err, written, string) {
                     if (err) return reject(err);
                     fs.close(fd, function (err) {
@@ -66,12 +68,40 @@ module.exports = (function () {
                         resolve({
                             path: path,
                             descriptor: fd,
-                            cleanup: cleanupCallback
+                            cleanup: function () {
+                                try {
+                                    cleanupCallback();
+                                } catch (e) { }
+                            }
                         });
                     });
                 });
             });
         });
+    };
+
+    helper.execJSDoc = function (jsdocPath, args, conf) {
+        if (!conf) return helper.exec(jsdocPath, args);
+        // console.log(stringifySafe(conf));
+
+        var tmpOpts = {
+            mode: 0o666,
+            prefix: 'jsdoc-conf-',
+            postfix: '.json',
+            keep: false
+        };
+        var fileRef;
+        return helper.createTempFile(conf, tmpOpts)
+            .then(function (file) {
+                fileRef = file;
+                var cmdArgs = args.concat();
+                cmdArgs.push('-c', file.path);
+                return helper.exec(jsdocPath, cmdArgs);
+            })
+            .then(function (result) {
+                fileRef.cleanup();
+                return result;
+            });
     };
 
     // write output file and return the original object.

@@ -1,7 +1,9 @@
 ### jsdoc-x Change log:
 
-**v1.2.0** (2017-03-05)
+**v1.3.0** (2017-03-05)
 
+- Added options: `allowUnknownTags`, `dictionaries`, `includePattern`, `excludePattern`.
+- Added [JSDoc plugin](http://usejsdoc.org/about-plugins.html) support via the new `plugins` option.
 - Updated dependencies to latest versions.
 
 **v1.1.0** (2016-08-13)

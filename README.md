@@ -3,10 +3,11 @@
 ![npm](https://img.shields.io/npm/v/jsdoc-x.svg)
 ![release](https://img.shields.io/github/release/onury/jsdoc-x.svg)
 ![license](http://img.shields.io/npm/l/jsdoc-x.svg)
+![maintained](https://img.shields.io/maintenance/yes/2017.svg)
 
 Parser for outputting a Javascript object from documented code via JSDoc's explain (`-X`) command.  
 
-> © 2016, Onur Yıldırım (@onury). MIT License.  
+> © 2017, Onur Yıldırım (@onury). MIT License.  
 
 **Install via NPM**:
 ```shell

@@ -16,9 +16,8 @@ module.exports = function (grunt) {
 
         'jasmine_nodejs': {
             options: {
-                specNameSuffix: 'spec.js',
-                helperNameSuffix: 'helper.js',
                 useHelpers: false,
+                helpers: [],
                 random: false,
                 seed: null,
                 defaultTimeout: null, // defaults to 5000
@@ -36,7 +35,7 @@ module.exports = function (grunt) {
                 customReporters: []
             },
             parse: {
-                specs: ['test/**']
+                specs: ['test/**/*.spec.js']
             }
         },
 

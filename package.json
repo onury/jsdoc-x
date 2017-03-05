@@ -33,6 +33,7 @@
     "fs-extra": "^2.0.0",
     "glob": "^7.1.1",
     "jsdoc": "^3.4.3",
+    "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.4",
     "tmp": "0.0.31"
   },
@@ -42,6 +43,7 @@
     "grunt": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-jasmine-nodejs": "^1.6.0",
+    "jsdoc-strip-async-await": "^0.1.0",
     "matchdep": "^1.0.1"
   }
 }

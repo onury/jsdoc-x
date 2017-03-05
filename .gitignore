@@ -1,7 +1,8 @@
-backup
-wiki
-node_modules
+/backup/
+/wiki/
+/node_modules/
 npm-debug.log
 output
 tmp
 TODO.md
+.DS_Store

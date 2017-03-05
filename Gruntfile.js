@@ -26,7 +26,7 @@ module.exports = function (grunt) {
                 reporters: {
                     console: {
                         colors: true,
-                        cleanStack: 1,
+                        cleanStack: 4,
                         verbosity: 4,
                         listStyle: 'indent',
                         activity: false
@@ -35,7 +35,16 @@ module.exports = function (grunt) {
                 customReporters: []
             },
             parse: {
-                specs: ['test/**/*.spec.js']
+                specs: [
+                    'test/parse.spec.js',
+                    'test/utils.spec.js'
+                ]
+            },
+            // test jsdoc configuration (read from temp JSON file)
+            conf: {
+                specs: [
+                    'test/conf.spec.js'
+                ]
             }
         },
 
@@ -65,6 +74,8 @@ module.exports = function (grunt) {
     //  REGISTER TASKS
     // ----------------------------
 
-    grunt.registerTask('test-parse', ['jasmine_nodejs:parse']);
+    grunt.registerTask('test:parse', ['jasmine_nodejs:parse']);
+    grunt.registerTask('test:conf', ['jasmine_nodejs:conf']);
+    grunt.registerTask('test', ['jasmine_nodejs']);
     grunt.registerTask('default', ['watch']);
 };

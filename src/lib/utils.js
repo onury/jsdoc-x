@@ -47,7 +47,7 @@ module.exports = (function () {
         // if @alias is set, the original (long) name is only found at meta.code.name
         if (symbol.alias) {
             var codeName = _cleanName(utils.notate(symbol, 'meta.code.name') || '');
-            if (codeName) return codeName.replace(/.*?[#\.~:](\w+)$/i, '$1');
+            if (codeName) return codeName.replace(/.*?[#.~:](\w+)$/i, '$1');
         }
         return symbol.name;
     };

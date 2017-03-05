@@ -78,6 +78,36 @@ module.exports = (function () {
         return args;
     }
 
+    // Builds the configuration object for JSDoc. JSDoc takes a filepath for
+    // configuration (-c command). So we need to create a temp JSON file. This
+    // function creates the conf object to be written to that temp file before
+    // passing to jsdoc as a command line argument.
+    function buildConf(options) {
+        var opts = options || {};
+
+        // updating default JSDoc configuration.
+        // see http://usejsdoc.org/about-configuring-jsdoc.html
+        return {
+            tags: {
+                allowUnknownTags: typeof opts.allowUnknownTags === 'boolean'
+                    ? opts.allowUnknownTags
+                    : true,
+                dictionaries: !Array.isArray(opts.dictionaries)
+                    ? ['jsdoc', 'closure']
+                    : opts.dictionaries
+            },
+            source: {
+                includePattern: opts.includePattern || '.+\\.js(doc|x)?$',
+                excludePattern: opts.excludePattern || '(^|\\/|\\\\)_'
+            },
+            plugins: !Array.isArray(opts.plugins) ? [] : opts.plugins,
+            templates: {
+                cleverLinks: false,
+                monospaceLinks: false
+            }
+        };
+    }
+
     function relativePath(symbol, rPath) {
         if (!symbol || !rPath) return;
         var p = symbol.meta && helper.getStr(symbol.meta.path);
@@ -99,7 +129,7 @@ module.exports = (function () {
     // operators are not taken into account.
     function getSorter(sortType, prop) {
         prop = prop || '$longname';
-        var re = /[#\.~:]/g,
+        var re = /[#.~:]/g,
             group = sortType === 'grouped';
         return function symbolSorter(a, b) {
             var A = group ? a[prop] : a[prop].replace(re, '_'),
@@ -267,6 +297,7 @@ module.exports = (function () {
         opts.files = opts.files || opts.file;
 
         var args,
+            conf,
             hasFiles = _.isString(opts.files) || (_.isArray(opts.files) && opts.files.length > 0),
             hasSource = _.isString(opts.source);
 
@@ -284,7 +315,7 @@ module.exports = (function () {
                         });
                 }
                 if (hasSource) {
-                    return helper.createTempSource(opts.source)
+                    return helper.createTempFile(opts.source)
                         .then(function (file) {
                             opts.files = [file.path];
                             // cleanupTemp = file.cleanup;
@@ -294,7 +325,9 @@ module.exports = (function () {
             })
             .then(function (opts) {
                 args = buildArgs(opts);
-                return helper.exec(jsdocx.path, args);
+                conf = buildConf(opts);
+                // return helper.exec(jsdocx.path, args);
+                return helper.execJSDoc(jsdocx.path, args, conf);
             })
             .then(function (json) {
                 var docs = helper.safeJsonParse(json);
@@ -314,7 +347,8 @@ module.exports = (function () {
                 // invalid. so, we'll prepend the full command, in case of an
                 // error and re-throw.
                 var cmd = 'jsdoc ' + args.join(' ');
-                err.message = err.message + ' \nExecuted JSDoc Command: ' + cmd;
+                err.message = err.message + ' \nExecuted JSDoc Command: ' + cmd + '\n'
+                    + 'with JSON configuration: ' + JSON.stringify(conf);
                 throw err;
             })
             .nodeify(callback);

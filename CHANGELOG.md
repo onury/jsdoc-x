@@ -1,5 +1,9 @@
 ### jsdoc-x Change log:
 
+**v1.2.0** (2017-03-05)
+
+- Updated dependencies to latest versions.
+
 **v1.1.0** (2016-08-13)
 
 - Constructors would still show up in the output even though `@private` is set. Fixed.

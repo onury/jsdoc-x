@@ -29,19 +29,19 @@
     "doc"
   ],
   "dependencies": {
-    "bluebird": "^3.3.4",
-    "fs-extra": "^0.26.7",
-    "glob": "^7.0.3",
-    "jsdoc": "^3.4.0",
-    "lodash": "^4.6.1",
-    "tmp": "0.0.28"
+    "bluebird": "^3.5.0",
+    "fs-extra": "^2.0.0",
+    "glob": "^7.1.1",
+    "jsdoc": "^3.4.3",
+    "lodash": "^4.17.4",
+    "tmp": "0.0.31"
   },
   "devDependencies": {
-    "eslint": "^2.4.0",
-    "eslint-config-xo": "^0.12.0",
-    "grunt": "^0.4.5",
+    "eslint": "^3.17.0",
+    "eslint-config-xo": "^0.17.0",
+    "grunt": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-jasmine-nodejs": "^1.5.1",
+    "grunt-jasmine-nodejs": "^1.6.0",
     "matchdep": "^1.0.1"
   }
 }

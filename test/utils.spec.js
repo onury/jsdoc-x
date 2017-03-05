@@ -20,7 +20,7 @@
 
         beforeAll(function (done) {
             options = {
-                files: './test/input/name-test.js',
+                files: './test/input-parse/name-test.js',
                 undocumented: false,
                 output: {
                     path: './test/output/docs-name-test.json',

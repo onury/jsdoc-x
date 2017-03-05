@@ -27,7 +27,7 @@
 
         it('should parse file (options 1)', function (done) {
             options = {
-                files: './test/input',
+                files: './test/input-parse',
                 encoding: 'utf8',
                 recurse: false,
                 pedantic: false,
@@ -58,9 +58,9 @@
 
         it('should parse file (options 2)', function (done) {
             options = {
-                files: './test/input/code.es6.js',
+                files: './test/input-parse/code.es6.js',
                 access: null,
-                package: './test/input/package.json',
+                package: './test/input-parse/package.json',
                 module: false,
                 undocumented: false,
                 undescribed: false,
@@ -87,7 +87,7 @@
         it('should parse multiple files', function (done) {
             options = {
                 files: [
-                    './test/input/**/*.js'
+                    './test/input-parse/**/*.js'
                 ],
                 encoding: 'utf8',
                 recurse: false,
@@ -209,8 +209,8 @@
 
         it('should build hierarchical symbols (grouped)', function (done) {
             options.files = [
-                './test/input/code.es6.js',
-                './test/input/test3.es5.js'
+                './test/input-parse/code.es6.js',
+                './test/input-parse/test3.es5.js'
             ];
             options.sort = 'grouped';
             options.hierarchy = true;

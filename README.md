@@ -433,7 +433,7 @@ Utilities for documentation output and symbols.
         <td><code>Array</code></td>
         <td>
             Builds and gets a flat array of symbol names from the given jsdoc-x parsed output.
-            Pass a comparer function for `sorter` or a pre-defined string `"alphabetic"` or `"grouped"`.
+            Pass a comparer function for <code>sorter</code> or a pre-defined string <code>"alphabetic"</code> or <code>"grouped"</code>.
         </td>
     </tr>
     <tr>

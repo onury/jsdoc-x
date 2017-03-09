@@ -425,6 +425,18 @@ Utilities for documentation output and symbols.
         </td>
     </tr>
     <tr>
+        <td><b><code>getSymbolNames(docs, sorter)</code></b></td>
+        <td>
+            <code>docs:Array</code>
+            <code>sorter:Function|String</code>
+        </td>
+        <td><code>Array</code></td>
+        <td>
+            Builds and gets a flat array of symbol names from the given jsdoc-x parsed output.
+            Pass a comparer function for `sorter` or a pre-defined string `"alphabetic"` or `"grouped"`.
+        </td>
+    </tr>
+    <tr>
         <td><b><code>hasDescription(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>

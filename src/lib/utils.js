@@ -349,6 +349,83 @@ module.exports = (function () {
         return Boolean(_getStr(symbol.classdesc) || _getStr(symbol.description));
     };
 
+    // SORT UTIL
+
+    /**
+     *  if group'ed, symbols are sorted with operators (#.~:) intact. Otherwise
+     *  operators are not taken into account.
+     *  @private
+     *  @param   {String|Boolean} sortType
+     *           Type of sorting function. Either `"alphabetic"` or `"grouped"`.
+     *           If boolean `true` passed, defaults to `"alphabetic"`, otherwise
+     *           returns null;
+     *  @param   {String} [prop]
+     *           If each item is an object, you can set the property name to be
+     *           used for sorting. Otherwise, omit this.
+     *  @returns {Function}
+     */
+    utils._getSorter = function (sortType, prop) {
+        if (!sortType) return null;
+        var re = /[#.~:]/g,
+            group = sortType === 'grouped';
+        if (!group) {
+            return function symbolSorter(a, b) {
+                // alphabetic sort (ignoring operators)
+                var A = (prop ? a[prop] : a).replace(re, '_');
+                var B = (prop ? b[prop] : b).replace(re, '_');
+                return A.toLocaleUpperCase().localeCompare(B.toLocaleUpperCase());
+                // console.log('comparing:', A, '<<—>>', B, '==>', result);
+            };
+        }
+        // grouped sort (by scope). also moving inner symbols to end.
+        return function symbolSorter(a, b) {
+            var A = prop ? a[prop] : a;
+            var B = prop ? b[prop] : b;
+            var aInner = A.indexOf('~') >= 0;
+            var bInner = B.indexOf('~') >= 0;
+            return (aInner && bInner) || (!aInner && !bInner)
+                ? A.toLocaleUpperCase().localeCompare(B.toLocaleUpperCase())
+                : (aInner ? 1 : -1);
+            // console.log('comparing:', A, A.indexOf('~') >= 0, '<<—>>', B, B.indexOf('~') >= 0, '==>', result);
+        };
+    };
+
+    /**
+     *  Used within utils.getSymbolNames()
+     *  @private
+     */
+    function _getSymNames(data, memo) {
+        memo = memo || [];
+        data.forEach(function (symbol) {
+            // var longName = jsdocx.utils.getFullName(symbol);
+            memo.push(symbol.$longname);
+            if (!symbol.isEnum && symbol.$members) {
+                memo = _getSymNames(symbol.$members, memo);
+            }
+        });
+        return memo;
+    }
+
+    /**
+     *  Builds a flat array of symbol names from the given JSDoc-X parsed
+     *  output.
+     *
+     *  @param {Array} docs - JSDoc documentation data.
+     *  @param {String|Function} [sortTypeOrSorter]
+     *         Either a comparer function to be used for sorting; or a
+     *         pre-defined string: `"alphabetic"` or `"grouped"`.
+     *
+     *  @returns {Array} - Array of symbol names.
+     */
+    utils.getSymbolNames = function (docs, sortTypeOrSorter) {
+        var sorter = typeof sortTypeOrSorter === 'function'
+            ? sortTypeOrSorter
+            : utils._getSorter(sortTypeOrSorter);
+        var names = _getSymNames(docs);
+        if (sorter) names.sort(sorter);
+        return names;
+    };
+
     // ---------------------------
 
     return utils;

@@ -125,25 +125,11 @@ module.exports = (function () {
         return helper.ensureArray(access);
     }
 
-    // if group'ed, symbols are sorted with operators (#.~:) intact. Otherwise
-    // operators are not taken into account.
-    function getSorter(sortType, prop) {
-        prop = prop || '$longname';
-        var re = /[#.~:]/g,
-            group = sortType === 'grouped';
-        return function symbolSorter(a, b) {
-            var A = group ? a[prop] : a[prop].replace(re, '_'),
-                B = group ? b[prop] : b[prop].replace(re, '_');
-            var result = A.toLocaleUpperCase().localeCompare(B.toLocaleUpperCase());
-            // console.log('comparing:', A, '<<—>>', B, '==>', result);
-            return result;
-        };
-    }
-
     // sorts documentation symbols and properties of each symbol, if any.
     function sortDocs(docs, sortType) {
-        var sorter = getSorter(sortType, '$longname'),
-            propSorter = getSorter(sortType, 'name');
+        if (!sortType) return;
+        var sorter = utils._getSorter(sortType, '$longname'),
+            propSorter = utils._getSorter(sortType, 'name');
         docs.sort(sorter);
         docs.forEach(function (symbol) {
             if (symbol && Array.isArray(symbol.properties)) {
@@ -154,8 +140,8 @@ module.exports = (function () {
 
     function hierarchy(docs, sortType) {
         var parent,
-            sorter = sortType ? getSorter(sortType) : null,
-            propSorter = sortType ? getSorter(sortType, 'name') : null;
+            sorter = utils._getSorter(sortType, '$longname'),
+            propSorter = utils._getSorter(sortType, 'name');
         _.eachRight(docs, function (symbol, index) {
             // Move constructor (method definition) to class declaration symbol
             if (utils.isConstructor(symbol)) {
@@ -270,8 +256,6 @@ module.exports = (function () {
         if (options.hierarchy) {
             docs = hierarchy(docs, options.sort);
         } else if (options.sort) {
-            // var sorter = getSorter(options.sort);
-            // docs.sort(sorter);
             sortDocs(docs, options.sort);
         }
         return docs;

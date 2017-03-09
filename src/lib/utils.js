@@ -407,22 +407,22 @@ module.exports = (function () {
     }
 
     /**
-     *  Builds a flat array of symbol names from the given JSDoc-X parsed
-     *  output.
+     *  Builds and gets a flat array of symbol names from the given jsdoc-x
+     *  parsed output.
      *
      *  @param {Array} docs - JSDoc documentation data.
-     *  @param {String|Function} [sortTypeOrSorter]
+     *  @param {String|Function} [sorter]
      *         Either a comparer function to be used for sorting; or a
      *         pre-defined string: `"alphabetic"` or `"grouped"`.
      *
      *  @returns {Array} - Array of symbol names.
      */
-    utils.getSymbolNames = function (docs, sortTypeOrSorter) {
-        var sorter = typeof sortTypeOrSorter === 'function'
-            ? sortTypeOrSorter
-            : utils._getSorter(sortTypeOrSorter);
+    utils.getSymbolNames = function (docs, sorter) {
+        var sortFn = typeof sorter === 'function'
+            ? sorter
+            : utils._getSorter(sorter);
         var names = _getSymNames(docs);
-        if (sorter) names.sort(sorter);
+        if (sortFn) names.sort(sortFn);
         return names;
     };
 

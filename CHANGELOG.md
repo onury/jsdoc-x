@@ -1,5 +1,11 @@
 ### jsdoc-x Change log:
 
+**v1.3.2** (2017-03-09)
+
+- Added `utils.getSymbolNames()` utility method.
+- Improved sort logic/performance.
+- Clean-up.
+
 **v1.3.0** (2017-03-05)
 
 - Added options: `allowUnknownTags`, `dictionaries`, `includePattern`, `excludePattern`.

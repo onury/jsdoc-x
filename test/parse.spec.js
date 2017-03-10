@@ -36,17 +36,21 @@
                 module: true,
                 undocumented: true,
                 undescribed: true,
+                ignored: false,
                 relativePath: null,
                 filter: null
             };
             jsdocx.parse(options)
                 .then(function (docs) {
+                    // console.log(JSON.stringify(docs, null, '  '));
                     expect(docs).toEqual(jasmine.any(Array));
                     var result = _.filter(docs, { undocumented: true });
                     expect(result.length).toBeGreaterThan(0);
                     result = _.find(docs, { longname: 'module.exports' });
                     expect(result).toBeDefined();
                     result = _.find(docs, { kind: 'package' });
+                    expect(result).toBeUndefined();
+                    result = _.find(docs, { longname: 'Code.ignored' });
                     expect(result).toBeUndefined();
                 })
                 .catch(function (err) {

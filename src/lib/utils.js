@@ -239,6 +239,16 @@ module.exports = (function () {
     };
 
     /**
+     *  Checks whether the given symbol is marked with `@ignore` tag.
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    utils.isIgnored = function (symbol) {
+        return symbol.ignore;
+    };
+
+    /**
      *  Checks whether the given symbol is an instance property.
      *
      *  @param {Object} symbol - Documented symbol object.

@@ -1,5 +1,10 @@
 ### jsdoc-x Change log:
 
+**v1.3.3** (2017-03-10)
+- Added `ignored` boolean option that specifies whether to exclude symbols marked with `@ignore` tag in the output.
+- Added `utils.isIgnored()`.
+- Added `utils.isDeprecated()`.
+
 **v1.3.2** (2017-03-09)
 
 - Added `utils.getSymbolNames()` utility method.

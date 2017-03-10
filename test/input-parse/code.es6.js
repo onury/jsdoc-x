@@ -107,6 +107,16 @@ class Code {
         return {};
     }
 
+    /**
+     * This symbol is ignored
+     * @memberof Code
+     * @type {Object}
+     * @ignore
+     */
+    static get ignored() {
+        return 'this symbol is ignored';
+    }
+
     // ---------------------------
     // STATIC METHODS
     // ---------------------------

@@ -217,13 +217,14 @@ module.exports = (function () {
             module: true,
             undocumented: true,
             undescribed: true,
+            ignored: true,
             hierarchy: false,
             sort: false, // (true|"alphabetic")|"grouped"|false
             relativePath: null
         });
 
         var access = normalizeAccess(options.access);
-        var isCon, undoc, undesc, pkg, mdl, acc, o;
+        var isCon, undoc, undesc, pkg, mdl, acc, ignored, o;
         docs = _.reduce(docs, function (memo, symbol) {
             // console.log(symbol.longname, symbol.kind, symbol.access, symbol.meta ? symbol.meta.code.type : '');
 
@@ -236,12 +237,13 @@ module.exports = (function () {
             undesc = options.undescribed || utils.hasDescription(symbol);
             pkg = options.package || symbol.kind !== 'package';
             mdl = options.module || symbol.longname !== 'module.exports';
+            ignored = options.ignored || symbol.ignore !== true;
             // access might not be explicitly set for the symbol.
             // in this case, we'll include the symbol.
             acc = access === 'all' || !symbol.access || access.indexOf(symbol.access) >= 0;
             // constructor symbol is undocumented=true even if it's documented
             isCon = acc && utils.isConstructor(symbol);
-            if (isCon || (undoc && undesc && pkg && mdl && acc)) {
+            if (isCon || (undoc && undesc && pkg && mdl && acc && ignored)) {
                 relativePath(symbol, options.relativePath);
                 o = predicate(symbol);
                 if (_.isPlainObject(o)) {

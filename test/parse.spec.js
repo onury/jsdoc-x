@@ -4,6 +4,7 @@
     var path = require('path');
     // dep modules
     var _ = require('lodash');
+    var fs = require('fs-extra');
     // own modules
     var jsdocx = require('../src/index'),
         helper = require('../src/lib/helper');
@@ -287,7 +288,7 @@
                     expect(nspace).toBeDefined();
                     var testClass = _.find(docs, { longname: 'Test' });
                     expect(testClass).toBeDefined();
-                    return helper.exists(options.output.path);
+                    return fs.pathExists(options.output.path);
                 })
                 .then(function (exists) {
                     expect(exists).toEqual(true);
@@ -305,6 +306,36 @@
             jsdocx.parse(options)
                 .catch(function (err) {
                     expect(Boolean(err)).toEqual(true);
+                })
+                .finally(done);
+        });
+
+        it('should mark @hideconstructor', function (done) {
+            options = {
+                files: './test/input-parse/test4.es6.js',
+                output: {
+                    path: './test/output/docs-test4.json',
+                    indent: true
+                },
+                access: null,
+                package: './test/input-parse/package.json',
+                module: false,
+                undocumented: false,
+                undescribed: false,
+                relativePath: path.join(__dirname, '../code'),
+                filter: null
+            };
+            jsdocx.parse(options)
+                .then(function (docs) {
+                    expect(docs).toEqual(jasmine.any(Array));
+                    var result = _.filter(docs, { longname: 'TestClass#TestClass' });
+                    expect(result.length).toEqual(1);
+                    var cons = result[0];
+                    expect(cons.hideconstructor).toEqual(true);
+                })
+                .catch(function (err) {
+                    expect(Boolean(err)).toEqual(false);
+                    console.log(err.stack || err);
                 })
                 .finally(done);
         });

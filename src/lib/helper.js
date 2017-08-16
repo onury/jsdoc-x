@@ -13,9 +13,7 @@ var _ = require('lodash'),
 module.exports = (function () {
 
     var helper = {},
-        spawn = child_process.spawn,
-        promiseWriteFile = Promise.promisify(fs.writeFile),
-        promiseEnsureDir = Promise.promisify(fs.ensureDir);
+        spawn = child_process.spawn;
 
     var ERR = {
         SOURCE: 'Cannot process missing or invalid input files, or source code.',
@@ -128,26 +126,16 @@ module.exports = (function () {
             : object;
 
         var promise = opts.force
-            ? promiseEnsureDir(path.dirname(opts.path))
+            ? fs.ensureDir(path.dirname(opts.path))
             : Promise.resolve();
 
         return promise
             .then(function () {
-                return promiseWriteFile(opts.path, json, 'utf8');
+                return fs.writeFile(opts.path, json, 'utf8');
             })
             .then(function () {
                 return object;
             });
-    };
-
-    // fs.exists does not conform with the Node callback signature e.g.
-    // `function (err, result) {...}`. so we promisify this manually.
-    helper.exists = function (filePath) {
-        return new Promise(function (resolve, reject) {
-            fs.exists(filePath, function (exists) {
-                resolve(exists);
-            });
-        });
     };
 
     // using spawn instead of execFile, since the latter has 200kb limit.

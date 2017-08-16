@@ -1,6 +1,6 @@
 // core modules
 var path = require('path'),
-    fs = require('fs');
+    fs = require('fs-extra');
 // dep modules
 var _ = require('lodash'),
     Promise = require('bluebird'),
@@ -21,7 +21,7 @@ module.exports = (function () {
     var jsdocjs = 'jsdoc/jsdoc.js';
     try {
         var local = path.join('..', 'node_modules', jsdocjs);
-        if (fs.existsSync(local)) {
+        if (fs.pathExistsSync(local)) {
             jsdocx.path = local;
         } else {
             // Use the internal require() machinery to look up the location

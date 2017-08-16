@@ -4,13 +4,13 @@ module.exports = (function () {
 
     var utils = {};
 
-    function _getStr(value) {
+    function getStr(value) {
         return value && value.trim() !== '' ? value : null;
     }
 
     // Cleans the given symbol name.
     // e.g. <anonymous>~obj.doStuff —> obj.doStuff
-    function _cleanName(name) {
+    function cleanName(name) {
         return (name || '').replace(/([^>]+>)?~?(.*)/, '$2');
     }
 
@@ -44,9 +44,10 @@ module.exports = (function () {
      *  @returns {String}
      */
     utils.getName = function (symbol) {
-        // if @alias is set, the original (long) name is only found at meta.code.name
+        // if @alias is set, the original (long) name is generally found at
+        // meta.code.name
         if (symbol.alias) {
-            var codeName = _cleanName(utils.notate(symbol, 'meta.code.name') || '');
+            var codeName = cleanName(utils.notate(symbol, 'meta.code.name') || '');
             if (codeName) return codeName.replace(/.*?[#.~:](\w+)$/i, '$1');
         }
         return symbol.name;
@@ -61,17 +62,18 @@ module.exports = (function () {
      *  @returns {String}
      */
     utils.getLongName = function (symbol) {
-        var longName = _cleanName(symbol.longname);
-        if (symbol.alias) {
-            var codeName = _cleanName(utils.notate(symbol, 'meta.code.name') || '');
-            if (!codeName) return longName;
-            var memberOf = _cleanName(symbol.memberof || '');
-            if (!memberOf) return codeName;
-            var re = new RegExp('^' + memberOf + '[#\\.~:]'),
-                dot = symbol.scope === 'instance' ? '#' : '.';
-            return re.test(codeName) ? codeName : memberOf + dot + codeName;
-        }
-        return longName;
+        var longName = cleanName(symbol.longname);
+        // if @alias is set, the original (long) name is generally found at
+        // meta.code.name
+        var codeName = symbol.alias
+            ? cleanName(utils.notate(symbol, 'meta.code.name') || '') || longName
+            : longName;
+
+        var memberOf = cleanName(symbol.memberof || '');
+        if (!memberOf) return codeName;
+        var re = new RegExp('^' + memberOf + '[#\\.~:]'),
+            dot = symbol.scope === 'instance' ? '#' : '.';
+        return re.test(codeName) ? codeName : memberOf + dot + codeName;
     };
     utils.getFullName = utils.getLongName;
 
@@ -81,7 +83,7 @@ module.exports = (function () {
      *  @returns {String} - If no code name, falls back to long name.
      */
     utils.getCodeName = function (symbol) {
-        return _cleanName(utils.notate(symbol, 'meta.code.name') || '')
+        return cleanName(utils.notate(symbol, 'meta.code.name') || '')
             || utils.getLongName(symbol);
     };
 
@@ -356,7 +358,7 @@ module.exports = (function () {
      *  @returns {Boolean}
      */
     utils.hasDescription = function (symbol) {
-        return Boolean(_getStr(symbol.classdesc) || _getStr(symbol.description));
+        return Boolean(getStr(symbol.classdesc) || getStr(symbol.description));
     };
 
     // SORT UTIL

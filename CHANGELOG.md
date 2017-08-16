@@ -1,5 +1,12 @@
 ### jsdoc-x Change log:
 
+**v1.4.0** (2017-08-17)
+
+- Updated `jsdoc` core module to version 3.5.4. Supports new tags such as `@hideconstructor` (See [all changes here][jsdoc-releases]).
+- Fixed `utils.getLongName()` (broken after JSDoc updated).
+- Updated dependencies to latest versions.
+- Other minor revisions.
+
 **v1.3.3** (2017-03-10)
 - Added `ignored` boolean option that specifies whether to exclude symbols marked with `@ignore` tag in the output.
 - Added `utils.isIgnored()`.
@@ -72,3 +79,6 @@
  - Added `relativePath` option.
 
 **v0.1.0** (2016-03-16)
+
+
+[jsdoc-releases]:https://github.com/jsdoc3/jsdoc/releases

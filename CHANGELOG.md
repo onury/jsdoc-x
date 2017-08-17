@@ -2,7 +2,7 @@
 
 **v1.4.0** (2017-08-17)
 
-- Updated `jsdoc` core module to version 3.5.4. Supports new tags such as `@hideconstructor` (See [all changes here][jsdoc-releases]).
+- Updated `jsdoc` core module from v3.4.3 to v3.5.4. This adds support for [ES2015 code](https://github.com/jsdoc3/jsdoc/releases/tag/3.5.0), new tags such as `@hideconstructor`, etc.. (See [all JSDoc changes here][jsdoc-releases]).
 - Fixed `utils.getLongName()` (broken after JSDoc updated).
 - Updated dependencies to latest versions.
 - Other minor revisions.

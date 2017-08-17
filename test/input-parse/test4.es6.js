@@ -2,7 +2,9 @@
 /**
  *  My Test Class.
  */
-export class TestClass {
+export class TestClass extends OtherClass {
+
+    static prop = 'this is a static property. ES2015 stage-1 proposal.';
 
     /**
      *  Some constructor.
@@ -13,7 +15,15 @@ export class TestClass {
     }
 
     /**
-     *  Instance method of test class.
+     *  Instance (arrow) method.
+     *  @return {Number}
+     */
+    arrowMethod = () => {
+        return true;
+    }
+
+    /**
+     *  Instance method.
      *  @return {Number}
      */
     instanceMethod() {

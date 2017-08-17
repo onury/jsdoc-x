@@ -310,7 +310,7 @@
                 .finally(done);
         });
 
-        it('should mark @hideconstructor', function (done) {
+        it('should mark @hideconstructor, document ES2015 code', function (done) {
             options = {
                 files: './test/input-parse/test4.es6.js',
                 output: {
@@ -332,6 +332,12 @@
                     expect(result.length).toEqual(1);
                     var cons = result[0];
                     expect(cons.hideconstructor).toEqual(true);
+                    result = _.filter(docs, { name: 'arrowMethod' });
+                    expect(result.length).toEqual(1);
+
+                    // static property is ES2015 stage-1 proposal, not yet supported by JSDoc.
+                    result = _.filter(docs, { name: 'prop' });
+                    expect(result.length).toEqual(0);
                 })
                 .catch(function (err) {
                     expect(Boolean(err)).toEqual(false);

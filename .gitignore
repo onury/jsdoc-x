@@ -2,7 +2,8 @@
 /wiki/
 /node_modules/
 npm-debug.log
-output
+test/output/*
+!test/output/KEEP
 tmp
 TODO.md
 .DS_Store

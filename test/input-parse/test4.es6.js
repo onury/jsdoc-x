@@ -23,10 +23,13 @@ export class TestClass extends OtherClass {
     }
 
     /**
-     *  Instance method.
-     *  @return {Number}
+     *  Solves equations of the form a * x = b
+     *  @example <caption>Example usage of instanceMethod.</caption>
+     *  // returns 2
+     *  a.instanceMethod(5);
+     *  @returns {Number} Returns the value of x for the equation.
      */
-    instanceMethod() {
-        return this.value;
-    }
+    instanceMethod (a) {
+        return this.value / a;
+    };
 }

@@ -1,72 +1,66 @@
-/* eslint camelcase:0 */
+'use strict';
 
 // core modules
-var path = require('path'),
-    child_process = require('child_process');
+const path = require('path');
+const childProcess = require('child_process');
 // dep modules
-var _ = require('lodash'),
-    Promise = require('bluebird'),
-    fs = require('fs-extra'),
-    tmp = require('tmp'),
-    stringifySafe = require('json-stringify-safe');
+const _ = require('lodash');
+const Promise = require('bluebird');
+const fs = require('fs-extra');
+const stringifySafe = require('json-stringify-safe');
+const tmp = require('tmp');
+tmp.setGracefulCleanup();
 
-module.exports = (function () {
+const spawn = childProcess.spawn;
 
-    var helper = {},
-        spawn = child_process.spawn;
+const helper = {
 
-    var ERR = {
-        SOURCE: 'Cannot process missing or invalid input files, or source code.',
-        INVALID_OUTPUT: 'Could not parse invalid output.'
-    };
-    helper.ERR = ERR;
-
-    helper.ensureArray = function (value) {
+    ensureArray(value) {
         if (value === undefined || value === null) return;
         return _.isArray(value) ? value : [value];
-    };
+    },
 
-    helper.getStr = function (value) {
+    getStr(value) {
         return value && value.trim() !== '' ? value : null;
-    };
+    },
 
-    helper.normalizePath = function (p) {
-        var first = path.normalize(p).slice(0, 1);
+    normalizePath(p) {
+        const first = path.normalize(p).slice(0, 1);
         if (first === '.') return p;
         if (first !== '/') return '/' + p;
         return p;
-    };
+    },
 
-    helper.safeJsonParse = function (string) {
-        var out;
+    safeJsonParse(string) {
+        let out;
         try {
             out = JSON.parse(string);
         } catch (e) {}
         return out;
-    };
+    },
 
-    helper.createTempFile = function (source, tmpOptions) {
-        var tmpOpts = _.defaults(tmpOptions, {
+    createTempFile(source, tmpOptions) {
+        const tmpOpts = _.defaults(tmpOptions, {
             mode: 0o666,
             prefix: 'jsdocx-',
             postfix: '.js',
-            // use cleanupCallback if `keep` is `true`
+            // use cleanupCallback if `keep` is `true` (or tmp.setGracefulCleanup())
             keep: false
         });
-        return new Promise(function (resolve, reject) {
-            tmp.file(tmpOpts, function _tempFileCreated(err, path, fd, cleanupCallback) {
+        return new Promise((resolve, reject) => {
+            tmp.file(tmpOpts, (err, path, fd, cleanupCallback) => {
                 if (err) return reject(err);
                 // console.log("File: ", path);
                 // console.log("Filedescriptor: ", fd);
                 if (typeof source !== 'string') source = stringifySafe(source);
-                fs.write(fd, source || '', 'utf8', function (err, written, string) {
+                fs.write(fd, source || '', 'utf8', err => { // , written, string
                     if (err) return reject(err);
-                    fs.close(fd, function (err) {
+                    fs.close(fd, err => {
                         if (err) return reject(err);
                         resolve({
                             path: path,
                             descriptor: fd,
-                            cleanup: function () {
+                            cleanup() {
                                 try {
                                     cleanupCallback();
                                 } catch (e) { }
@@ -76,39 +70,31 @@ module.exports = (function () {
                 });
             });
         });
-    };
+    },
 
-    helper.execJSDoc = function (jsdocPath, args, conf) {
+    execJSDoc(jsdocPath, args, conf) {
         if (!conf) return helper.exec(jsdocPath, args);
         // console.log(stringifySafe(conf));
 
-        var tmpOpts = {
+        const tmpOpts = {
             mode: 0o666,
             prefix: 'jsdoc-conf-',
             postfix: '.json',
             keep: false
         };
-        var fileRef;
         return helper.createTempFile(conf, tmpOpts)
-            .then(function (file) {
-                fileRef = file;
-                var cmdArgs = args.concat();
+            .then(file => {
+                const cmdArgs = args.concat();
                 cmdArgs.push('-c', file.path);
                 return helper.exec(jsdocPath, cmdArgs);
-            })
-            .then(function (result) {
-                fileRef.cleanup();
-                return result;
             });
-    };
+    },
 
     // write output file and return the original object.
     // `force` will create the parent directories if they don't exist.
-    helper.writeJSON = function (options, object) {
-        var opts = options;
-        if (_.isString(options)) {
-            opts = { path: options };
-        }
+    writeJSON(options, object) {
+        let opts = options;
+        if (_.isString(options)) opts = { path: options };
 
         opts = _.extend({
             indent: false,
@@ -121,56 +107,43 @@ module.exports = (function () {
             opts.indent = 0;
         }
 
-        var json = !_.isString(object)
+        const json = !_.isString(object)
             ? JSON.stringify(object, null, opts.indent)
             : object;
 
-        var promise = opts.force
+        const promise = opts.force
             ? fs.ensureDir(path.dirname(opts.path))
             : Promise.resolve();
 
         return promise
-            .then(function () {
-                return fs.writeFile(opts.path, json, 'utf8');
-            })
-            .then(function () {
-                return object;
-            });
-    };
+            .then(() => fs.writeFile(opts.path, json, 'utf8'))
+            .then(() => object);
+    },
 
     // using spawn instead of execFile, since the latter has 200kb limit.
-    helper.exec = function (file, args) {
-        var cmdArgs = (args || []).concat();
+    exec(file, args) {
+        const cmdArgs = (args || []).concat();
         cmdArgs.unshift(file);
-        return new Promise(function (resolve, reject) {
-            var proc = spawn('node', cmdArgs),
-                output = '',
-                err = '';
+        return new Promise((resolve, reject) => {
+            const proc = spawn('node', cmdArgs);
+            let output = '';
+            let err = '';
 
-            proc.stdout.on('data', function (data) {
+            proc.stdout.on('data', data => {
                 output += data;
             });
 
-            proc.stderr.on('data', function (data) {
+            proc.stderr.on('data', data => {
                 err += data;
             });
 
-            proc.on('close', function (code) {
-                // console.log(`child process exited with code ${code}`);
-                if (code !== 0 || err) {
-                    return reject(new Error(err));
-                }
-                if (output.indexOf(' no input ') >= 0) {
-                    return reject(new Error(helper.ERR.SOURCE));
-                }
+            proc.on('close', code => {
+                if (code !== 0 || err) return reject(new Error(err));
                 resolve(output);
             });
         });
 
-    };
+    }
+};
 
-    // ---------------------------
-
-    return helper;
-
-})();
+module.exports = helper;

@@ -1,9 +1,14 @@
 ### jsdoc-x Change log:
 
-**v1.4.0** (2017-08-17)
+**v2.0.0** (2017-08-17)
 
+- **Breaking Change**: Requires Node.js v4 or newer.
 - Updated `jsdoc` core module from v3.4.3 to v3.5.4. This adds support for [ES2015 code](https://github.com/jsdoc3/jsdoc/releases/tag/3.5.0), new tags such as `@hideconstructor`, etc.. (See [all JSDoc changes here][jsdoc-releases]).
+- Fixed an issue where constructor could not be detected due to a JSDoc bug. For example, in ES2015 code, if the constructor is not marked with `@constructs` the longname is incorrect e.g. `ClassName#ClassName` instead of `ClassName`. We fixed this both for `utils.getLongName()` and for constructor-detection within the `hierarchy` process.
+- Fixed an issue where some symbols were not moved to `$members` collection because of its `<anonymous>~` prefix. This has occurred when the `hierarchy` option was enabled.
+- Fixed an issue with [a rare case](https://github.com/onury/jsdoc-x/pull/3) that occurred when a JSDoc comment contained a specific string.
 - Fixed `utils.getLongName()` (broken after JSDoc updated).
+- Any temporary files generated are now gracefully cleaned up, after parsing is complete.
 - Updated dependencies to latest versions.
 - Other minor revisions.
 

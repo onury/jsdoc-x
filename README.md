@@ -1,13 +1,15 @@
 # jsdoc-x
 
-![npm](https://img.shields.io/npm/v/jsdoc-x.svg)
-![release](https://img.shields.io/github/release/onury/jsdoc-x.svg)
-![license](http://img.shields.io/npm/l/jsdoc-x.svg)
-![maintained](https://img.shields.io/maintenance/yes/2017.svg)
+[![npm](http://img.shields.io/npm/v/jsdoc-x.svg)](https://www.npmjs.com/package/jsdoc-x)
+[![release](https://img.shields.io/github/release/onury/jsdoc-x.svg)](https://github.com/onury/jsdoc-x)
+[![license](http://img.shields.io/npm/l/jsdoc-x.svg)](https://github.com/onury/jsdoc-x/blob/master/LICENSE)
+[![downloads](https://img.shields.io/npm/dt/jsdoc-x.svg)](https://www.npmjs.com/package/jsdoc-x)
+[![dependencies](https://david-dm.org/onury/jsdoc-x.svg)](https://david-dm.org/onury/jsdoc-x)
+[![maintained](https://img.shields.io/maintenance/yes/2017.svg)](https://github.com/onury/jsdoc-x/graphs/commit-activity)  
+
+> © 2017, Onur Yıldırım ([@onury](https://github.com/onury)). MIT License.
 
 Parser for outputting a Javascript object from documented code via JSDoc's explain (`-X`) command.  
-
-> © 2017, Onur Yıldırım (@onury). MIT License.  
 
 **Install via NPM**:
 ```shell
@@ -643,3 +645,6 @@ Utilities for documentation output and symbols.
 ### Change-log:
 
 See [CHANGELOG.md](CHANGELOG.md).
+
+
+[onury]:https://github.com/onury

@@ -1,6 +1,6 @@
 ### jsdoc-x Change log:
 
-**v2.0.0** (2017-08-17)
+**v2.0.0** (2017-08-24)
 
 - **Breaking Change**: Requires Node.js v4 or newer.
 - Updated `jsdoc` core module from v3.4.3 to v3.5.4. This adds support for [ES2015 code](https://github.com/jsdoc3/jsdoc/releases/tag/3.5.0), new tags such as `@hideconstructor`, etc.. (See [all JSDoc changes here][jsdoc-releases]).

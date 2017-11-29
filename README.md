@@ -277,6 +277,14 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
         <td><code>false</code></td>
         <td>Whether to create parent directories if they don't exist.</td>
     </tr>
+    <tr>
+        <td><b><code>debug</code></b></td>
+        <td><code>Boolean</code></td>
+        <td><code>true</code></td>
+        <td>
+            Specifies whether to include extra information within thrown error messages.
+        </td>
+    </tr>
 </table>
 
 

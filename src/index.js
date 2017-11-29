@@ -287,6 +287,7 @@ jsdocx.parse = (options, callback) => {
         ? { files: options }
         : options;
     opts.files = opts.files || opts.file;
+    const debug = opts.debug === undefined ? true : opts.debug;
 
     let args, conf;
     const hasFiles = _.isString(opts.files) || (_.isArray(opts.files) && opts.files.length > 0);
@@ -330,12 +331,14 @@ jsdocx.parse = (options, callback) => {
             return docs;
         })
         .catch(err => {
-            // jsdoc err might not be very useful when some arguments are
-            // invalid. so, we'll prepend the full command, in case of an
-            // error and re-throw.
-            const cmd = 'jsdoc ' + args.join(' ');
-            err.message = err.message + ' \nExecuted JSDoc Command: ' + cmd + '\n'
-                + 'with JSON configuration: ' + JSON.stringify(conf || {});
+            if (debug) {
+                // jsdoc err might not be very useful when some arguments are
+                // invalid. so, we'll prepend the full command, in case of an
+                // error and re-throw.
+                const cmd = 'jsdoc ' + args.join(' ');
+                err.message = err.message + ' \nExecuted JSDoc Command: ' + cmd + '\n'
+                    + 'with JSON configuration: ' + JSON.stringify(conf || {});
+            }
             throw err;
         })
         .nodeify(callback);

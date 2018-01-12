@@ -6,9 +6,9 @@
 [![license](http://img.shields.io/npm/l/jsdoc-x.svg)](https://github.com/onury/jsdoc-x/blob/master/LICENSE)
 [![downloads](https://img.shields.io/npm/dt/jsdoc-x.svg)](https://www.npmjs.com/package/jsdoc-x)
 [![dependencies](https://david-dm.org/onury/jsdoc-x.svg)](https://david-dm.org/onury/jsdoc-x)
-[![maintained](https://img.shields.io/maintenance/yes/2017.svg)](https://github.com/onury/jsdoc-x/graphs/commit-activity)  
+[![maintained](https://img.shields.io/maintenance/yes/2018.svg)](https://github.com/onury/jsdoc-x/graphs/commit-activity)  
 
-> © 2017, Onur Yıldırım ([@onury](https://github.com/onury)). MIT License.
+> © 2018, Onur Yıldırım ([@onury](https://github.com/onury)). MIT License.
 
 Parser for outputting a Javascript object from documented code via JSDoc's explain (`-X`) command.  
 

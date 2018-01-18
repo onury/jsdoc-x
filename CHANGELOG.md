@@ -1,5 +1,9 @@
 ### jsdoc-x Change log:
 
+**v2.0.2** (2018-01-18)
+
+- **Updated** dependencies.
+
 **v2.0.1** (2017-08-24)
 
 - **Added** `options.debug` for `.parse()` method. Fixes [#4](https://github.com/onury/jsdoc-x/issues/4).

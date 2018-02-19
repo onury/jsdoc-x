@@ -20,7 +20,8 @@
         "document": false,
         "navigator": false,
         "window": false,
-        "google": false
+        "google": false,
+        "jasmine": true
     },
     "extends": "xo",
     // "extends": "eslint:recommended",

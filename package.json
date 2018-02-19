@@ -34,11 +34,13 @@
     "glob": "^7.1.2",
     "jsdoc": "^3.5.5",
     "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.5",
     "tmp": "0.0.33"
   },
   "devDependencies": {
-    "jasmine": "^2.9.0",
+    "eslint": "^4.18.0",
+    "eslint-config-xo": "^0.20.1",
+    "jasmine": "^3.0.0",
     "jasmine-console-reporter": "^2.0.1",
     "jsdoc-strip-async-await": "^0.1.0"
   }

@@ -8,7 +8,8 @@ function getStr(value) {
 // e.g. <anonymous>~obj.doStuff —> obj.doStuff
 function cleanName(name) {
     return (name || '').replace(/([^>]+>)?~?(.*)/, '$2')
-        .replace(/^(module\.)?exports\./, '');
+        .replace(/^(module\.)?exports\./, '')
+        .replace(/^module:/, '');
 }
 
 function notate(obj, notation) {
@@ -115,7 +116,7 @@ const utils = {
         var codeName = symbol.alias ? metaCodeName : longName;
 
         if (!memberOf) return codeName;
-        var re = new RegExp('^' + memberOf + '[#\\.~:]'),
+        var re = new RegExp('^' + memberOf + '[#.~:]'),
             dot = symbol.scope === 'instance' ? '#' : '.';
 
         return re.test(codeName) ? codeName : memberOf + dot + codeName;
@@ -131,6 +132,40 @@ const utils = {
      */
     getCodeName(symbol) {
         return getMetaCodeName(symbol) || utils.getLongName(symbol);
+    },
+
+    /**
+     *  Gets the number of levels for the given symbol or name. e.g.
+     *  `mylib.prop` has 2 levels.
+     *  @name jsdocx.utils.getLevels
+     *  @function
+     *
+     *  @param {Object|String} symbol - Documented symbol object or long name.
+     *  @returns {Number}
+     */
+    getLevels(symbol) {
+        var longname = typeof symbol === 'string' ? (symbol || '') : symbol.$longname;
+        // colon (:) is not a level separator. JSDoc uses colon in cases like:
+        // `obj~event:ready` or `module:someModule`
+        return ((longname || '').split(/[.#~]/) || []).length;
+    },
+
+    /**
+     *  Gets the parent symbol name from the given symbol's name. Note that,
+     *  this will return the parent name even if the parent symbol does not
+     *  exist in the documentation. If there is no parent, returns `""` (empty
+     *  string).
+     *  @name jsdocx.utils.getParentName
+     *  @function
+     *
+     *  @param {Object|String} symbol - Documented symbol object or long name.
+     *  @returns {Number}
+     */
+    getParentName(symbol) {
+        var longname = typeof symbol === 'string' ? (symbol || '') : symbol.$longname;
+        // colon (:) is not a level separator. JSDoc uses colon in cases like:
+        // `obj~event:ready` or `module:someModule`
+        return (longname || '').replace(/[.#~][^.#~]*$/, '');
     },
 
     /**
@@ -157,6 +192,36 @@ const utils = {
             }
         }
         return null;
+    },
+
+    /**
+     *  Gets the kind of the symbol. This is not the same as `symbol.kind`.
+     *  i.e. JSDoc generates a constructor's kind as `"class"`. This will return
+     *  `"constructor"`.
+     *  @name jsdocx.utils.getKind
+     *  @function
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *
+     *  @returns {String}
+     */
+    getKind(symbol) {
+        if (utils.isEnum(symbol)) return 'enum'; // should come before all
+        if (utils.isConstant(symbol)) return 'constant';
+        if (utils.isModule(symbol)) return 'module';
+        if (utils.isNamespace(symbol)) return 'namespace';
+        if (utils.isConstructor(symbol)) return 'constructor';
+        if (utils.isGenerator(symbol)) return 'generator'; // should come before method/function check
+        if (utils.isCallback(symbol)) return 'callback'; // should come before typedef check
+        if (utils.isTypeDef(symbol)) return 'typedef';
+        if (utils.isClass(symbol)) return 'class';
+        if (utils.isMethod(symbol)) return 'method';
+        if (utils.isProperty(symbol)) return 'property';
+        if (utils.isEvent(symbol)) return 'event';
+        if (utils.isInterface(symbol)) return 'interface';
+        if (utils.isMixin(symbol)) return 'mixin';
+        if (utils.isExternal(symbol)) return 'external';
+        return symbol.kind || '';
     },
 
     /**
@@ -196,6 +261,19 @@ const utils = {
     },
 
     /**
+     *  Checks whether the given symbol is marked as a mixin (is intended to be
+     *  added to other objects).
+     *  @name jsdocx.utils.isMixin
+     *  @function
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    isMixin(symbol) {
+        return symbol.kind === 'mixin';
+    },
+
+    /**
      *  Checks whether the given symbol is a class.
      *  @name jsdocx.utils.isClass
      *  @function
@@ -204,9 +282,21 @@ const utils = {
      *  @returns {Boolean}
      */
     isClass(symbol) {
-        return !utils.isConstructor(symbol)
-            && (symbol.kind === 'class'
-                || utils.notate(symbol, 'meta.code.type') === 'ClassDeclaration');
+        return symbol.kind === 'class'
+            && utils.notate(symbol, 'meta.code.type') !== 'MethodDefinition'; // constructor if MethodDefinition
+            // && utils.notate(symbol, 'meta.code.type') === 'ClassDeclaration';
+    },
+
+    /**
+     *  Checks whether the given symbol is marked as a constant.
+     *  @name jsdocx.utils.isConstant
+     *  @function
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    isConstant(symbol) {
+        return symbol.kind === 'constant';
     },
 
     /**
@@ -260,6 +350,19 @@ const utils = {
     },
 
     /**
+     *  Checks whether the given symbol is marked as an interface that other
+     *  symbols can implement.
+     *  @name jsdocx.utils.isInterface
+     *  @function
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    isInterface(symbol) {
+        return symbol.kind === 'interface';
+    },
+
+    /**
      *  Checks whether the given symbol is a method.
      *  @name jsdocx.utils.isMethod
      *  @function
@@ -271,7 +374,10 @@ const utils = {
     isMethod(symbol) {
         var codeType = utils.notate(symbol, 'meta.code.type');
         return symbol.kind === 'function'
-            || (codeType === 'MethodDefinition' || codeType === 'FunctionExpression');
+            || codeType === 'FunctionExpression'
+            || codeType === 'FunctionDeclaration';
+        // for getters/setters codeType might return 'MethodDefinition'
+        // so we leave it out.
     },
 
     /**
@@ -299,7 +405,7 @@ const utils = {
     },
 
     /**
-     *  Checks whether the given symbol is a property.
+     *  Checks whether the given symbol is a property (not a method.)
      *  @name jsdocx.utils.isProperty
      *  @function
      *
@@ -307,8 +413,7 @@ const utils = {
      *  @returns {Boolean}
      */
     isProperty(symbol) {
-        return symbol.kind === 'member';
-        //   && utils.notate(symbol, 'meta.code.type') === 'MethodDefinition';
+        return symbol.kind === 'member' && !utils.isMethod(symbol);
     },
 
     /**
@@ -361,6 +466,21 @@ const utils = {
     },
 
     /**
+     *  Checks whether the given symbol is a callback definition.
+     *  @name jsdocx.utils.isCallback
+     *  @function
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    isCallback(symbol) {
+        const typeNames = (symbol.type || {}).names || [];
+        return symbol.kind === 'typedef'
+            && (symbol.comment || '').indexOf('@callback ' + symbol.longname) >= 0
+            && (typeNames.length === 1 && typeNames[0] === 'function');
+    },
+
+    /**
      *  Checks whether the given symbol is an enumeration.
      *  @name jsdocx.utils.isEnum
      *  @function
@@ -369,7 +489,44 @@ const utils = {
      *  @returns {Boolean}
      */
     isEnum(symbol) {
-        return symbol.isEnum;
+        return Boolean(symbol.isEnum);
+    },
+
+    /**
+     *  Checks whether the given symbol is an event.
+     *  @name jsdocx.utils.isEvent
+     *  @function
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    isEvent(symbol) {
+        return symbol.kind === 'event';
+    },
+
+    /**
+     *  Checks whether the given symbol is defined outside of the current
+     *  package.
+     *  @name jsdocx.utils.isExternal
+     *  @function
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    isExternal(symbol) {
+        return symbol.kind === 'external';
+    },
+
+    /**
+     *  Checks whether the given symbol is a generator function.
+     *  @name jsdocx.utils.isGenerator
+     *  @function
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    isGenerator(symbol) {
+        return symbol.generator && symbol.kind === 'function';
     },
 
     /**
@@ -381,7 +538,7 @@ const utils = {
      *  @returns {Boolean}
      */
     isReadOnly(symbol) {
-        return symbol.readonly;
+        return Boolean(symbol.readonly);
     },
 
     /**
@@ -406,6 +563,20 @@ const utils = {
      */
     isPrivate(symbol) {
         return symbol.access === 'private';
+    },
+
+    /**
+     *  Checks whether the given symbol has `package` private access; indicating
+     *  that the symbol is available only to code in the same directory as the
+     *  source file for this symbol.
+     *  @name jsdocx.utils.isPackagePrivate
+     *  @function
+     *
+     *  @param {Object} symbol - Documented symbol object.
+     *  @returns {Boolean}
+     */
+    isPackagePrivate(symbol) {
+        return symbol.access === 'package';
     },
 
     /**
@@ -486,7 +657,8 @@ const utils = {
      */
     _getSorter(sortType, prop) {
         if (!sortType) return null;
-        var re = /[#.~:]/g,
+        // colon (:) is not included bec. it just indicates a prefix, it's not a level separator as dot (.).
+        var re = /[#.~]/g,
             group = sortType === 'grouped';
         if (!group) {
             return (a, b) => {

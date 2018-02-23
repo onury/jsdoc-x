@@ -1,14 +1,59 @@
 /* eslint camelcase:0 */
 
 /**
- *  global-function
+ *  global-function (FunctionDeclaration)
  */
-function globalFunction() {}
+function xGlobalFunction() {}
 
 /**
- *  global-object
+ *  global-function (FunctionExpression)
  */
-let globalObject = {};
+var hGlobalFunction = function () {};
+
+/**
+ *  global-object (ObjectExpression)
+ */
+let aGlobalObject = {};
+
+/**
+ *  global-object2 (NewExpression)
+ */
+let aGlobalObject2 = new Object();
+
+/**
+ *  global-array-object-2 (NewExpression)
+ */
+let gGlobalArray2 = new Array();
+
+/**
+ *  global-array-object (ArrayExpression)
+ */
+let gGlobalArray = [];
+
+/**
+ *  global-var (Literal)
+ */
+let vGlobalVar = 1;
+
+/**
+ *  global-obj-external (MemberExpression)
+ */
+const kGlobalObjExt = SomeObj.prop;
+
+/**
+ *  global-obj-external (CallExpression)
+ */
+let zGlobalObjExt = SomeObj.method();
+
+/**
+ *  global-obj-external (Identifier)
+ */
+let oGlobalObjExt = SomeObj;
+
+/**
+ *  global-obj-external (CallExpression)
+ */
+let fGlobalObjExt = SomeObj();
 
 /**
  * class
@@ -16,35 +61,37 @@ let globalObject = {};
 class Code {
 
     /**
-     * Iconstructor
+     * constructor
      */
     constructor(options) {
         this.options = options;
     }
 
-    // /**
-    //  * props
-    //  * @type {Object}
-    //  * @memberof Code
-    //  *
-    //  * @property {Number} zOption - z option.
-    //  * @property {Number} bOption - b option.
-    //  * @property {Number} _opt - _opt option.
-    //  * @property {Number} aOption - a option.
-    //  */
-    // get config() {
-    //     return {
-    //         zOption: 3,
-    //         bOption: 2,
-    //         _opt: 4,
-    //         aOption: 1
-    //     };
-    // }
+    /**
+     * props
+     * @type {Object}
+     * @memberof Code
+     *
+     * @property {Number} pOption - p option.
+     * @property {Number} _opt - _opt option.
+     */
+    get config() {
+        return {
+            /**
+             * @memberof Code#config
+             */
+            pOption: 2,
+            /**
+             * @memberof Code#config
+             */
+            _opt: 4
+        };
+    }
 
     /**
      * prop
      * @memberof Code
-     * @type {Object}
+     * @type {Number}
      * @private
      */
     get cPrivateInstanceProp() {
@@ -54,7 +101,7 @@ class Code {
     /**
      * prop
      * @memberof Code
-     * @type {Object}
+     * @type {Number}
      * @private
      */
     get privateInstanceProp() {
@@ -64,10 +111,20 @@ class Code {
     /**
      * prop
      * @memberof Code
-     * @type {Object}
+     * @type {String}
      * @private
      */
     get aPrivateInstanceProp() {
+        return '1';
+    }
+
+    /**
+     * prop
+     * @memberof Code
+     * @type {Number}
+     * @protected
+     */
+    get bProtectedInstanceProp() {
         return 1;
     }
 
@@ -81,25 +138,6 @@ class Code {
     static get Error() {
         return Error;
     }
-
-    // /**
-    //  * obj
-    //  * @memberof Code
-    //  * @type {Object}
-    //  */
-    // static get utils() {
-    //     return {};
-    // }
-
-    // /**
-    //  * This symbol is ignored
-    //  * @memberof Code
-    //  * @type {Object}
-    //  * @ignore
-    //  */
-    // static get ignored() {
-    //     return 'this symbol is ignored';
-    // }
 
     /**
      * x
@@ -125,14 +163,6 @@ class Code {
         return new Code(options);
     }
 
-    // /**
-    //  * a
-    //  * @memberof Code
-    //  */
-    // static aStaticMethod() {
-    //     return 'a';
-    // }
-
     /**
      * instance method
      * @memberof Code
@@ -140,14 +170,6 @@ class Code {
     instanceMethod() {
         return 1;
     }
-
-    // /**
-    //  * b
-    //  * @memberof Code
-    //  */
-    // bInstanceMethod() {
-    //     return 'b';
-    // }
 
 }
 

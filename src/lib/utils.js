@@ -151,21 +151,46 @@ const utils = {
     },
 
     /**
-     *  Gets the parent symbol name from the given symbol's name. Note that,
-     *  this will return the parent name even if the parent symbol does not
-     *  exist in the documentation. If there is no parent, returns `""` (empty
-     *  string).
+     *  Gets the parent symbol name from the given symbol object or symbol's
+     *  name (notation). Note that, this will return the parent name even if the
+     *  parent symbol does not exist in the documentation. If there is no
+     *  parent, returns `""` (empty string).
      *  @name jsdocx.utils.getParentName
      *  @function
      *
      *  @param {Object|String} symbol - Documented symbol object or long name.
-     *  @returns {Number}
+     *  @returns {String} - `""` (empty string) if symbol has no parent.
      */
     getParentName(symbol) {
-        var longname = typeof symbol === 'string' ? (symbol || '') : symbol.$longname;
+        let longname;
+        if (typeof symbol !== 'string') {
+            if (symbol.memberof) return symbol.memberof;
+            longname = symbol.$longname;
+        } else {
+            longname = symbol;
+        }
         // colon (:) is not a level separator. JSDoc uses colon in cases like:
         // `obj~event:ready` or `module:someModule`
-        return (longname || '').replace(/[.#~][^.#~]*$/, '');
+        if (!longname || !(/[.#~]/g).test(longname)) return '';
+        return longname.replace(/[.#~][^.#~]*$/, '');
+    },
+
+    /**
+     *  Gets the parent symbol object from the given symbol object or symbol's
+     *  name.
+     *  @name jsdocx.utils.getParent
+     *  @function
+     *
+     *  @param {Object|String} symbol - Documented symbol object or long name.
+     *  @returns {String} - `null` if symbol has no parent.
+     */
+    getParent(docs, symbol) {
+        const sym = typeof symbol === 'string'
+            ? utils.getSymbolByName(docs, symbol)
+            : symbol;
+        const parentName = (sym && sym.memberof) || utils.getParentName(symbol);
+        if (parentName) utils.getSymbolByName(docs, parentName);
+        return null;
     },
 
     /**

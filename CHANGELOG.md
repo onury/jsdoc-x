@@ -1,7 +1,8 @@
 ### jsdoc-x Changelog:
 
-**v2.1.0** (2018-02-24)
+**v3.0.0** (2018-02-24)
 
+- **Breaking Change:** Requires Node.js v6 or later.
 - **Improved** the symbol sorting logic. You can now sort by `scope`, by `access` type, by `kind`, `grouped` or `alphabetic`. See docs.
 - **Fixed** an issue with `utils.isClass()` method where `meta.code.type` is not set to `ClassDeclaration`.
 - **Added** utility methods: `getLevels()`, `getParentName()`, `getParent()`, `getKind()`, `isEvent()`, `isGenerator()`, `isCallback()`, `isConstant(), `isInterface()`, `isExternal()`, `isMixin()`, `isPackagePrivate()`.

@@ -2,7 +2,7 @@
 
 **v3.0.0** (2018-02-24)
 
-- **Breaking Change:** Requires Node.js v6 or later.
+- **Breaking Change:** Dropped support for Node v4. Node.js v6 or later is supported.
 - **Improved** the symbol sorting logic. You can now sort by `scope`, by `access` type, by `kind`, `grouped` or `alphabetic`. See docs.
 - **Fixed** an issue with `utils.isClass()` method where `meta.code.type` is not set to `ClassDeclaration`.
 - **Added** utility methods: `getLevels()`, `getParentName()`, `getParent()`, `getKind()`, `isEvent()`, `isGenerator()`, `isCallback()`, `isConstant(), `isInterface()`, `isExternal()`, `isMixin()`, `isPackagePrivate()`.

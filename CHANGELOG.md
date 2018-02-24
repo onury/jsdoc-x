@@ -2,10 +2,10 @@
 
 **v3.0.0** (2018-02-24)
 
-- **Breaking Change:** Dropped support for Node v4. Node.js v6 or later is supported.
+- **Breaking Change:** Requires Node.js v6 or later. (Dropped support for Node v4.)
 - **Improved** the symbol sorting logic. You can now sort by `scope`, by `access` type, by `kind`, `grouped` or `alphabetic`. See docs.
 - **Fixed** an issue with `utils.isClass()` method where `meta.code.type` is not set to `ClassDeclaration`.
-- **Added** utility methods: `getLevels()`, `getParentName()`, `getParent()`, `getKind()`, `isEvent()`, `isGenerator()`, `isCallback()`, `isConstant(), `isInterface()`, `isExternal()`, `isMixin()`, `isPackagePrivate()`.
+- **Added** utility methods: `getLevels()`, `getParentName()`, `getParent()`, `getKind()`, `isEvent()`, `isGenerator()`, `isCallback()`, `isConstant()`, `isInterface()`, `isExternal()`, `isMixin()`, `isPackagePrivate()`.
 - **Added** `getKind()` utility method. This is not the same as `symbol.kind`. i.e. JSDoc generates a constructor's kind as `"class"`. This will return `"constructor"`.
 - **Added** `$kind` property to documented symbols when parsed. See `utils.getKind()` method to see how it's different than `symbol.kind`.
 - **Fixed** `.isProperty()` utility method. It'll now return `false` if symbol is a method/function. This also affects the following methods: `.isStaticProperty()`, `.isInstanceProperty()`.

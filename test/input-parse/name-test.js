@@ -72,7 +72,13 @@
      */
     function m6() {}
 
+    /**
+     *  Some name space.
+     *  @memberof foo
+     *  @type {Object}
+     */
     var o = {};
+
     /**
      *  m7
      *  @memberof foo
@@ -93,5 +99,12 @@
      *  @alias m9alias
      */
     foo.o.m9 = function () {};
+
+    /**
+     *  foo.o.mx
+     *  @memberof foo.o
+     *  @alias m9alias
+     */
+    foo.o.mx = function () {};
 
 })();

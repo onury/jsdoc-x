@@ -1,4 +1,17 @@
-### jsdoc-x Change log:
+### jsdoc-x Changelog:
+
+**v2.1.0** (2018-02-24)
+
+- **Improved** the symbol sorting logic. You can now sort by `scope`, by `access` type, by `kind`, `grouped` or `alphabetic`. See docs.
+- **Fixed** an issue with `utils.isClass()` method where `meta.code.type` is not set to `ClassDeclaration`.
+- **Added** utility methods: `getLevels()`, `getParentName()`, `getParent()`, `getKind()`, `isEvent()`, `isGenerator()`, `isCallback()`, `isConstant(), `isInterface()`, `isExternal()`, `isMixin()`, `isPackagePrivate()`.
+- **Added** `getKind()` utility method. This is not the same as `symbol.kind`. i.e. JSDoc generates a constructor's kind as `"class"`. This will return `"constructor"`.
+- **Added** `$kind` property to documented symbols when parsed. See `utils.getKind()` method to see how it's different than `symbol.kind`.
+- **Fixed** `.isProperty()` utility method. It'll now return `false` if symbol is a method/function. This also affects the following methods: `.isStaticProperty()`, `.isInstanceProperty()`.
+- **Changed** `.isMethod()` utility method to return `false` for getters/setters (which will be treated as properties, not methods).
+- **Added** more tests for `utils`.
+- **Updated** dependencies.
+- Clean up and other revisions.
 
 **v2.0.2** (2018-01-18)
 

@@ -56,21 +56,18 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
     <tr>
         <td><b>Param</b></td>
         <td><b>Type</b></td>
-        <td><b>Default</b></td>
         <td><b>Description</b></td>
     </tr>
     <tr>
         <td><b><code>options</code></b></td>
         <td><code>Object|Array|String</code></td>
-        <td></td>
         <td>Required. Either an options object or one or more source files to be processed. See details below.</td>
     </tr>
     <tr>
         <td><b><code>callback</code></b></td>
         <td><code>Function</code></td>
-        <td><code>undefined</code></td>
         <td>
-            Callback function to be executed in the following signature: `function (err, array) { ... }`. Omit this callback to return a `Promise`.
+            Callback function to be executed in the following signature: `function (err, array) { ... }`. Omit this callback to return a `Promise`. Default: <code>undefined</code>
         </td>
     </tr>
 </table>
@@ -82,207 +79,182 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
     <tr>
         <td><b>Option</b></td>
         <td><b>Type</b></td>
-        <td><b>Default</b></td>
         <td><b>Description</b></td>
     </tr>
     <tr>
         <td><b><code>files</code></b></td>
         <td><code>String|Array</code></td>
-        <td><code>undefined</code></td>
         <td>
-            Required (if <code>source</code> is not set). One or more file/directory paths to be processed. This also accepts a <a href="https://github.com/isaacs/node-glob">Glob</a> string or array of globs. e.g. <code>./src/&#x2A;&#x2A;/&#x2A;.js</code> will produce an array of all <code>.js</code> files under </code>./src</code> directory and sub-directories.
+            Required (if <code>source</code> is not set). One or more file/directory paths to be processed. This also accepts a <a href="https://github.com/isaacs/node-glob">Glob</a> string or array of globs. e.g. <code>./src/&#x2A;&#x2A;/&#x2A;.js</code> will produce an array of all <code>.js</code> files under </code>./src</code> directory and sub-directories. Default: <code>undefined</code>
         </td>
     </tr>
     <tr>
         <td><b><code>source</code></b></td>
         <td><code>String</code></td>
-        <td><code>undefined</code></td>
         <td>
-            Required (if <code>files</code> is not set). Documented source code to be processed. If <code>files</code> is also set, this will be ignored.
+            Required (if <code>files</code> is not set). Documented source code to be processed. If <code>files</code> is also set, this will be ignored. Default: <code>undefined</code>
         </td>
     </tr>
     <tr>
         <td><b><code>encoding</code><b></td>
         <td><code>String</code></td>
-        <td><code>"utf8"</code></td>
-        <td>Encoding to be used when reading source files.</td>
+        <td>Encoding to be used when reading source files. Default: <code>"utf8"</code></td>
     </tr>
     <tr>
         <td><b><code>recurse</code><b></td>
         <td><code>Boolean</code></td>
-        <td><code>false</code></td>
         <td>
-            Specifies whether to recurse into subdirectories when scanning for source files.
+            Specifies whether to recurse into subdirectories when scanning for source files. Default: <code>false</code>
         </td>
     </tr>
     <tr>
         <td><b><code>pedantic</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>false</code></td>
         <td>
-            Specifies whether to treat errors as fatal errors, and treat warnings as errors.
+            Specifies whether to treat errors as fatal errors, and treat warnings as errors. Default: <code>false</code>
         </td>
     </tr>
     <tr>
         <td><b><code>access</code></b></td>
         <td><code>String|Array</code></td>
-        <td><code>undefined</code></td>
         <td>
-            Specifies which symbols to be processed with the given access property. Possible values: <code>"private"</code>, <code>"protected"</code>, <code>"public"</code> or <code>"all"</code> (for all access levels). By default, all except private symbols are processed. Note that, if access is not set for a documented symbol, it will still be included, regardless of this option.
+            Specifies which symbols to be processed with the given access property. Possible values: <code>"private"</code>, <code>"protected"</code>, <code>"public"</code> or <code>"all"</code> (for all access levels). By default, all except private symbols are processed. Note that, if access is not set for a documented symbol, it will still be included, regardless of this option. Default: <code>undefined</code>
         </td>
     </tr>
     <tr>
         <td><b><code>private</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>false</code></td>
-        <td></td>
+        <td>Shorthand for enabling documentation for <code>private</code> access symbols. Default: <code>false</code></td>
     </tr>
     <tr>
         <td><b><code>package</code></b></td>
         <td><code>String</code></td>
-        <td><code>undefined</code></td>
         <td>
-            The path to the <code>package.json</code> file that contains the project name, version, and other details. If set to <code>true</code> instead of a path string, the first <code>package.json</code> file found in the source paths.
+            The path to the <code>package.json</code> file that contains the project name, version, and other details. If set to <code>true</code> instead of a path string, the first <code>package.json</code> file found in the source paths. Default: <code>undefined</code>
         </td>
     </tr>
     <tr>
         <td><b><code>module</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>true</code></td>
         <td>
-            Specifies whether to include <code>module.exports</code> symbols.
+            Specifies whether to include <code>module.exports</code> symbols. Default: <code>true</code>
         </td>
     </tr>
     <tr>
         <td><b><code>undocumented</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>true</code></td>
         <td>
-            Specifies whether to include undocumented symbols.
+            Specifies whether to include undocumented symbols. Default: <code>true</code>
         </td>
     </tr>
     <tr>
         <td><b><code>undescribed</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>true</code></td>
         <td>
-            Specifies whether to include symbols without a description.
+            Specifies whether to include symbols without a description. Default: <code>true</code>
         </td>
     </tr>
     <tr>
         <td><b><code>ignored</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>true</code></td>
         <td>
-            Specifies whether to include symbols marked with <code>@ignore</code> tag.
+            Specifies whether to include symbols marked with <code>@ignore</code> tag. Default: <code>true</code>
         </td>
     </tr>
     <tr>
         <td><b><code>allowUnknownTags</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>true</code></td>
         <td>
             Specifies whether to allow unrecognized tags.
-            If set to `false` parsing will fail on unknown tags.
+            If set to <code>false</code> parsing will fail on unknown tags. Default: <code>true</code>
         </td>
     </tr>
     <tr>
         <td><b><code>dictionaries</code></b></td>
         <td><code>Array</code></td>
-        <td><code>["jsdoc", "closure"]</code></td>
         <td>
-            Indicates the dictionaries to be used. By default, both standard JSDoc tags and Closure Compiler tags are enabled.
+            Indicates the dictionaries to be used. By default, both standard JSDoc tags and Closure Compiler tags are enabled. Default: <code>["jsdoc", "closure"]</code>
         </td>
     </tr>
     <tr>
         <td><b><code>includePattern</code></b></td>
         <td><code>String</code></td>
-        <td><code>".+\\.js(doc|x)?$"</code></td>
         <td>
-            String pattern for defining sources to be included. By default, only files ending in ".js", ".jsdoc", and ".jsx" will be processed.
+            String pattern for defining sources to be included. By default, only files ending in ".js", ".jsdoc", and ".jsx" will be processed. Default: <code>".+\\.js(doc|x)?$"</code>
         </td>
     </tr>
     <tr>
         <td><b><code>excludePattern</code></b></td>
         <td><code>String</code></td>
-        <td><code>"(^|\\/|\\\\)_"</code></td>
         <td>
-            String pattern for defining sources to be ignored. By default, any file starting with an underscore or in a directory starting with an underscore will be ignored.
+            String pattern for defining sources to be ignored. By default, any file starting with an underscore or in a directory starting with an underscore will be ignored. Default: <code>"(^|\\/|\\\\)_"</code>
         </td>
     </tr>
     <tr>
         <td><b><code>plugins</code></b></td>
         <td><code>Array</code></td>
-        <td><code>[]</code></td>
         <td>
             Defines the JSDoc plugins to be used.
-            See <a href="http://usejsdoc.org/about-plugins.html">this guide</a> on JSDoc plugins.
+            See <a href="http://usejsdoc.org/about-plugins.html">this guide</a> on JSDoc plugins. Default: <code>[]</code>
         </td>
     </tr>
     <tr>
         <td><b><code>relativePath</code></b></td>
         <td><code>String</code></td>
-        <td><code>undefined</code></td>
         <td>
-            When set, all <code>symbol.meta.path</code> values will be relative to this path.
+            When set, all <code>symbol.meta.path</code> values will be relative to this path. Default: <code>undefined</code>
         </td>
     </tr>
     <tr>
         <td><b><code>predicate</code></b></td>
         <td><code>Function</code></td>
-        <td><code>undefined</code></td>
         <td>
-            Alias: <code>filter</code>. This is used to filter the parsed documentation output array. If a <code>Function</code> is passed; it's invoked for each included <code>symbol</code>. e.g. <code>function (symbol) { return symbol; }</code> Returning a falsy value will remove the symbol from the output. Returning <code>true</code> will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object.
+            Alias: <code>filter</code>. This is used to filter the parsed documentation output array. If a <code>Function</code> is passed; it's invoked for each included <code>symbol</code>. e.g. <code>function (symbol) { return symbol; }</code> Returning a falsy value will remove the symbol from the output. Returning <code>true</code> will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object. Default: <code>undefined</code>
         </td>
     </tr>
     <tr>
         <td><b><code>hierarchy</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>false</code></td>
         <td>
-            Specifies whether to arrange symbols by their hierarchy. This will find and move symbols that have a <code>memberof</code> property to a <code>$members</code> property of their corresponding owners. Also the constructor symbol will be moved to a <code>$constructor</code> property of the <code>ClassDeclaration</code> symbol; if any.
+            Specifies whether to arrange symbols by their hierarchy. This will find and move symbols that have a <code>memberof</code> property to a <code>$members</code> property of their corresponding owners. Also the constructor symbol will be moved to a <code>$constructor</code> property of the <code>ClassDeclaration</code> symbol; if any. Default: <code>false</code>
         </td>
     </tr>
     <tr>
         <td><b><code>sort</code></b></td>
         <td><code>Boolean|String</code></td>
-        <td><code>false</code></td>
         <td>
-            Specifies whether to sort the documentation symbols. For alphabetic sort, set to <code>true</code> or <code>"alphabetic"</code>. To additionally group by scope (static/instance) set to <code>"grouped"</code>. Set to <code>false</code> to disable.
+            Specifies whether to sort the documentation symbols. For alphabetic sort, set to <code>true</code> or <code>"alphabetic"</code>. To group-sort set to <code>"grouped"</code>. <i>(Group sorting is done in the following order: by memberof, by scope, by access type, by kind, alphabetic.)</i> To sort by only <code>"scope"</code> or <code>"access"</code> or <code>"kind"</code>, set to corresponding string. <i>(Sorting by kind is done in the following order: constant, package/module, namespace, class, constructor, method, property, enum, typedef, event, interface, mixin, external, other members.)</i> Set to <code>false</code> to disable. Default: <code>false</code>
         </td>
     </tr>
     <tr>
         <td><b><code>output</code></b></td>
         <td><code>String|Object</code></td>
-        <td><code>undefined</code></td>
         <td>
-            Path for a JSON file to be created, containing the output documentation array. Or you can set this to an object for extra options.  
+            Path for a JSON file to be created, containing the output documentation array. Or you can set this to an object for extra options. Default: <code>undefined</code>
         </td>
     </tr>
     <tr>
         <td>↳<code>output.<b>path</b></code></td>
         <td><code>String</code></td>
-        <td><code>undefined</code></td>
-        <td>Path for a JSON file to be created.</td>
+        <td>Path for a JSON file to be created. Default: <code>undefined</code></td>
     </tr>
     <tr>
         <td>↳<code>output.<b>indent</b></code></td>
         <td><code>Boolean|Number</code></td>
-        <td><code>false</code></td>
-        <td>Number of spaces for indentation. If set to <code>true</code>, 2 spaces will be used.</td>
+        <td>Number of spaces for indentation. If set to <code>true</code>, 2 spaces will be used. Default: <code>false</code></td>
     </tr>
     <tr>
         <td>↳<code>output.<b>force</b></code></td>
         <td><code>Boolean</code></td>
-        <td><code>false</code></td>
-        <td>Whether to create parent directories if they don't exist.</td>
+        <td>
+            Whether to create parent directories if they don't exist. Default: <code>false</code>
+        </td>
     </tr>
     <tr>
         <td><b><code>debug</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>true</code></td>
         <td>
-            Specifies whether to include extra information within thrown error messages.
+            Specifies whether to include extra information within thrown error messages. Default: <code>true</code>
         </td>
     </tr>
 </table>
@@ -296,27 +268,23 @@ Filters the given documentation output array. This is useful if you have an alre
     <tr>
         <td><b>Param</b></td>
         <td><b>Type</b></td>
-        <td><b>Default</b></td>
         <td><b>Description</b></td>
     </tr>
     <tr>
         <td><b><code>docs</code></b></td>
         <td><code>Array</code></td>
-        <td></td>
         <td>Required. Documentation output array.</td>
     </tr>
     <tr>
         <td><b><code>options</code></b></td>
         <td><code>Object</code></td>
-        <td><code>undefined</code></td>
-        <td>Filter options. See details below.</td>
+        <td>Filter options. See details below. Default: <code>undefined</code></td>
     </tr>
     <tr>
         <td><b><code>predicate</code></b></td>
         <td><code>Function</code></td>
-        <td><code>undefined</code></td>
         <td>
-            The function invoked per iteration. Returning a falsy value will remove the symbol from the output. Returning <code>true</code> will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object.
+            The function invoked per iteration. Returning a falsy value will remove the symbol from the output. Returning <code>true</code> will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object. Default: <code>undefined</code>
         </td>
     </tr>
 </table>
@@ -328,71 +296,62 @@ Filters the given documentation output array. This is useful if you have an alre
     <tr>
         <td><b>Option</b></td>
         <td><b>Type</b></td>
-        <td><b>Default</b></td>
         <td><b>Description</b></td>
     </tr>
     <tr>
         <td><b><code>access</code></b></td>
         <td><code>String|Array</code></td>
-        <td><code>undefined</code></td>
         <td>
-            Specifies which symbols to be processed with the given access property. Possible values: <code>"private"</code>, <code>"protected"</code>, <code>"public"</code> or <code>"all"</code> (for all access levels). By default, all except private symbols are processed. Note that, if access is not set for a documented symbol, it will still be included, regardless of this option.
+            Specifies which symbols to be processed with the given access property. Possible values: <code>"private"</code>, <code>"protected"</code>, <code>"public"</code> or <code>"all"</code> (for all access levels). By default, all except private symbols are processed. Note that, if access is not set for a documented symbol, it will still be included, regardless of this option. Default: <code>undefined</code>
         </td>
     </tr>
     <tr>
         <td><b><code>package</code></b></td>
         <td><code>String</code></td>
-        <td><code>undefined</code></td>
         <td>
-            The path to the <code>package.json</code> file that contains the project name, version, and other details. If set to <code>true</code> instead of a path string, the first <code>package.json</code> file found in the source paths.
+            The path to the <code>package.json</code> file that contains the project name, version, and other details. If set to <code>true</code> instead of a path string, the first <code>package.json</code> file found in the source paths. Default: <code>undefined</code>
         </td>
     </tr>
     <tr>
         <td><b><code>module</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>true</code></td>
         <td>
-            Specifies whether to include <code>module.exports</code> symbols.
+            Specifies whether to include <code>module.exports</code> symbols. Default: <code>true</code>
         </td>
     </tr>
     <tr>
         <td><b><code>undocumented</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>true</code></td>
         <td>
-            Specifies whether to include undocumented symbols.
+            Specifies whether to include undocumented symbols. Default: <code>true</code>
         </td>
     </tr>
     <tr>
         <td><b><code>undescribed</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>true</code></td>
         <td>
-            Specifies whether to include symbols without a description.
+            Specifies whether to include symbols without a description. Default: <code>true</code>
         </td>
     </tr>
     <tr>
         <td><b><code>relativePath</code></b></td>
         <td><code>String</code></td>
-        <td><code>undefined</code></td>
         <td>
-            When set, all <code>symbol.meta.path</code> values will be relative to this path.
+            When set, all <code>symbol.meta.path</code> values will be relative to this path. Default: <code>undefined</code>
         </td>
     </tr>
     <tr>
         <td><b><code>hierarchy</code></b></td>
         <td><code>Boolean</code></td>
-        <td><code>false</code></td>
         <td>
-            Specifies whether to arrange symbols by their hierarchy. This will find and move symbols that have a <code>memberof</code> property to a <code>$members</code> property of their corresponding owners. Also the constructor symbol will be moved to a <code>$constructor</code> property of the <code>ClassDeclaration</code> symbol; if any.
+            Specifies whether to arrange symbols by their hierarchy. This will find and move symbols that have a <code>memberof</code> property to a <code>$members</code> property of their corresponding owners. Also the constructor symbol will be moved to a <code>$constructor</code> property of the <code>ClassDeclaration</code> symbol; if any. Default: <code>false</code>
         </td>
     </tr>
     <tr>
         <td><b><code>sort</code></b></td>
         <td><code>Boolean|String</code></td>
-        <td><code>false</code></td>
         <td>
-            Specifies whether to sort the documentation symbols. For alphabetic sort, set to <code>true</code> or <code>"alphabetic"</code>. To additionally group by scope (static/instance) set to <code>"grouped"</code>. Set to <code>false</code> to disable.
+            Specifies whether to sort the documentation symbols. For alphabetic sort, set to <code>true</code> or <code>"alphabetic"</code>. To additionally group by scope (static/instance) set to <code>"grouped"</code>. Set to <code>false</code> to disable. Default: <code>false</code>
         </td>
     </tr>
 </table>
@@ -456,6 +415,38 @@ Utilities for documentation output and symbols.
         </td>
     </tr>
     <tr>
+        <td><b><code>getKind(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Number</code></td>
+        <td>
+            Gets the kind of the symbol. This is not the same as <code>symbol.kind</code>. i.e. JSDoc generates a constructor's kind as <code>"class"</code>. This will return <code>"constructor"</code>. Enumeration objects are returned as <code>"enum"</code>. Function members are returned as <code>"method"</code>, non-function members are returned as <code>"property"</code> (including getters/setters)...
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>getLevels(symbol)</code></b></td>
+        <td><code>symbol:Object|String</code></td>
+        <td><code>Number</code></td>
+        <td>
+            Gets the number of levels for the given symbol or name. e.g. <code>mylib.prop</code> has 2 levels.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>getParentName(symbol)</code></b></td>
+        <td><code>symbol:Object|String</code></td>
+        <td><code>Number</code></td>
+        <td>
+            Gets the parent symbol name from the given symbol's name. Note that, this will return the parent name even if the parent symbol does not exist in the documentation. If there is no parent, returns <code>""</code> (empty string).
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>getParent(symbol)</code></b></td>
+        <td><code>symbol:Object|String</code></td>
+        <td><code>Number</code></td>
+        <td>
+            Gets the parent symbol object from the given symbol object or symbol's name.
+        </td>
+    </tr>
+    <tr>
         <td><b><code>hasDescription(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>
@@ -464,11 +455,27 @@ Utilities for documentation output and symbols.
         </td>
     </tr>    
     <tr>
+        <td><b><code>isCallback(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a callback definition.
+        </td>
+    </tr>
+    <tr>
         <td><b><code>isClass(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>
         <td>
             Checks whether the given symbol is a class.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isConstant(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a marked as a constant.
         </td>
     </tr>
     <tr>
@@ -493,6 +500,30 @@ Utilities for documentation output and symbols.
         <td><code>Boolean</code></td>
         <td>
             Checks whether the given symbol is an enumeration.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isEvent(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is an event.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isEexternal(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is defined outside of the current package.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isGenerator(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is a generator function.
         </td>
     </tr>
     <tr>
@@ -541,6 +572,14 @@ Utilities for documentation output and symbols.
         <td><code>Boolean</code></td>
         <td>
             Checks whether the given symbol is an instance property.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isMixin(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is marked as a mixin (is intended to be added to other objects).
         </td>
     </tr>
     <tr>
@@ -608,6 +647,14 @@ Utilities for documentation output and symbols.
         </td>
     </tr>
     <tr>
+        <td><b><code>isInterface(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol is marked as an interface that other symbols can implement.
+        </td>
+    </tr>
+    <tr>
         <td><b><code>isPublic(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>
@@ -621,6 +668,14 @@ Utilities for documentation output and symbols.
         <td><code>Boolean</code></td>
         <td>
             Checks whether the given symbol has <code>private</code> access.
+        </td>
+    </tr>
+    <tr>
+        <td><b><code>isPackagePrivate(symbol)</code></b></td>
+        <td><code>symbol:Object</code></td>
+        <td><code>Boolean</code></td>
+        <td>
+            Checks whether the given symbol has <code>package</code> private access; indicating that the symbol is available only to code in the same directory as the source file for this symbol.
         </td>
     </tr>
     <tr>

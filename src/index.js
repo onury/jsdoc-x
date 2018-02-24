@@ -10,6 +10,7 @@ const glob = Promise.promisify(require('glob'));
 // own modules
 const helper = require('./lib/helper');
 const utils = require('./lib/utils');
+const sorter = require('./lib/sorter');
 
 const ERR_SOURCE = 'Cannot process missing or invalid input files, or source code.';
 
@@ -123,8 +124,8 @@ function relativePath(symbol, rPath) {
 }
 
 function normalizeAccess(access) {
-    // ['public', 'protected', 'private'];
-    if (access === 'all') return access; // all
+    // ['public', 'protected', 'private', 'package']
+    if (access === 'all') return access; // 'all'
     if (!_.isString(access) && !_.isArray(access)) {
         return ['public', 'protected'];
     }
@@ -134,20 +135,22 @@ function normalizeAccess(access) {
 // sorts documentation symbols and properties of each symbol, if any.
 function sortDocs(docs, sortType) {
     if (!sortType) return;
-    const sorter = utils._getSorter(sortType, '$longname');
-    const propSorter = utils._getSorter(sortType, 'name');
-    docs.sort(sorter);
+    const fnSorter = sorter.getSymbolsComparer(sortType, '$longname');
+    const fnPropSorter = sorter.getSymbolsComparer(sortType, 'name');
+    docs.sort(fnSorter);
     docs.forEach(symbol => {
         if (symbol && Array.isArray(symbol.properties)) {
-            symbol.properties.sort(propSorter);
+            symbol.properties.sort(fnPropSorter);
         }
     });
 }
 
 function hierarchy(docs, sortType) {
     let parent;
-    const sorter = utils._getSorter(sortType, '$longname');
-    const propSorter = utils._getSorter(sortType, 'name');
+    const fnSorter = sorter.getSymbolsComparer(sortType, '$longname');
+    // properties should be sorted alphabetically since they don't have kind or
+    // scope. (they only have types.)
+    const fnPropSorter = sorter.getSymbolsComparer('alphabetic', 'name');
     _.eachRight(docs, (symbol, index) => {
         // Move constructor (method definition) to class declaration symbol
         if (utils.isConstructor(symbol)) {
@@ -161,18 +164,19 @@ function hierarchy(docs, sortType) {
         // otherwise, move symbols with memberof property to corresponding parent member.
         } else if (symbol.memberof && symbol.longname !== 'module.exports') {
             // first check and sort if it has properties
-            if (propSorter && Array.isArray(symbol.properties)) {
-                symbol.properties.sort(propSorter);
+            if (fnPropSorter && Array.isArray(symbol.properties)) {
+                symbol.properties.sort(fnPropSorter);
             }
 
             parent = _.find(docs, sym => {
                 return utils._cleanName(sym.longname) === utils._cleanName(symbol.memberof);
             });
-            if (parent) {
+            // parent cannot be constructor
+            if (parent && !utils.isConstructor(parent)) {
                 parent.$members = parent.$members || [];
                 parent.$members.push(symbol);
-                if (sorter) {
-                    parent.$members.sort(sorter);
+                if (fnSorter) {
+                    parent.$members.sort(fnSorter);
                 } else {
                     // reverse bec. we used eachRight
                     parent.$members.reverse();
@@ -181,7 +185,7 @@ function hierarchy(docs, sortType) {
             }
         }
     });
-    if (sorter) docs.sort(sorter);
+    if (fnSorter) docs.sort(fnSorter);
     return docs;
 }
 
@@ -238,6 +242,9 @@ jsdocx.filter = (docs, options, predicate) => {
         // has an alias. See https://github.com/jsdoc3/jsdoc/issues/1217 and
         // documentation of jsdocx.utils.getFullName()
         symbol.$longname = utils.getLongName(symbol);
+        // i.e.JSDoc generates a constructor's kind as `"class"`. This will
+        // set it as `"constructor"`. See getKind() method.
+        symbol.$kind = utils.getKind(symbol);
 
         undoc = options.undocumented || symbol.undocumented !== true;
         undesc = options.undescribed || utils.hasDescription(symbol);

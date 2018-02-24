@@ -35,6 +35,7 @@
         "padded-blocks": 0,
         "no-negated-condition": 0,
         "quote-props": 0,
-        "capitalized-comments": 0
+        "capitalized-comments": 0,
+        "no-multi-spaces": 0
     }
 }

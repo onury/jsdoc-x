@@ -57,7 +57,7 @@ function * generator(i) {
  */
 
 /**
- *  instance-member
+ *  arrow
  *  @return {Boolean}
  */
 const arrowMethod = () => {
@@ -68,6 +68,14 @@ const arrowMethod = () => {
  *  class
  */
 class UtilsTest {
+
+    /**
+     *  instance-member
+     *  @return {Boolean}
+     */
+    get member() {
+        return true;
+    }
 
     /**
      *  instance-method

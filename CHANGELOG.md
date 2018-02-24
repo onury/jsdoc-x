@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
-## [3.0.0](https://github.com/onury/jsdoc-x/compare/v3.0.0...v2.0.2) (2018-02-24)
+## [3.0.0](https://github.com/onury/jsdoc-x/compare/v2.0.2...v3.0.0) (2018-02-24)
 
 ### Changed
 - **Breaking:** Requires Node.js v6 or later. (Dropped support for Node v4.)
@@ -23,17 +23,17 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 - An issue with `utils.isClass()` method where `meta.code.type` is not set to `ClassDeclaration`.
 - `.isProperty()` utility method. It'll now return `false` if symbol is a method/function. This also affects the following methods: `.isStaticProperty()`, `.isInstanceProperty()`.
 
-## [2.0.2](https://github.com/onury/jsdoc-x/compare/v2.0.2...v2.0.1) (2018-01-18)
+## [2.0.2](https://github.com/onury/jsdoc-x/compare/v2.0.1...v2.0.2) (2018-01-18)
 
 ### Changed
 - Updated dependencies.
 
-## [2.0.1](https://github.com/onury/jsdoc-x/compare/v2.0.1...v2.0.0) (2017-08-24)
+## [2.0.1](https://github.com/onury/jsdoc-x/compare/v2.0.0...v2.0.1) (2017-08-24)
 
 ### Added
 - `options.debug` for `.parse()` method. Fixes [#4](https://github.com/onury/jsdoc-x/issues/4).
 
-## [2.0.0](https://github.com/onury/jsdoc-x/compare/v2.0.0...v1.3.3) (2017-08-24)
+## [2.0.0](https://github.com/onury/jsdoc-x/compare/v1.3.3...v2.0.0) (2017-08-24)
 
 ### Changed
 - **Breaking**: Requires Node.js v4 or newer.
@@ -47,14 +47,14 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 - An issue with [a rare case](https://github.com/onury/jsdoc-x/pull/3) that occurred when a JSDoc comment contained a specific string.
 - `utils.getLongName()` (was broken after JSDoc updated).
 
-## [1.3.3](https://github.com/onury/jsdoc-x/compare/v1.3.3...v1.3.2) (2017-03-10)
+## [1.3.3](https://github.com/onury/jsdoc-x/compare/v1.3.2...v1.3.3) (2017-03-10)
 
 ### Added
 - `ignored` boolean option that specifies whether to exclude symbols marked with `@ignore` tag in the output.
 - `utils.isIgnored()`.
 - `utils.isDeprecated()`.
 
-## [1.3.2](https://github.com/onury/jsdoc-x/compare/v1.3.2...v1.3.0) (2017-03-09)
+## [1.3.2](https://github.com/onury/jsdoc-x/compare/v1.3.0...v1.3.2) (2017-03-09)
 
 ### Changed
 - Improved symbols sorting logic/performance.
@@ -62,7 +62,7 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 ### Added
 - `utils.getSymbolNames()` utility method.
 
-## [1.3.0](https://github.com/onury/jsdoc-x/compare/v1.3.0...v1.1.0) (2017-03-05)
+## [1.3.0](https://github.com/onury/jsdoc-x/compare/v1.1.0...v1.3.0) (2017-03-05)
 
 ### Changed
 - Updated dependencies to latest versions.
@@ -71,7 +71,7 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 - Options: `allowUnknownTags`, `dictionaries`, `includePattern`, `excludePattern`.
 - [JSDoc plugin](http://usejsdoc.org/about-plugins.html) support via the new `plugins` option.
 
-## [1.1.0](https://github.com/onury/jsdoc-x/compare/v1.1.0...v1.0.8) (2016-08-13)
+## [1.1.0](https://github.com/onury/jsdoc-x/compare/v1.0.8...v1.1.0) (2016-08-13)
 
 ### Added
 - Utility methods: `utils.isPublic()`, `utils.isPrivate()`, `utils.isProtected()`.
@@ -79,7 +79,7 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 ### Fixed
 - Constructors would still show up in the output even though `@private` is set.
 
-## [1.0.8](https://github.com/onury/jsdoc-x/compare/v1.0.8...v1.0.5) (2016-06-06)
+## [1.0.8](https://github.com/onury/jsdoc-x/compare/v1.0.5...v1.0.8) (2016-06-06)
 
 ### Changed
 - Sort options now sorts with `$longname`.
@@ -91,7 +91,7 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 ### Fixed
 - `utils.getFullName()` (alias: `utils.getLongName()`).
 
-## [1.0.5](https://github.com/onury/jsdoc-x/compare/v1.0.5...v1.0.2) (2016-05-30)
+## [1.0.5](https://github.com/onury/jsdoc-x/compare/v1.0.2...v1.0.5) (2016-05-30)
 
 ### Added
 - Utility methods `utils.notate()` and `utils.isModule()`.
@@ -101,17 +101,17 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 - `utils.isMethod()`. Added alias `utils.isFunction()`
 - `utils.isClass()`.
 
-## [1.0.2](https://github.com/onury/jsdoc-x/compare/v1.0.2...v1.0.1) (2016-05-10)
+## [1.0.2](https://github.com/onury/jsdoc-x/compare/v1.0.1...v1.0.2) (2016-05-10)
 
 ### Fixed
 - Parsing an array of files was broken. Fixed. (PR [#2](https://github.com/onury/jsdoc-x/pull/2))
 
-## [1.0.1](https://github.com/onury/jsdoc-x/compare/v1.0.1...v1.0.0) (2016-05-07)
+## [1.0.1](https://github.com/onury/jsdoc-x/compare/v1.0.0...v1.0.1) (2016-05-07)
 
 ### Fixed
 - `utils.isMethod()`.
 
-## [1.0.0](https://github.com/onury/jsdoc-x/compare/v1.0.0...v0.4.8) (2016-05-05)
+## [1.0.0](https://github.com/onury/jsdoc-x/compare/v0.4.8...v1.0.0) (2016-05-05)
 
 ### Added
 - `glob` support for `files` option of `.parse()` method.
@@ -121,7 +121,7 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 - `.filter()` method for use with (already parsed) documentation array.
 - `utils` as a utility module for documentation symbols.
 
-## [0.4.8](https://github.com/onury/jsdoc-x/compare/v0.4.8...v0.4.6) (2016-03-19)
+## [0.4.8](https://github.com/onury/jsdoc-x/compare/v0.4.6...v0.4.8) (2016-03-19)
  
 ### Fixed
 - If the parent project(s) has `jsdoc`, ours won't get installed. Since we use a specific file within `jsdoc` module, we cannot find it via `require()`. Now, fixed `jsdoc` path resolver. This will either use the local or from the parent project(s) properly.
@@ -130,12 +130,12 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 ## [0.4.6] (2016-03-19)
 
 ### Added
-- `output` option to write `JSON` file.
+- `output`` f option to wrile.
 
-## [0.4.0] (2016-03-18)
+ite `JSON## [0.4.0] (2016-03-18)
 
 ### Changed
-- Using `child_process.spawn` instead of `execFile` since the latter has 200kb limit.
+- Using `child_process `e.spawn` ixecFilnstead ofe` since the latter has 200kb limit.
 
 ### Added
 - `filter`, `undocumented`, `undescribed`, `module` options.
@@ -144,12 +144,12 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 ## [0.3.0] (2016-03-17)
 
 ### Added
-- Support for both Promises and callbacks.
-- `relativePath` option.
+- Support for both `r Promises and calelativlbacks.
+-ePath` option.
 
 ## [0.1.0] (2016-03-16)
 
 - Initial.
 
 
-[jsdoc-releases]:https://github.com/jsdoc3/jsdoc/releases
+[://jsdoc-releasgithubes]:https.com/jsdoc3/jsdoc/releases

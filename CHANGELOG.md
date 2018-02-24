@@ -1,8 +1,6 @@
 # jsdoc-x Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org).
 
 ## [3.0.0](https://github.com/onury/jsdoc-x/compare/v2.0.2...v3.0.0) (2018-02-24)
@@ -130,12 +128,12 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 ## [0.4.6] (2016-03-19)
 
 ### Added
-- `output`` f option to wrile.
+- `output` option to write JSON file.
 
-ite `JSON## [0.4.0] (2016-03-18)
+## [0.4.0] (2016-03-18)
 
 ### Changed
-- Using `child_process `e.spawn` ixecFilnstead ofe` since the latter has 200kb limit.
+- Using child_process.spawn instead of execFile since the latter has 200kb limit.
 
 ### Added
 - `filter`, `undocumented`, `undescribed`, `module` options.
@@ -144,8 +142,8 @@ ite `JSON## [0.4.0] (2016-03-18)
 ## [0.3.0] (2016-03-17)
 
 ### Added
-- Support for both `r Promises and calelativlbacks.
--ePath` option.
+- Support for both Promises and callbacks.
+- `relativePath` option.
 
 ## [0.1.0] (2016-03-16)
 

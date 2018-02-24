@@ -1,3 +1,4 @@
+/* eslint camelcase:0, no-unused-vars:0, no-new-object:0, no-undef:0, new-cap:0, no-array-constructor:0 */
 
 // DO NOT CHANGE descriptions of JSDoc comments.
 // They're used to get the symbol in tests.
@@ -43,7 +44,7 @@ function someModule() {}
  *  @function fibonacci
  *  @yields {number} The next number.
  */
-function* generator(i) {
+function * generator(i) {
     yield i;
     yield i + 10;
 }
@@ -56,17 +57,17 @@ function* generator(i) {
  */
 
 /**
+ *  instance-member
+ *  @return {Boolean}
+ */
+const arrowMethod = () => {
+    return true;
+};
+
+/**
  *  class
  */
 class UtilsTest {
-
-    /**
-     *  instance-member
-     *  @return {Boolean}
-     */
-    arrowMethod = () => {
-        return true;
-    }
 
     /**
      *  instance-method

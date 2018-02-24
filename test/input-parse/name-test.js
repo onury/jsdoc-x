@@ -1,4 +1,4 @@
-/* eslint no-unused-vars:0 */
+/* eslint camelcase:0, no-unused-vars:0, no-new-object:0, no-undef:0, new-cap:0, no-array-constructor:0 */
 
 (function () {
     'use strict';

@@ -313,7 +313,7 @@ const utils = {
     isClass(symbol) {
         return symbol.kind === 'class'
             && utils.notate(symbol, 'meta.code.type') !== 'MethodDefinition'; // constructor if MethodDefinition
-            // && utils.notate(symbol, 'meta.code.type') === 'ClassDeclaration';
+        // && utils.notate(symbol, 'meta.code.type') === 'ClassDeclaration';
     },
 
     /**

@@ -35,7 +35,7 @@ function getMetaCodeName(symbol) {
 function getSymNames(data, memo) {
     memo = memo || [];
     data.forEach(function (symbol) {
-        // var longName = jsdocx.utils.getFullName(symbol);
+        // const longName = jsdocx.utils.getFullName(symbol);
         memo.push(symbol.$longname);
         if (!symbol.isEnum && symbol.$members) {
             memo = getSymNames(symbol.$members, memo);
@@ -82,7 +82,7 @@ const utils = {
         // if @alias is set, the original (long) name is generally found at
         // meta.code.name
         if (symbol.alias) {
-            var codeName = getMetaCodeName(symbol);
+            const codeName = getMetaCodeName(symbol);
             if (codeName) return codeName.replace(/.*?[#.~:](\w+)$/i, '$1');
         }
         return symbol.name;
@@ -100,9 +100,9 @@ const utils = {
      *  @returns {String}
      */
     getLongName(symbol) {
-        var longName = cleanName(symbol.longname);
-        var metaCodeName = getMetaCodeName(symbol) || longName;
-        var memberOf = cleanName(symbol.memberof || '');
+        const longName = cleanName(symbol.longname);
+        const metaCodeName = getMetaCodeName(symbol) || longName;
+        const memberOf = cleanName(symbol.memberof || '');
 
         // JSDoc bug: if the constructor is not marked with @constructs, the
         // longname is incorrect. e.g. `ClassName#ClassName`. So we return
@@ -113,11 +113,11 @@ const utils = {
 
         // if @alias is set, the original (long) name is generally found at
         // meta.code.name
-        var codeName = symbol.alias ? metaCodeName : longName;
+        const codeName = symbol.alias ? metaCodeName : longName;
 
         if (!memberOf) return codeName;
-        var re = new RegExp('^' + memberOf + '[#.~:]'),
-            dot = symbol.scope === 'instance' ? '#' : '.';
+        const re = new RegExp('^' + memberOf + '[#.~:]');
+        const dot = symbol.scope === 'instance' ? '#' : '.';
 
         return re.test(codeName) ? codeName : memberOf + dot + codeName;
     },
@@ -144,10 +144,13 @@ const utils = {
      *  @returns {Number}
      */
     getLevels(symbol) {
-        var longname = typeof symbol === 'string' ? (symbol || '') : symbol.$longname;
+        let longname = (typeof symbol === 'string' ? symbol : symbol.$longname) || '';
+        longname = cleanName(longname);
         // colon (:) is not a level separator. JSDoc uses colon in cases like:
         // `obj~event:ready` or `module:someModule`
-        return ((longname || '').split(/[.#~]/) || []).length;
+        return longname
+            ? ((longname || '').split(/[.#~]/) || []).length
+            : 0;
     },
 
     /**
@@ -164,10 +167,10 @@ const utils = {
     getParentName(symbol) {
         let longname;
         if (typeof symbol !== 'string') {
-            if (symbol.memberof) return symbol.memberof;
-            longname = symbol.$longname;
+            if (symbol.memberof) return cleanName(symbol.memberof);
+            longname = cleanName(symbol.$longname);
         } else {
-            longname = symbol;
+            longname = cleanName(symbol);
         }
         // colon (:) is not a level separator. JSDoc uses colon in cases like:
         // `obj~event:ready` or `module:someModule`
@@ -188,8 +191,9 @@ const utils = {
         const sym = typeof symbol === 'string'
             ? utils.getSymbolByName(docs, symbol)
             : symbol;
-        const parentName = (sym && sym.memberof) || utils.getParentName(symbol);
-        if (parentName) utils.getSymbolByName(docs, parentName);
+        if (!sym) return null;
+        const parentName = (sym && cleanName(sym.memberof)) || utils.getParentName(symbol);
+        if (parentName) return utils.getSymbolByName(docs, parentName);
         return null;
     },
 
@@ -203,7 +207,7 @@ const utils = {
      *  @returns {Object} - Symbol object if found. Otherwise, returns `null`.
      */
     getSymbolByName(docs, name) {
-        var i, symbol;
+        let i, symbol;
         for (i = 0; i < docs.length; i++) {
             symbol = docs[i];
             if (symbol.name === name
@@ -212,7 +216,7 @@ const utils = {
                 return symbol;
             }
             if (symbol.$members) {
-                var sym = utils.getSymbolByName(symbol.$members, name);
+                const sym = utils.getSymbolByName(symbol.$members, name);
                 if (sym) return sym;
             }
         }
@@ -397,7 +401,7 @@ const utils = {
      *  @returns {Boolean}
      */
     isMethod(symbol) {
-        var codeType = utils.notate(symbol, 'meta.code.type');
+        const codeType = utils.notate(symbol, 'meta.code.type');
         return symbol.kind === 'function'
             || codeType === 'FunctionExpression'
             || codeType === 'FunctionDeclaration';
@@ -659,10 +663,10 @@ const utils = {
      *  @returns {Array} - Array of symbol names.
      */
     getSymbolNames(docs, sorter) {
-        var sortFn = typeof sorter === 'function'
+        const sortFn = typeof sorter === 'function'
             ? sorter
             : utils._getSorter(sorter);
-        var names = getSymNames(docs);
+        const names = getSymNames(docs);
         if (sortFn) names.sort(sortFn);
         return names;
     },
@@ -683,23 +687,23 @@ const utils = {
     _getSorter(sortType, prop) {
         if (!sortType) return null;
         // colon (:) is not included bec. it just indicates a prefix, it's not a level separator as dot (.).
-        var re = /[#.~]/g,
+        const re = /[#.~]/g,
             group = sortType === 'grouped';
         if (!group) {
             return (a, b) => {
                 // alphabetic sort (ignoring operators)
-                var A = (prop ? a[prop] : a).replace(re, '_');
-                var B = (prop ? b[prop] : b).replace(re, '_');
+                const A = (prop ? a[prop] : a).replace(re, '_');
+                const B = (prop ? b[prop] : b).replace(re, '_');
                 return A.toLocaleUpperCase().localeCompare(B.toLocaleUpperCase());
                 // console.log('comparing:', A, '<<—>>', B, '==>', result);
             };
         }
         // grouped sort (by scope). also moving inner symbols to end.
         return (a, b) => {
-            var A = prop ? a[prop] : a;
-            var B = prop ? b[prop] : b;
-            var aInner = A.indexOf('~') >= 0;
-            var bInner = B.indexOf('~') >= 0;
+            const A = prop ? a[prop] : a;
+            const B = prop ? b[prop] : b;
+            const aInner = A.indexOf('~') >= 0;
+            const bInner = B.indexOf('~') >= 0;
             return (aInner && bInner) || (!aInner && !bInner)
                 ? A.toLocaleUpperCase().localeCompare(B.toLocaleUpperCase())
                 : (aInner ? 1 : -1);

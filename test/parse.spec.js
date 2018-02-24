@@ -7,8 +7,9 @@ const _ = require('lodash');
 const fs = require('fs-extra');
 // own modules
 const jsdocx = require('../src/index');
+// const utils = require('../src/lib/utils');
 
-describe('Parser Suite', () => {
+describe('Test: Parser', () => {
     let options;
     const JS_SOURCE = '/**\n *  describe\n *  @namespace\n *  @type {Object}\n */\nconst nspace = {};\nclass Test { constructor() {} }';
 
@@ -114,150 +115,6 @@ describe('Parser Suite', () => {
                 expect(result.length).toBeGreaterThan(0);
                 result = _.filter(docs, { meta: { filename: 'test3.es5.js' } });
                 expect(result.length).toBeGreaterThan(0);
-            })
-            .catch(err => {
-                expect(Boolean(err)).toEqual(false);
-                console.log(err.stack || err);
-            })
-            .finally(done);
-    });
-
-    it('should sort symbols (ungrouped)', done => {
-        options.sort = true;
-        // options.output = false;
-        jsdocx.parse(options)
-            .then(docs => {
-                expect(docs).toEqual(jasmine.any(Array));
-
-                const cache = {};
-                function index(longname) {
-                    cache[longname] = cache[longname]
-                        || _.findIndex(docs, { longname: longname });
-                    return cache[longname];
-                }
-
-                expect(index('_opt')).toBeLessThan(index('<anonymous>~namespace'));
-                expect(index('aOption')).toBeLessThan(index('Code'));
-                expect(index('Code')).toBeLessThan(index('Code#_'));
-                expect(index('Code')).toBeLessThan(index('module:test2'));
-                expect(index('Code')).toBeLessThan(index('namespace'));
-                expect(index('module:test2')).toBeLessThan(index('namespace'));
-                expect(index('namespace')).toBeLessThan(index('namespace.location'));
-                expect(index('aOption')).toBeLessThan(index('zOption'));
-                expect(index('aOption')).toBeLessThan(index('bOption'));
-                expect(index('bOption')).toBeLessThan(index('zOption'));
-                expect(index('Code.aStaticMethod')).toBeLessThan(index('Code#bInstanceMethod'));
-                expect(index('Code#bInstanceMethod')).toBeLessThan(index('Code.xStaticMethod'));
-                expect(index('Code.utils')).toBeLessThan(index('Code.xStaticMethod'));
-                expect(index('Code#instanceMethod')).toBeLessThan(index('Code.utils'));
-
-                // docs.forEach(function (symbol) {
-                //     console.log(symbol.longname);
-                //     if (Array.isArray(symbol.properties)) {
-                //         symbol.properties.forEach(function (prop) {
-                //             console.log('prop:', prop.name);
-                //         });
-                //     }
-                // });
-                // console.log('-------------------');
-            })
-            .catch(err => {
-                expect(Boolean(err)).toEqual(false);
-                console.log(err.stack || err);
-            })
-            .finally(done);
-    });
-
-    it('should sort symbols (grouped)', done => {
-        options.sort = 'grouped';
-        // options.output = false;
-        jsdocx.parse(options)
-            .then(docs => {
-                expect(docs).toEqual(jasmine.any(Array));
-
-                const cache = {};
-                function index(longname) {
-                    cache[longname] = cache[longname]
-                        || _.findIndex(docs, { longname: longname });
-                    return cache[longname];
-                }
-
-                expect(index('_opt')).toBeLessThan(index('<anonymous>~namespace'));
-                expect(index('aOption')).toBeLessThan(index('Code'));
-                expect(index('Code')).toBeLessThan(index('Code#_'));
-                expect(index('Code')).toBeLessThan(index('module:test2'));
-                expect(index('Code')).toBeLessThan(index('namespace'));
-                expect(index('module:test2')).toBeLessThan(index('namespace'));
-                expect(index('namespace')).toBeLessThan(index('namespace.location'));
-                expect(index('aOption')).toBeLessThan(index('zOption'));
-                expect(index('aOption')).toBeLessThan(index('bOption'));
-                expect(index('bOption')).toBeLessThan(index('zOption'));
-                expect(index('Code.aStaticMethod')).toBeLessThan(index('Code#bInstanceMethod'));
-                expect(index('Code#bInstanceMethod')).not.toBeLessThan(index('Code.xStaticMethod'));
-                expect(index('Code#instanceMethod')).not.toBeLessThan(index('Code.utils'));
-
-                // docs.forEach(function (item) {
-                //     console.log(item.longname);
-                // });
-            })
-            .catch(err => {
-                expect(Boolean(err)).toEqual(false);
-                console.log(err.stack || err);
-            })
-            .finally(done);
-    });
-
-    it('should build hierarchical symbols (grouped)', done => {
-        options.files = [
-            './test/input-parse/code.es6.js',
-            './test/input-parse/test3.es5.js'
-        ];
-        options.sort = 'grouped';
-        options.hierarchy = true;
-        options.module = false;
-        options.undocumented = false;
-        options.undescribed = false;
-        options.output = {
-            path: './test/output/docs-hierarchy.json',
-            indent: true
-        };
-
-        jsdocx.parse(options)
-            .then(docs => {
-                expect(docs).toEqual(jasmine.any(Array));
-                expect(docs.length).toEqual(2);
-
-                function getIndexer(symbol, prop, nameProp) {
-                    nameProp = nameProp || 'longname';
-                    const cache = {};
-                    return val => {
-                        const i = _.findIndex(symbol[prop], s => s[nameProp] === val); // eslint-disable-line max-nested-callbacks
-                        cache[val] = cache[val] || i;
-                        return cache[val];
-                    };
-                }
-
-                let index;
-
-                expect(docs[0].$members).toEqual(jasmine.any(Array));
-                expect(docs[0].$members.length).toBeGreaterThan(5);
-                index = getIndexer(docs[0], '$members');
-                expect(index('Code.aStaticMethod')).toBeLessThan(index('Code#bInstanceMethod'));
-                expect(index('Code#bInstanceMethod')).not.toBeLessThan(index('Code.xStaticMethod'));
-                expect(index('Code#instanceMethod')).not.toBeLessThan(index('Code.utils'));
-
-                expect(docs[1].$members).toEqual(jasmine.any(Array));
-                expect(docs[1].$members.length).toEqual(1); // namespace.location
-
-                const sym = docs[1].$members[0]; // location symbol
-                expect(sym.properties.length).toBeGreaterThan(5);
-                index = getIndexer(sym, 'properties', 'name'); // properties of location
-                expect(index('href')).toBeLessThan(index('query'));
-                expect(index('host')).toBeLessThan(index('hostname'));
-                expect(index('path')).toBeLessThan(index('pathname'));
-                expect(index('hash')).toBeLessThan(index('host'));
-                expect(index('origin')).toBeLessThan(index('query'));
-
             })
             .catch(err => {
                 expect(Boolean(err)).toEqual(false);

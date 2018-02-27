@@ -133,7 +133,7 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 ## [0.4.0] (2016-03-18)
 
 ### Changed
-- Using child_process.spawn instead of execFile since the latter has 200kb limit.
+- Using `child_process.spawn` instead of `execFile` since the latter has 200kb limit.
 
 ### Added
 - `filter`, `undocumented`, `undescribed`, `module` options.

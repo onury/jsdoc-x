@@ -1,13 +1,13 @@
 'use strict';
 
 function getStr(value) {
-    return value && value.trim() !== '' ? value : null;
+    return typeof value === 'string' ? value.trim() : '';
 }
 
 // Cleans the given symbol name.
 // e.g. <anonymous>~obj.doStuff —> obj.doStuff
 function cleanName(name) {
-    return (name || '').replace(/([^>]+>)?~?(.*)/, '$2')
+    return getStr(name).replace(/([^>]+>)?~?(.*)/, '$2')
         .replace(/^(module\.)?exports\./, '')
         .replace(/^module:/, '');
 }

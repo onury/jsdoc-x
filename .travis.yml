@@ -4,9 +4,9 @@ language: node_js
 node_js:
   - '8'
 before_install:
-  - "npm config set spin false"
-  - 'npm i -g npm@^6'
+  - 'npm config set spin false'
+  - npm i -g npm@latest
 before_script: cd $TRAVIS_BUILD_DIR
 script:
-  - 'npm test'
+  - npm test
 

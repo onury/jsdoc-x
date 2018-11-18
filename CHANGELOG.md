@@ -1,7 +1,12 @@
 # jsdoc-x Changelog
 
-All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org).
+All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
+
+## [4.0.0](https://github.com/onury/jsdoc-x/compare/v3.0.0...v4.0.0) (2018-11-18)
+
+### Changed
+- **Breaking:** Requires Node.js v8 or later. This change is due to the core dependency `fs-extra` update.
+- Minor improvements.
 
 ## [3.0.0](https://github.com/onury/jsdoc-x/compare/v2.0.2...v3.0.0) (2018-02-24)
 
@@ -120,7 +125,7 @@ and this project adheres to [Semantic Versioning](http://semver.org).
 - `utils` as a utility module for documentation symbols.
 
 ## [0.4.8](https://github.com/onury/jsdoc-x/compare/v0.4.6...v0.4.8) (2016-03-19)
- 
+
 ### Fixed
 - If the parent project(s) has `jsdoc`, ours won't get installed. Since we use a specific file within `jsdoc` module, we cannot find it via `require()`. Now, fixed `jsdoc` path resolver. This will either use the local or from the parent project(s) properly.
 

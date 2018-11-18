@@ -7,7 +7,7 @@ function getStr(value) {
 // Cleans the given symbol name.
 // e.g. <anonymous>~obj.doStuff —> obj.doStuff
 function cleanName(name) {
-    return (typeof name === 'string' ? name : '').replace(/([^>]+>)?~?(.*)/, '$2')
+    return getStr(name).replace(/([^>]+>)?~?(.*)/, '$2')
         .replace(/^(module\.)?exports\./, '')
         .replace(/^module:/, '');
 }
@@ -211,8 +211,8 @@ const utils = {
         for (i = 0; i < docs.length; i++) {
             symbol = docs[i];
             if (symbol.name === name
-                    || symbol.longname === name
-                    || utils.getCodeName(symbol) === name) {
+                || symbol.longname === name
+                || utils.getCodeName(symbol) === name) {
                 return symbol;
             }
             if (symbol.$members) {

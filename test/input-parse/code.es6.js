@@ -29,8 +29,6 @@ class Code {
      *         should work; but it's not guaranteed.
      *         Find out the {@link https://developers.google.com/maps/documentation/javascript/versions|latest version here}.
      *
-     * @returns {Code} - A new instance of `Code`.
-     *
      * @example
      * var code = new Code({
      *     language: 'en',
@@ -163,6 +161,14 @@ class Code {
      * @memberof Code
      */
     static aStaticMethod() {
+        return 'a';
+    }
+
+    /**
+     * a - For sort test.
+     * @memberof Code
+     */
+    static ignoredByPredicate() {
         return 'a';
     }
 

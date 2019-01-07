@@ -65,8 +65,7 @@ describe('Test: Parser', () => {
             module: false,
             undocumented: false,
             undescribed: false,
-            relativePath: path.join(__dirname, '../code'),
-            filter: null
+            relativePath: path.join(__dirname, '../code')
         };
         jsdocx.parse(options)
             .then(docs => {
@@ -99,7 +98,8 @@ describe('Test: Parser', () => {
             undocumented: true,
             undescribed: true,
             relativePath: null,
-            filter: null,
+            // filter: symbol => symbol.name !== 'ignoredByPredicate',
+            filter: '^((?!(ignoredByPredicate)).)*$',
             output: {
                 path: './test/output/docs-multiple-files.json',
                 indent: true
@@ -115,6 +115,8 @@ describe('Test: Parser', () => {
                 expect(result.length).toBeGreaterThan(0);
                 result = _.filter(docs, { meta: { filename: 'test3.es5.js' } });
                 expect(result.length).toBeGreaterThan(0);
+                result = _.find(docs, { name: 'ignoredByPredicate' });
+                expect(result).toBeUndefined();
             })
             .catch(err => {
                 expect(Boolean(err)).toEqual(false);

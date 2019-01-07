@@ -204,21 +204,29 @@ function promiseGlobFiles(globs) {
  *  Filters the parsed documentation output array.
  *
  *  @param {Array} docs - Documentation output array.
- *  @param {Object} [options] - Filter options.
- *  @param {Function} [predicate] - The function invoked per iteration.
- *  Returning a falsy value will remove the symbol from the output.
- *  Returning true will keep the original symbol. To keep the symbol and
- *  alter its contents, simply return an altered symbol object.
+ *  @param {Object|Function} [options] - Filter options.
+ *  @param {Function|String} [predicate] - The function invoked per iteration.
+ *  Returning a falsy value will remove the symbol from the output. Returning
+ *  true will keep the original symbol. To keep the symbol and alter its
+ *  contents, simply return an altered symbol object. If a RegExp string is
+ *  passed, it will be executed on symbol's long name.
  *
  *  @returns {Array} - Filtered documentation array.
  */
 jsdocx.filter = (docs, options, predicate) => {
     if (!options && !predicate) return docs;
-    if (_.isFunction(options)) {
+    if (!predicate && _.isFunction(options)) {
         predicate = options;
         options = {};
     }
-    if (!_.isFunction(predicate)) predicate = identity;
+
+    if (_.isString(predicate)) {
+        const re = new RegExp(String(predicate));
+        predicate = symbol => re.test(symbol.longname);
+    } else if (!_.isFunction(predicate)) {
+        predicate = identity;
+    }
+
     docs = helper.ensureArray(docs);
 
     options = _.defaults(options, {

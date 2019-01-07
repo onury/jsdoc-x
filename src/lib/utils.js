@@ -22,7 +22,7 @@ function cleanName(name) {
     name = getStr(name)
         .replace(/([^>]+>)?~?(.*)/, '$2')
         // e.g. '"./node_modules/eventemitter3/index.js"~EventEmitter'.
-        .replace(/^"[^"]+"([^"]+)$/, '$1')
+        .replace(/^"[^"]+"\.?([^"]+)$/, '$1')
         .replace(/^(module\.)?exports\./, '')
         .replace(/^module:/, '');
     return fixBracket(name);
@@ -92,7 +92,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {String}
+     *  @returns {String} -
      */
     getName(symbol) {
         // if @alias is set, the original (long) name is generally found at
@@ -157,7 +157,7 @@ const utils = {
      *  @function
      *
      *  @param {Object|String} symbol - Documented symbol object or long name.
-     *  @returns {Number}
+     *  @returns {Number} -
      */
     getLevels(symbol) {
         let longname = (typeof symbol === 'string' ? symbol : symbol.$longname) || '';
@@ -200,6 +200,7 @@ const utils = {
      *  @name jsdocx.utils.getParent
      *  @function
      *
+     *  @param {Array} docs - Documentation symbols array.
      *  @param {Object|String} symbol - Documented symbol object or long name.
      *  @returns {String} - `null` if symbol has no parent.
      */
@@ -248,7 +249,7 @@ const utils = {
      *
      *  @param {Object} symbol - Documented symbol object.
      *
-     *  @returns {String}
+     *  @returns {String} -
      */
     getKind(symbol) {
         if (utils.isEnum(symbol)) return 'enum'; // should come before all
@@ -275,7 +276,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isGlobal(symbol) {
         return symbol.scope === 'global';
@@ -287,7 +288,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isNamespace(symbol) {
         return symbol.kind === 'namespace';
@@ -299,7 +300,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isModule(symbol) {
         return symbol.kind === 'module';
@@ -312,7 +313,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isMixin(symbol) {
         return symbol.kind === 'mixin';
@@ -324,7 +325,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isClass(symbol) {
         return symbol.kind === 'class'
@@ -338,7 +339,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isConstant(symbol) {
         return symbol.kind === 'constant';
@@ -350,7 +351,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isConstructor(symbol) {
         return symbol.kind === 'class'
@@ -364,7 +365,7 @@ const utils = {
      *  @alias jsdocx.utils.isStatic
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isStaticMember(symbol) {
         return symbol.scope === 'static';
@@ -376,7 +377,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isInner(symbol) {
         return symbol.scope === 'inner';
@@ -388,7 +389,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isInstanceMember(symbol) {
         return symbol.scope === 'instance';
@@ -401,7 +402,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isInterface(symbol) {
         return symbol.kind === 'interface';
@@ -414,7 +415,7 @@ const utils = {
      *  @alias jsdocx.utils.isFunction
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isMethod(symbol) {
         const codeType = utils.notate(symbol, 'meta.code.type');
@@ -431,7 +432,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isInstanceMethod(symbol) {
         return utils.isInstanceMember(symbol) && utils.isMethod(symbol);
@@ -443,7 +444,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isStaticMethod(symbol) {
         return utils.isStaticMember(symbol) && utils.isMethod(symbol);
@@ -455,7 +456,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isProperty(symbol) {
         return symbol.kind === 'member' && !utils.isMethod(symbol);
@@ -467,7 +468,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isIgnored(symbol) {
         return symbol.ignore;
@@ -479,7 +480,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isInstanceProperty(symbol) {
         return utils.isInstanceMember(symbol) && utils.isProperty(symbol);
@@ -491,7 +492,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isStaticProperty(symbol) {
         return utils.isStaticMember(symbol) && utils.isProperty(symbol);
@@ -504,7 +505,7 @@ const utils = {
      *  @alias utils.isCustomType
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isTypeDef(symbol) {
         return symbol.kind === 'typedef';
@@ -516,7 +517,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isCallback(symbol) {
         const typeNames = (symbol.type || {}).names || [];
@@ -531,7 +532,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isEnum(symbol) {
         return Boolean(symbol.isEnum);
@@ -543,7 +544,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isEvent(symbol) {
         return symbol.kind === 'event';
@@ -556,7 +557,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isExternal(symbol) {
         return symbol.kind === 'external';
@@ -568,7 +569,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isGenerator(symbol) {
         return symbol.generator && symbol.kind === 'function';
@@ -580,7 +581,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isReadOnly(symbol) {
         return Boolean(symbol.readonly);
@@ -592,7 +593,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isPublic(symbol) {
         return typeof symbol.access !== 'string' || symbol.access === 'public';
@@ -604,7 +605,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isPrivate(symbol) {
         return symbol.access === 'private';
@@ -618,7 +619,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isPackagePrivate(symbol) {
         return symbol.access === 'package';
@@ -630,7 +631,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isProtected(symbol) {
         return symbol.access === 'protected';
@@ -643,7 +644,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     isUndocumented(symbol) {
         // we could use the `undocumented` property but it still seems buggy.
@@ -659,7 +660,7 @@ const utils = {
      *  @function
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {Boolean}
+     *  @returns {Boolean} -
      */
     hasDescription(symbol) {
         return Boolean(getStr(symbol.classdesc) || getStr(symbol.description));
@@ -698,7 +699,7 @@ const utils = {
      *  @param   {String} [prop]
      *           If each item is an object, you can set the property name to be
      *           used for sorting. Otherwise, omit this.
-     *  @returns {Function}
+     *  @returns {Function} -
      */
     _getSorter(sortType, prop) {
         if (!sortType) return null;

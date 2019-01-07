@@ -4,12 +4,28 @@ function getStr(value) {
     return typeof value === 'string' ? value.trim() : '';
 }
 
+function bracket(prop) {
+    const re = /^[a-z$_][a-z\d$_]*$/i; // non-bracket notation
+    return re.test(prop) ? '.' + prop : '["' + prop + '"]';
+}
+// fixes a jsdoc bug
+// e.g. MyClass.Enum."STATE"] —» MyClass.Enum.STATE
+function fixBracket(notation) {
+    return notation.replace(/(.*?)\."([^"]+)"\]?$/, (str, $1, $2) => {
+        return $2 ? $1 + bracket($2) : notation;
+    });
+}
+
 // Cleans the given symbol name.
-// e.g. <anonymous>~obj.doStuff —> obj.doStuff
 function cleanName(name) {
-    return getStr(name).replace(/([^>]+>)?~?(.*)/, '$2')
+    // e.g. <anonymous>~obj.doStuff —» obj.doStuff
+    name = getStr(name)
+        .replace(/([^>]+>)?~?(.*)/, '$2')
+        // e.g. '"./node_modules/eventemitter3/index.js"~EventEmitter'.
+        .replace(/^"[^"]+"([^"]+)$/, '$1')
         .replace(/^(module\.)?exports\./, '')
         .replace(/^module:/, '');
+    return fixBracket(name);
 }
 
 function notate(obj, notation) {
@@ -97,7 +113,7 @@ const utils = {
      *  @alias jsdocx.utils.getFullName
      *
      *  @param {Object} symbol - Documented symbol object.
-     *  @returns {String}
+     *  @returns {String} -
      */
     getLongName(symbol) {
         const longName = cleanName(symbol.longname);

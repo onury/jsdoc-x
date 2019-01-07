@@ -6,9 +6,9 @@
 [![license](http://img.shields.io/npm/l/jsdoc-x.svg)](https://github.com/onury/jsdoc-x/blob/master/LICENSE)
 [![downloads](https://img.shields.io/npm/dt/jsdoc-x.svg)](https://www.npmjs.com/package/jsdoc-x)
 [![dependencies](https://david-dm.org/onury/jsdoc-x.svg)](https://david-dm.org/onury/jsdoc-x)
-[![maintained](https://img.shields.io/maintenance/yes/2018.svg)](https://github.com/onury/jsdoc-x/graphs/commit-activity)  
+[![maintained](https://img.shields.io/maintenance/yes/2019.svg)](https://github.com/onury/jsdoc-x/graphs/commit-activity)  
 
-> © 2018, Onur Yıldırım ([@onury](https://github.com/onury)). MIT License.
+> © 2019, Onur Yıldırım ([@onury](https://github.com/onury)). MIT License.
 
 Parser for outputting a Javascript object from documented code via JSDoc's explain (`-X`) command.  
 
@@ -207,9 +207,9 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
     </tr>
     <tr>
         <td><b><code>predicate</code></b></td>
-        <td><code>Function</code></td>
+        <td><code>Function|string</code></td>
         <td>
-            Alias: <code>filter</code>. This is used to filter the parsed documentation output array. If a <code>Function</code> is passed; it's invoked for each included <code>symbol</code>. e.g. <code>function (symbol) { return symbol; }</code> Returning a falsy value will remove the symbol from the output. Returning <code>true</code> will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object. Default: <code>undefined</code>
+            Alias: <code>filter</code>. This is used to filter the parsed documentation output array. If a <code>Function</code> is passed; it's invoked for each included <code>symbol</code>. e.g. <code>function (symbol) { return symbol; }</code> Returning a falsy value will remove the symbol from the output. Returning <code>true</code> will keep the original symbol. To keep the symbol and alter its contents, simply return an altered symbol object. If a RegExp string is passed, it's executed on the symbol's long name. Default: <code>undefined</code>
         </td>
     </tr>
     <tr>

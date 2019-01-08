@@ -22,7 +22,7 @@ function cleanName(name) {
     name = getStr(name)
         .replace(/([^>]+>)?~?(.*)/, '$2')
         // e.g. '"./node_modules/eventemitter3/index.js"~EventEmitter'.
-        .replace(/^"[^"]+"\.?([^"]+)$/, '$1')
+        .replace(/^"[^"]+"\.?~?([^"]+)$/, '$1')
         .replace(/^(module\.)?exports\./, '')
         .replace(/^module:/, '');
     return fixBracket(name);
@@ -58,6 +58,10 @@ function getSymNames(data, memo) {
         }
     });
     return memo;
+}
+
+function hasConstructorTag(symbol) {
+    return /\*\s+@construct(s|or)\b/.test(symbol.comment);
 }
 
 // ---------------------------
@@ -118,7 +122,9 @@ const utils = {
     getLongName(symbol) {
         const longName = cleanName(symbol.longname);
         const metaCodeName = getMetaCodeName(symbol) || longName;
-        const memberOf = cleanName(symbol.memberof || '');
+        let memberOf = symbol.memberof || '';
+        // if memberOf is like "\"./some/file.js\""
+        memberOf = /^".*"$/.test(memberOf) ? '' : cleanName(memberOf);
 
         // JSDoc bug: if the constructor is not marked with @constructs, the
         // longname is incorrect. e.g. `ClassName#ClassName`. So we return
@@ -183,7 +189,11 @@ const utils = {
     getParentName(symbol) {
         let longname;
         if (typeof symbol !== 'string') {
-            if (symbol.memberof) return cleanName(symbol.memberof);
+            if (symbol.memberof
+                // if memberOf is like "\"./some/file.js\""
+                && /^".*"$/.test(symbol.memberof) === false) {
+                return cleanName(symbol.memberof);
+            }
             longname = cleanName(symbol.$longname);
         } else {
             longname = cleanName(symbol);
@@ -209,7 +219,8 @@ const utils = {
             ? utils.getSymbolByName(docs, symbol)
             : symbol;
         if (!sym) return null;
-        const parentName = (sym && cleanName(sym.memberof)) || utils.getParentName(symbol);
+        // const parentName = (sym && cleanName(sym.memberof)) || utils.getParentName(symbol);
+        const parentName = utils.getParentName(sym);
         if (parentName) return utils.getSymbolByName(docs, parentName);
         return null;
     },
@@ -329,7 +340,8 @@ const utils = {
      */
     isClass(symbol) {
         return symbol.kind === 'class'
-            && utils.notate(symbol, 'meta.code.type') !== 'MethodDefinition'; // constructor if MethodDefinition
+            && utils.notate(symbol, 'meta.code.type') !== 'MethodDefinition' // constructor if MethodDefinition
+            && !hasConstructorTag(symbol);
         // && utils.notate(symbol, 'meta.code.type') === 'ClassDeclaration';
     },
 
@@ -355,7 +367,7 @@ const utils = {
      */
     isConstructor(symbol) {
         return symbol.kind === 'class'
-            && utils.notate(symbol, 'meta.code.type') === 'MethodDefinition';
+            && (utils.notate(symbol, 'meta.code.type') === 'MethodDefinition' || hasConstructorTag(symbol));
     },
 
     /**

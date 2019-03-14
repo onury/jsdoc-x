@@ -90,29 +90,37 @@ function buildArgs(options) {
 // function creates the conf object to be written to that temp file before
 // passing to jsdoc as a command line argument.
 function buildConf(options) {
-    let opts = options || {};
-
+    const opts = options || {};
+    const config = typeof opts.config === 'object' && !Array.isArray(opts.config)
+        ? opts.config
+        : {};
     // updating default JSDoc configuration.
     // see http://usejsdoc.org/about-configuring-jsdoc.html
-    return {
+    return _.defaultsDeep(config, {
         tags: {
             allowUnknownTags: typeof opts.allowUnknownTags === 'boolean'
                 ? opts.allowUnknownTags
                 : true,
-            dictionaries: !Array.isArray(opts.dictionaries)
-                ? ['jsdoc', 'closure']
-                : opts.dictionaries
+            dictionaries: Array.isArray(opts.dictionaries)
+                ? opts.dictionaries
+                : ['jsdoc', 'closure']
         },
         source: {
-            includePattern: opts.includePattern || '.+\\.js(doc|x)?$',
-            excludePattern: opts.excludePattern || '(^|\\/|\\\\)_'
+            includePattern: typeof opts.includePattern === 'string'
+                ? opts.includePattern
+                : '.+\\.js(doc|x)?$',
+            excludePattern: typeof opts.excludePattern === 'string'
+                ? opts.excludePattern
+                : '(^|\\/|\\\\)_'
         },
-        plugins: !Array.isArray(opts.plugins) ? [] : opts.plugins,
         templates: {
             cleverLinks: false,
             monospaceLinks: false
-        }
-    };
+        },
+        plugins: Array.isArray(opts.plugins)
+            ? opts.plugins
+            : []
+    });
 }
 
 function relativePath(symbol, rPath) {

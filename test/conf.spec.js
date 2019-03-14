@@ -92,7 +92,7 @@ describe('JSDoc configuration options', () => {
     });
 
     // allows passing custom options to jsdoc
-    fit('setting config.custom object should not throw', done => {
+    it('setting config.custom object should not throw', done => {
         options.source = '/**\n *  describe\n *  @type {Object}\n */\nconst a = {};';
         options.config.custom = {
             key: 'value'

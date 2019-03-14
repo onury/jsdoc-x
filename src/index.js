@@ -91,35 +91,23 @@ function buildArgs(options) {
 // passing to jsdoc as a command line argument.
 function buildConf(options) {
     const opts = options || {};
-    const config = typeof opts.config === 'object' && !Array.isArray(opts.config)
-        ? opts.config
-        : {};
+    const config = _.isPlainObject(opts) ? opts.config : {};
     // updating default JSDoc configuration.
     // see http://usejsdoc.org/about-configuring-jsdoc.html
     return _.defaultsDeep(config, {
         tags: {
-            allowUnknownTags: typeof opts.allowUnknownTags === 'boolean'
-                ? opts.allowUnknownTags
-                : true,
-            dictionaries: Array.isArray(opts.dictionaries)
-                ? opts.dictionaries
-                : ['jsdoc', 'closure']
+            allowUnknownTags: _.isBoolean(opts.allowUnknownTags) ? opts.allowUnknownTags : true,
+            dictionaries: _.isArray(opts.dictionaries) ? opts.dictionaries : ['jsdoc', 'closure']
         },
         source: {
-            includePattern: typeof opts.includePattern === 'string'
-                ? opts.includePattern
-                : '.+\\.js(doc|x)?$',
-            excludePattern: typeof opts.excludePattern === 'string'
-                ? opts.excludePattern
-                : '(^|\\/|\\\\)_'
+            includePattern: _.isString(opts.includePattern) ? opts.includePattern : '.+\\.js(doc|x)?$',
+            excludePattern: _.isString(opts.excludePattern) ? opts.excludePattern : '(^|\\/|\\\\)_'
         },
         templates: {
             cleverLinks: false,
             monospaceLinks: false
         },
-        plugins: Array.isArray(opts.plugins)
-            ? opts.plugins
-            : []
+        plugins: _.isArray(opts.plugins) ? opts.plugins : []
     });
 }
 

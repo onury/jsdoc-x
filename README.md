@@ -6,9 +6,9 @@
 [![license](http://img.shields.io/npm/l/jsdoc-x.svg)](https://github.com/onury/jsdoc-x/blob/master/LICENSE)
 [![downloads](https://img.shields.io/npm/dt/jsdoc-x.svg)](https://www.npmjs.com/package/jsdoc-x)
 [![dependencies](https://david-dm.org/onury/jsdoc-x.svg)](https://david-dm.org/onury/jsdoc-x)
-[![maintained](https://img.shields.io/maintenance/yes/2019.svg)](https://github.com/onury/jsdoc-x/graphs/commit-activity)  
+[![maintained](https://img.shields.io/maintenance/yes/2020.svg)](https://github.com/onury/jsdoc-x/graphs/commit-activity)  
 
-> © 2019, Onur Yıldırım ([@onury](https://github.com/onury)). MIT License.
+> © 2020, Onur Yıldırım ([@onury](https://github.com/onury)). MIT License.
 
 Parser for outputting a Javascript object from documented code via JSDoc's explain (`-X`) command.  
 
@@ -99,7 +99,7 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
         <td><b><code>config</code></b></td>
         <td><code>Object</code></td>
         <td>
-            Pass in all options as a single object. Overrides all other options. Allows passing custom config options to jsdoc. Default:  <code>{}</code>
+            Pass a configuration object to the underlying JSDoc core. This will bypass all parser options. Default:  <code>{}</code>
         </td>
     </tr>
     <tr>

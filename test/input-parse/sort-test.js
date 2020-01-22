@@ -58,7 +58,7 @@ let fGlobalObjExt = SomeObj();
 /**
  * class
  */
-class Code {
+export class Code {
 
     /**
      * constructor
@@ -173,7 +173,7 @@ class Code {
 
 }
 
-/**
- *  exporting
- */
-export default Code;
+// /**
+//  *  exporting
+//  */
+// export default Code;

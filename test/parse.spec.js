@@ -181,7 +181,7 @@ describe('Test: Parser', () => {
         jsdocx.parse(options)
             .then(docs => {
                 expect(docs).toEqual(jasmine.any(Array));
-                let result = _.filter(docs, { longname: 'TestClass#TestClass' });
+                let result = _.filter(docs, { longname: 'TestClass', $kind: 'constructor' });
                 expect(result.length).toEqual(1);
                 const cons = result[0];
                 expect(cons.hideconstructor).toEqual(true);

@@ -14,6 +14,7 @@ function pad(str, len) {
     return str + new Array(spaces).join(' ');
 }
 
+// eslint-disable-next-line no-unused-vars
 function logSortedDocs(docs, nPrefix = '') {
     var i = nPrefix ? 1 : 0;
     var s = nPrefix ? '  ' : '';
@@ -25,9 +26,11 @@ function logSortedDocs(docs, nPrefix = '') {
                 console.log(` ${pad(i++, 4)}  > prop: ${prop.name}`);
             });
         }
+
         if (Array.isArray(symbol.$members)) {
             logSortedDocs(symbol.$members, i + '.');
         }
+
         i++;
     });
 }
@@ -77,7 +80,7 @@ describe('Test: Sorter', () => {
                     'gGlobalArray2',
                     'hGlobalFunction',
                     'kGlobalObjExt',
-                    'module.exports',
+                    // 'module.exports',
                     'oGlobalObjExt',
                     'vGlobalVar',
                     'xGlobalFunction',
@@ -117,7 +120,6 @@ describe('Test: Sorter', () => {
                     'aGlobalObject',                     // global
                     'aGlobalObject2',                    // global
                     'Code',                              // global
-                    'Code',                              // global
                     'fGlobalObjExt',                     // global
                     'gGlobalArray',                      // global
                     'gGlobalArray2',                     // global
@@ -133,7 +135,8 @@ describe('Test: Sorter', () => {
                     'Code.Error',                        // static
                     'Code.staticMethod',                 // static
                     'Code.xStaticMethod',                // static
-                    'module.exports',                    // static
+                    // 'module.exports',                    // static
+                    'Code',                              // instance (constructor)
                     'Code#bProtectedInstanceProp',       // instance
                     'Code#config',                       // instance
                     'Code#instanceMethod',               // instance
@@ -189,7 +192,7 @@ describe('Test: Sorter', () => {
                     'gGlobalArray2',                     // public
                     'hGlobalFunction',                   // public
                     'kGlobalObjExt',                     // public
-                    'module.exports',                    // public
+                    // 'module.exports',                    // public
                     'oGlobalObjExt',                     // public
                     'vGlobalVar',                        // public
                     'xGlobalFunction',                   // public
@@ -254,7 +257,7 @@ describe('Test: Sorter', () => {
                     'fGlobalObjExt',                   // property
                     'gGlobalArray',                    // property
                     'gGlobalArray2',                   // property
-                    'module.exports',                  // property
+                    // 'module.exports',                  // property
                     'oGlobalObjExt',                   // property
                     'vGlobalVar',                      // property
                     'zGlobalObjExt'                    // property
@@ -300,7 +303,6 @@ describe('Test: Sorter', () => {
                 const expectedOrder = [
                     'aGlobalObject',                  // global     public     property
                     'aGlobalObject2',                 // global     public     property
-                    'Code',                           // global     public     constructor
                     'Code',                           // global     public     class
                     'fGlobalObjExt',                  // global     public     property
                     'gGlobalArray',                   // global     public     property
@@ -317,7 +319,8 @@ describe('Test: Sorter', () => {
                     'Code#config._opt',               // static     public     property
                     'Code#config.pOption',            // static     public     property
                     'Code.Error',                     // static     public     property
-                    'module.exports',                 // static     public     property
+                    // 'module.exports',                 // static     public     property
+                    'Code',                           // instance   public     constructor
                     'Code#instanceMethod',            // instance   public     method
                     'Code#config',                    // instance   public     property
                     // '_opt',                           // prop
@@ -370,8 +373,8 @@ describe('Test: Sorter', () => {
                     'oGlobalObjExt',                   // global     public     property
                     'vGlobalVar',                      // global     public     property
                     'xGlobalFunction',                 // global     public     method
-                    'zGlobalObjExt',                   // global     public     property
-                    'module.exports'                   // static     public     property
+                    'zGlobalObjExt'                    // global     public     property
+                    // 'module.exports'                   // static     public     property
                 ];
                 expect(sorted).toEqual(expectedOrder);
 

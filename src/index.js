@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 'use strict';
 
 // core modules
@@ -43,7 +44,7 @@ try {
         // /path/to/parent-project/node_modules/jsdoc/jsdoc.js
     }
 } catch (e) {
-    throw new Error('Could not find jsdoc module.');
+    throw new Error('Could not find jsdoc module.', e);
 }
 
 // ---------------------------
@@ -77,6 +78,7 @@ function buildArgs(options) {
     if (_.isString(opts.package)) {
         args.push('-P', opts.package);
     }
+
     if (opts.recurse) args.push('-r');
     if (opts.pedantic) args.push('--pedantic');
     if (opts.query) args.push('-q', opts.query);
@@ -129,6 +131,7 @@ function normalizeAccess(access) {
     if (!_.isString(access) && !_.isArray(access)) {
         return ['public', 'protected'];
     }
+
     return helper.ensureArray(access);
 }
 
@@ -181,6 +184,7 @@ function hierarchy(docs, sortType) {
                     // reverse bec. we used eachRight
                     parent.$members.reverse();
                 }
+
                 docs.splice(index, 1);
             }
         }
@@ -194,6 +198,45 @@ function promiseGlobFiles(globs) {
     return Promise.reduce(globs, (memo, pattern) => {
         return glob(pattern).then(paths => memo.concat(paths));
     }, []);
+}
+
+function isSymbolComparable(symbol) {
+    return typeof symbol.name === 'string'
+        && typeof symbol.longname === 'string'
+        && _.isPlainObject(symbol.meta)
+        && _.isPlainObject(symbol.meta.code)
+        && typeof symbol.meta.code.name === 'string';
+}
+
+// jsdoc (core) version ^3.6.3 produces some duplicate symbols especially when
+// some ES2015 exporting is used within the code. We'll find these duplicates
+// and remove them in .filter() method. We'll only mark the symbol with longer
+// `code.name` or `longname` as duplicate. (e.g. "exports.Code" vs "Code")
+function isDuplicateSymbol(docs, symbol) {
+    if (!isSymbolComparable(symbol)) return false;
+
+    const found = _.find(docs, s => {
+        if (!isSymbolComparable(s)) return false;
+
+        const meta = s.meta;
+        const symMeta = symbol.meta;
+
+        const isDup = s.name === symbol.name
+            && meta.path === symMeta.path
+            && meta.filename === symMeta.filename
+            && meta.lineno === symMeta.lineno
+            && meta.code.type === symMeta.code.type;
+        if (!isDup) return false;
+
+        if (meta.code.name.length < symMeta.code.name.length) return true;
+        if (meta.code.name.length === symMeta.code.name.length) {
+            return s.longname.length < symbol.longname.length;
+        }
+
+        return false;
+    });
+
+    return Boolean(found);
 }
 
 // ---------------------------
@@ -242,7 +285,7 @@ jsdocx.filter = (docs, options, predicate) => {
     });
 
     const access = normalizeAccess(options.access);
-    let isCon, undoc, undesc, pkg, mdl, acc, ignored, o;
+    let isCon, isDup, undoc, undesc, pkg, mdl, acc, ignored, o;
     docs = _.reduce(docs, (memo, symbol) => {
         // console.log(symbol.longname, symbol.kind, symbol.access, symbol.meta ? symbol.meta.code.type : '');
 
@@ -262,9 +305,15 @@ jsdocx.filter = (docs, options, predicate) => {
         // access might not be explicitly set for the symbol.
         // in this case, we'll include the symbol.
         acc = access === 'all' || !symbol.access || access.indexOf(symbol.access) >= 0;
+
+        // is symbol is duplicate?
+        isDup = isDuplicateSymbol(docs, symbol);
+        // if (isDup) console.info('>>> duplicate', symbol.longname, symbol.meta.code.name);
+
         // constructor symbol is undocumented=true even if it's documented
-        isCon = acc && utils.isConstructor(symbol);
-        if (isCon || (undoc && undesc && pkg && mdl && acc && ignored)) {
+        isCon = acc && !isDup && utils.isConstructor(symbol);
+
+        if (isCon || (undoc && undesc && pkg && mdl && acc && ignored && !isDup)) {
             relativePath(symbol, options.relativePath);
             o = predicate(symbol);
             if (_.isPlainObject(o)) {
@@ -273,6 +322,7 @@ jsdocx.filter = (docs, options, predicate) => {
                 memo.push(symbol); // original symbol pushed
             }
         }
+
         return memo;
     }, []);
 
@@ -281,6 +331,7 @@ jsdocx.filter = (docs, options, predicate) => {
     } else if (options.sort) {
         sortDocs(docs, options.sort);
     }
+
     return docs;
 };
 
@@ -321,6 +372,7 @@ jsdocx.parse = (options, callback) => {
                         return opts;
                     });
             }
+
             if (hasSource) {
                 return helper.createTempFile(opts.source)
                     .then(file => {
@@ -343,6 +395,7 @@ jsdocx.parse = (options, callback) => {
             if (options.output) {
                 return helper.writeJSON(options.output, docs);
             }
+
             return docs;
         })
         .catch(err => {
@@ -354,6 +407,7 @@ jsdocx.parse = (options, callback) => {
                 err.message = err.message + ' \nExecuted JSDoc Command: ' + cmd + '\n'
                     + 'with JSON configuration: ' + JSON.stringify(conf || {});
             }
+
             throw err;
         })
         .nodeify(callback);

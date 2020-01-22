@@ -511,7 +511,7 @@ Utilities for documentation output and symbols.
         </td>
     </tr>
     <tr>
-        <td><b><code>isEexternal(symbol)</code></b></td>
+        <td><b><code>isExternal(symbol)</code></b></td>
         <td><code>symbol:Object</code></td>
         <td><code>Boolean</code></td>
         <td>

@@ -20,31 +20,16 @@ npm i jsdoc-x
 ## Usage:
 
 ```js
-var jsdocx = require('jsdoc-x');
-```
-
-Parse using Promises...
-```js
-jsdocx.parse('./src/**/*.js')
-    .then(function (docs) {
-        console.log(docs);
-    })
-    .catch(function (err) {
-        console.log(err.stack);
-    });
-```
-
-Or callback...
-```js
-var options = { files: './src/**/*.js', hierarchy: true };
-jsdocx.parse(options, function (err, docs) {
-    if (err) {
-        console.log(err.stack);
-        return;
-    }
+const jsdocx = require('jsdoc-x');
+try {
+    const docs = await jsdocx.parse('./src/**/*.js');
     console.log(docs);
-});
+} catch (err) {
+    console.log(err.stack);
+}
 ```
+_(If you like pain, `.parse()` method also supports a callback, instead of promises.)_
+
 
 See an **output example** [here](https://github.com/onury/jsdoc-x/blob/master/test/output/docs.json).
 

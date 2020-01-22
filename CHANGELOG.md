@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [4.1.0](https://github.com/onury/jsdoc-x/compare/v4.0.3...v4.1.0) (2020-01-22)
+
+### Changed
+- Updated JSDoc core dependency to v3.6.3 (latest as of Jan, 2020.)
+- Added `config` option that enables passing a custom configuration to the underlying JSDoc core. This bypasses all parser options. (PR by [@JustinBeaudry](https://github.com/JustinBeaudry))
+- Updated other dependencies to their latest versions.
+
+### Fixed
+- An issue where JSDoc core (v3.6.x) produces some duplicate symbols especially when some ES2015 exporting is used within the code.
+
+
 ## [4.0.3](https://github.com/onury/jsdoc-x/compare/v4.0.0...v4.0.3) (2019-01-08)
 
 ### Changed

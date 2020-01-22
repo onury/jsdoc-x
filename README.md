@@ -96,6 +96,13 @@ Executes the `jsdoc -X` command and parses the output into a Javascript object/a
         </td>
     </tr>
     <tr>
+        <td><b><code>config</code></b></td>
+        <td><code>Object</code></td>
+        <td>
+            Pass in all options as a single object. Overrides all other options. Allows passing custom config options to jsdoc. Default:  <code>{}</code>
+        </td>
+    </tr>
+    <tr>
         <td><b><code>encoding</code><b></td>
         <td><code>String</code></td>
         <td>Encoding to be used when reading source files. Default: <code>"utf8"</code></td>

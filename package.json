@@ -4,6 +4,9 @@
   "description": "Parser for outputting a customized Javascript object from documented code via JSDoc's explain (-X) command. ",
   "license": "MIT",
   "author": "Onur Yıldırım <onur@cutepilot.com>",
+  "contributors": [
+    "Justin Beaudry <me@justinbeaudry.dev>"
+  ],
   "repository": "onury/jsdoc-x",
   "main": "src/index.js",
   "files": [
